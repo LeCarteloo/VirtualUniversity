@@ -106,7 +106,7 @@
       <g id="Group_1849" data-name="Group 1849" transform="translate(11.518 280.543)">
         <g id="Group_1848" data-name="Group 1848">
           <g id="Group_1847" data-name="Group 1847">
-            <path id="Path_3785" data-name="Path 3785" d="M96,287.8H87.423L80.6,296.671l16.279.1Z" transform="translate(-80.6 -287.8)" fill="#376586"/>
+            <path id="Path_3785" data-name="Path 3785" d="M96,287.8H87.423L80.6,296.671l16.279.1Z" transform="translate(-80.6 -287.8)" fill="blue"/>
           </g>
         </g>
         <rect id="Rectangle_209" data-name="Rectangle 209" width="16.279" height="1.95" transform="translate(16.365 10.468) rotate(180)" fill="#d4d4d4"/>

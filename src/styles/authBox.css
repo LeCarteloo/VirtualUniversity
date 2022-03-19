@@ -11,6 +11,9 @@
   align-items: center;
   flex-direction: row;
   background-color: var(--bg-color);
+  /* background-image: url("../assets/bg-auth.png");
+  background-repeat: no-repeat;
+  background-position: 100%; */
 }
 
 .auth-inputs,
@@ -21,4 +24,28 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+.auth-route {
+  background-image: url("../assets/bg-auth.png");
+  justify-content: space-evenly;
+}
+
+.auth-route img {
+  max-width: 100%;
+}
+
+@media (max-width: 900px) {
+  .auth-container {
+    flex-direction: column;
+  }
+  .auth-inputs,
+  .auth-route {
+    width: 100vw;
+    height: 50vh;
+  }
+  /* Just for tests */
+  .auth-route {
+    background-image: none;
+  }
 }

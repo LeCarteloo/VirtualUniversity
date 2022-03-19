@@ -1,7 +1,9 @@
 @import "colors.css";
 
-h3 {
-  margin-bottom: 0.5em;
+label {
+  display: block;
+  margin: 0.5em 0 0.5em 0;
+  font-size: 20px;
 }
 
 input {
@@ -12,4 +14,10 @@ input {
   outline: none;
   color: var(--font-color);
   font-size: 16px;
+  width: 250px;
+}
+
+.input-error {
+  color: rgb(231, 59, 59);
+  margin-top: 0.25em;
 }
