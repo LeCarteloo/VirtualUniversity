@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="520.35" height="294.603" viewBox="0 0 520.35 294.603">
+  <defs>
+    <clipPath id="clip-path">
+      <rect x="120" y="415" width="520.35" height="294.603" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="Scroll_Group_1" data-name="Scroll Group 1" transform="translate(-120 -415)" clip-path="url(#clip-path)" style="isolation: isolate">
+    <g id="Tło" transform="matrix(0.485, -0.875, 0.875, 0.485, -130.291, 1268.778)">
+      <path id="Cien" d="M900.219-187.564S866.468,18.693,1057.725,81.508,1157.1,331.829,1157.1,331.829l231.571-11.25,87.191-288.76S1462.74-252.254,1461.8-256s-244.7,27.188-244.7,27.188S963.034-195.065,959.284-193.19s-63.752,5.625-63.752,5.625" transform="translate(-177 7)" fill="#339fcd" opacity="0.52"/>
+      <path id="Mocny_Kolor" data-name="Mocny Kolor" d="M900.219-187.564S866.468,18.693,1057.725,81.508,1157.1,331.829,1157.1,331.829l231.571-11.25,87.191-288.76S1462.74-252.254,1461.8-256s-244.7,27.188-244.7,27.188S963.034-195.065,959.284-193.19s-63.752,5.625-63.752,5.625" transform="translate(-163.403 7)" fill="#339fcd"/>
+    </g>
+  </g>
+</svg>

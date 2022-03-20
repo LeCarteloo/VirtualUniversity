@@ -4,6 +4,7 @@ import "../styles/authBox.css";
 
 import LoginPeople from "../assets/login_people.svg";
 import BgAuth from "../assets/bg-auth.svg";
+import BgAuthMobile from "../assets/bg-auth-mobile.svg";
 
 import Button from "./Button";
 import Form from "./Form";
@@ -20,10 +21,8 @@ const AuthBox = ({ type, path, values, onSubmit }) => {
         <div className={`auth-remind ${type}`}>
           <div className="remind-text">
             <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sequi
-              earum vero officiis voluptates, recusandae cum laboriosam
-              blanditiis iusto veritatis eveniet ex reiciendis nobis voluptate
-              quasi esse dignissimos ipsam facilis excepturi.
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+              Exercitationem, molestiae.
             </p>
             <Link to={path}>
               <Button text={values.routeText} bgColor={"#1164aa"} />
