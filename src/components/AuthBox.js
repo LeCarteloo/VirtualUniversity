@@ -5,20 +5,17 @@ import "../styles/authBox.css";
 import LoginPeople from "../assets/login_people.svg";
 import BgAuth from "../assets/bg-auth.svg";
 
-import TextInput from "./TextInput";
 import Button from "./Button";
+import Form from "./Form";
 
-const AuthBox = ({ type, path, values }) => {
+const AuthBox = ({ type, path, values, onSubmit }) => {
   return (
     <section className="auth-section">
       <img src={BgAuth} alt="Background blob" className={`auth-blob ${type}`} />
       <div className="auth-container">
         <div className={`auth-inputs ${type}`}>
-          {/* Later add Form */}
           <h2>{values.title}</h2>
-          <TextInput label={values.firstInput} />
-          <TextInput label={values.secondInput} />
-          <Button text={values.actionText} />
+          <Form key={type} values={values} type={type} onSubmit={onSubmit} />
         </div>
         <div className={`auth-remind ${type}`}>
           <div className="remind-text">

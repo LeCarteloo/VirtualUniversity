@@ -4,6 +4,7 @@ import "../styles/buttons.css";
 const Button = ({ text, bgColor, fontColor, onClick }) => {
   return (
     <button
+      type="submit"
       style={{
         backgroundColor: bgColor,
         color: fontColor,

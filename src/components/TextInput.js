@@ -1,22 +1,25 @@
 import "../styles/inputs.css";
+
 import PropTypes from "prop-types";
-import { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
-const TextInput = ({ label, value, error }) => {
-  const [text, setText] = useState("");
-
+const TextInput = ({ label, value, error, onChange }) => {
   return (
     <div className="input-container">
       <label> {label} </label>
       <input
         type="text"
         value={value}
-        onChange={(e) => {
-          setText(e.target.value);
-          //   console.log(text);
-        }}
+        onChange={onChange}
+        className={error && "error"}
       />
-      <p className="input-error"> {error} </p>
+      {error && (
+        <p className="display-error">
+          <FontAwesomeIcon icon={faTimes} style={{ paddingRight: "0.5em" }} />
+          {error}
+        </p>
+      )}
     </div>
   );
 };

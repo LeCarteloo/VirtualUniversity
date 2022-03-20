@@ -15,9 +15,16 @@ input {
   color: var(--font);
   font-size: 16px;
   width: 250px;
+  transition: ease 0.5s;
 }
 
-.input-error {
+input.error {
+  box-shadow: inset 0px 0px 0px 2px rgb(231, 59, 59);
+  transition: ease 0.2s;
+}
+
+.display-error {
   color: rgb(231, 59, 59);
   margin-top: 0.25em;
+  transition: 0.5s;
 }
