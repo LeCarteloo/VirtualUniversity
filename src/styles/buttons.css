@@ -4,6 +4,8 @@
   border: none;
   padding: 0.5em;
   margin-top: 0.5em;
-  width: 100px;
-  border-radius: 5px;
+  width: 200px;
+  border-radius: 10px;
+  font-size: 1em;
+  cursor: pointer;
 }

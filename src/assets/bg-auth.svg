@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1220.136" height="1079.679" viewBox="0 0 1220.136 1079.679">
+  <defs>
+    <clipPath id="clip-path">
+      <rect x="-18" y="250" width="1220.136" height="1079.679" fill="none"/>
+    </clipPath>
+  </defs>
+  <g id="bg-auth" data-name="bg-auth" transform="translate(18 -250)" clip-path="url(#clip-path)" style="isolation: isolate">
+    <g id="Background" transform="translate(-718.532 249.32)">
+      <path id="Shadow" d="M907.253-84.4s-84.4,515.751,393.846,672.821,248.5,625.934,248.5,625.934l579.048-28.132,218.022-722.052s-32.82-710.33-35.165-719.707-611.869,67.985-611.869,67.985-635.312,84.4-644.689,89.084S895.532-84.4,895.532-84.4" transform="translate(-177 7)" fill="#339fcd" opacity="0.52"/>
+      <path id="Color" data-name="Color" d="M907.253-84.4s-84.4,515.751,393.846,672.821,248.5,625.934,248.5,625.934l579.048-28.132,218.022-722.052s-32.82-710.33-35.165-719.707-611.869,67.985-611.869,67.985-635.312,84.4-644.689,89.084S895.532-84.4,895.532-84.4" transform="translate(-143 7)" fill="#339fcd"/>
+    </g>
+  </g>
+</svg>

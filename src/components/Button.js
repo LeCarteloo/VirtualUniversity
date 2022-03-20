@@ -17,7 +17,7 @@ const Button = ({ text, bgColor, fontColor, onClick }) => {
 };
 
 Button.defaultProps = {
-  bgColor: "#800000",
+  bgColor: "#339fcd",
   fontColor: "#FFF",
 };
 
