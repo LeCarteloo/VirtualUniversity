@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import "../styles/authBox.css";
+import "../styles/auth.scss";
 
 import LoginPeople from "../assets/login_people.svg";
 import BgAuth from "../assets/bg-auth.svg";
@@ -48,7 +48,9 @@ const Login = () => {
                 setPassword(e.target.value);
               }}
             />
-            <Button text="Login in" />
+            <Link to="/home">
+              <Button text="Login in" />
+            </Link>
           </form>
         </div>
         <div className="auth-remind">

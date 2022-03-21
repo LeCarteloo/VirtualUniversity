@@ -1,4 +1,4 @@
-import "../styles/inputs.css";
+import "../styles/inputs.scss";
 
 import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
