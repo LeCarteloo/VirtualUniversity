@@ -4,12 +4,12 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
-const TextInput = ({ label, value, error, onChange }) => {
+const TextInput = ({ type, label, value, error, onChange }) => {
   return (
     <div className="input-container">
       <label> {label} </label>
       <input
-        type="text"
+        type={type}
         value={value}
         onChange={onChange}
         className={error && "error"}
@@ -22,6 +22,10 @@ const TextInput = ({ label, value, error, onChange }) => {
       )}
     </div>
   );
+};
+
+TextInput.defaultProps = {
+  type: "text",
 };
 
 TextInput.propTypes = {
