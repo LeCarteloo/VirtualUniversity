@@ -1,0 +1,37 @@
+@use "./global" as global;
+
+.nav-item {
+  list-style: none;
+  cursor: pointer;
+  padding: 25px;
+  margin: 5px;
+  border-radius: 10px;
+
+  &:hover {
+    background-color: global.$secondary;
+  }
+
+  a {
+    text-decoration: none;
+    color: global.$font;
+    // Not sure about this
+    &.hidden {
+      display: flex;
+      justify-content: center;
+    }
+  }
+
+  //   .nav-icon {
+  //     display: block;
+  //     margin: auto;
+  //   }
+
+  .nav-name {
+    margin-left: 25px;
+    font-size: 18px;
+
+    &.hidden {
+      display: none;
+    }
+  }
+}
