@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 import NavItem from "./NavItem";
 
@@ -37,13 +38,13 @@ const NavBar = () => {
       </ul>
 
       <div className="user-info">
-        <a href="/">
+        <Link to="/">
           <FontAwesomeIcon
             icon={faArrowRightFromBracket}
             size="xl"
             className="logout-icon"
           />
-        </a>
+        </Link>
       </div>
     </nav>
   );

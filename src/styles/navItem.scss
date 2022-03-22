@@ -11,15 +11,11 @@
   align-items: center;
   height: 50px;
   width: 100%;
-  // padding: 25px;
   &:hover {
     background-color: global.$primary;
-
-    a {
-    }
   }
 
-  a {
+  .nav-link {
     text-decoration: none;
     color: global.$font;
 
@@ -29,6 +25,7 @@
     .nav-name {
       white-space: nowrap;
       margin-left: 25px;
+      margin-right: 25px;
       font-size: 18px;
       transition: 0.5s;
       &.hidden {

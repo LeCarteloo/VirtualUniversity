@@ -1,13 +1,8 @@
 @use "./global" as global;
 .nav-bar {
-  position: fixed;
   width: 300px;
   height: 100%;
   background-color: global.$secondary;
-
-  overflow: hidden;
-  overflow-x: hidden;
-
   transition: 0.5s;
 
   &.hidden {
@@ -76,11 +71,17 @@
     padding: 1em 0.75em;
   }
 
+  // @media (max-width: 756px) {
+  //   .nav-items {
+  //     padding: 10%;
+  //   }
+  // }
+
   .user-info {
     width: 100%;
     height: 50px;
     // background-color: global.$primary-dark;
-    position: absolute;
+    position: relative;
     bottom: 0;
     display: flex;
     justify-content: center;
@@ -100,10 +101,22 @@
         background-color: global.$primary;
       }
     }
+  }
+}
 
-    .logout-icon {
-      text-align: center;
-      transform: scaleX(-1);
+@media (max-width: 756px) {
+  .nav-bar {
+    position: fixed;
+
+    &.hidden {
+      position: absolute;
+      z-index: 1;
+      transform: translateX(-80px);
+      .nav-hamburger {
+        position: absolute;
+        left: 90px;
+        top: 10px;
+      }
     }
   }
 }
