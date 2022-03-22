@@ -3,34 +3,107 @@
   position: fixed;
   width: 300px;
   height: 100%;
-  background-color: global.$primary;
+  background-color: global.$secondary;
+
   overflow: hidden;
   overflow-x: hidden;
+
+  transition: 0.5s;
 
   &.hidden {
     width: 80px;
   }
 
-  .top-content {
-    width: 100%;
+  .nav-header {
     height: 50px;
-    background-color: green;
+    display: flex;
+    justify-content: space-evenly;
 
     .nav-logo {
-      width: 45%;
-      height: 100%;
-      background-color: red;
-      display: inline-block;
+      width: 50%;
+      white-space: nowrap;
+
+      // Centering placeholder text
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &.hidden {
+        width: 0px;
+        opacity: 0;
+        // Animation not working yet
+        display: none;
+        transition: 0.5s;
+      }
     }
+
     .nav-hamburger {
-      width: 55%;
-      height: 100%;
-      background-color: blue;
-      display: inline-block;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      cursor: pointer;
+
+      .hamburger-line {
+        width: 25px;
+        height: 2px;
+        background-color: white;
+        margin: 3px;
+        align-items: center;
+        transition: 0.5s;
+
+        &.active {
+          width: 33px;
+        }
+
+        &.active:nth-child(1) {
+          background-color: global.$primary;
+          transform: rotate(45deg) translateY(11px);
+        }
+        &.active:nth-child(2) {
+          transform: translateX(30px);
+          opacity: 0;
+        }
+        &.active:nth-child(3) {
+          background-color: global.$primary;
+          transform: rotate(-45deg) translateY(-11px);
+        }
+      }
     }
   }
 
   .nav-items {
-    padding-top: 1em;
+    padding: 1em 0.75em;
+  }
+
+  .user-info {
+    width: 100%;
+    height: 50px;
+    // background-color: global.$primary-dark;
+    position: absolute;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    a {
+      width: 100%;
+
+      text-decoration: none;
+      color: global.$font;
+      height: 50px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      &:hover {
+        background-color: global.$primary;
+      }
+    }
+
+    .logout-icon {
+      text-align: center;
+      transform: scaleX(-1);
+    }
   }
 }

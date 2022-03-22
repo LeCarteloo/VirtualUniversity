@@ -1,37 +1,45 @@
 @use "./global" as global;
 
+//bg #1c1c2c
+//sec #242434
+
 .nav-item {
   list-style: none;
   cursor: pointer;
-  padding: 25px;
-  margin: 5px;
   border-radius: 10px;
-
+  display: flex;
+  align-items: center;
+  height: 50px;
+  width: 100%;
+  // padding: 25px;
   &:hover {
-    background-color: global.$secondary;
+    background-color: global.$primary;
+
+    a {
+    }
   }
 
   a {
     text-decoration: none;
     color: global.$font;
-    // Not sure about this
-    &.hidden {
-      display: flex;
-      justify-content: center;
+
+    display: flex;
+    align-items: center;
+
+    .nav-name {
+      white-space: nowrap;
+      margin-left: 25px;
+      font-size: 18px;
+      transition: 0.5s;
+      &.hidden {
+        visibility: hidden;
+        opacity: 0;
+        transition: visibility 0s, opacity 0.5s linear;
+        display: none;
+      }
     }
-  }
-
-  //   .nav-icon {
-  //     display: block;
-  //     margin: auto;
-  //   }
-
-  .nav-name {
-    margin-left: 25px;
-    font-size: 18px;
-
-    &.hidden {
-      display: none;
+    .nav-icon {
+      margin: 15px;
     }
   }
 }

@@ -1,5 +1,4 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 import "../styles/navItem.scss";
 
@@ -9,7 +8,7 @@ const NavItem = ({ icon, name, nav }) => {
   return (
     <li className="nav-item">
       <a href="/" className={navState}>
-        <FontAwesomeIcon icon={faTimes} className="nav-icon" />
+        <FontAwesomeIcon icon={icon} size="xl" className="nav-icon" />
         <span className={`nav-name ${navState}`}> {name} </span>
       </a>
     </li>
