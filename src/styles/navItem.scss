@@ -7,12 +7,32 @@
   list-style: none;
   cursor: pointer;
   border-radius: 10px;
-  display: flex;
-  align-items: center;
-  height: 50px;
+  height: 100%;
   width: 100%;
+  overflow: hidden;
+
   &:hover {
     background-color: global.$primary;
+  }
+
+  // &.open {
+  //   &:hover {
+  //     background-color: red;
+  //   }
+  //   .extra-info {
+  //     transition: max-height 0.5s;
+
+  //     max-height: 3000px;
+  //   }
+  // }
+
+  .extra-info {
+    transition: max-height 0.5s;
+    max-height: 0px;
+    &.open {
+      transition: max-height 0.5s;
+      max-height: 250px;
+    }
   }
 
   .nav-link {

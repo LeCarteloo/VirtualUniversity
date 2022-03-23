@@ -15,6 +15,8 @@ const NavBar = () => {
 
   const navState = !nav ? "hidden" : "";
 
+  const subLinks = ["Test1", "Test2", "Test3"];
+
   return (
     <nav className={`nav-bar ${navState}`}>
       <div className="nav-header">
@@ -30,7 +32,12 @@ const NavBar = () => {
         <NavItem name="Dashboard" nav={nav} icon={faFolder} />
         <NavItem name="Timetable" nav={nav} icon={faFolder} />
         <NavItem name="Grades" nav={nav} icon={faFolder} />
-        <NavItem name="Your studies" nav={nav} icon={faFolder} />
+        <NavItem
+          name="Your studies"
+          nav={nav}
+          icon={faFolder}
+          subLinks={subLinks}
+        />
         <NavItem name="Payments" nav={nav} icon={faFolder} />
         <NavItem name="Shared drive" nav={nav} icon={faFolder} />
         <NavItem name="Files" nav={nav} icon={faFolder} />

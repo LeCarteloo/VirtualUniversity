@@ -100,6 +100,9 @@
       &:hover {
         background-color: global.$primary;
       }
+      .logout-icon {
+        transform: scaleX(-1);
+      }
     }
   }
 }
