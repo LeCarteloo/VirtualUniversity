@@ -68,21 +68,22 @@
   }
 
   .nav-items {
+    overflow-y: auto;
+
+    height: calc(100% - 86px);
     padding: 1em 0.75em;
   }
 
-  // @media (max-width: 756px) {
-  //   .nav-items {
-  //     padding: 10%;
-  //   }
-  // }
+  .wrapper {
+    height: calc(100% - 46px);
+  }
 
   .user-info {
     width: 100%;
     height: 50px;
-    // background-color: global.$primary-dark;
-    position: relative;
-    bottom: 0;
+    background-color: global.$third;
+    // position: relative;
+    // bottom: 0;
     display: flex;
     justify-content: center;
     align-items: center;

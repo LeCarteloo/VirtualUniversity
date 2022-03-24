@@ -15,7 +15,7 @@ const Dashboard = () => {
           : "No announcements to display"}
       </div>
       <div className="nav-blocks">
-        <div className="nav-block">
+        {/* <div className="nav-block">
           <FontAwesomeIcon icon={faFolder} size="5x" className="block-icon" />
           <span className="block-name">Shared drive</span>
         </div>
@@ -46,7 +46,7 @@ const Dashboard = () => {
         <div className="nav-block">
           <FontAwesomeIcon icon={faFolder} size="5x" className="block-icon" />
           <span className="block-name">Shared drive</span>
-        </div>
+        </div> */}
       </div>
     </section>
   );

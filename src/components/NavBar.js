@@ -15,7 +15,18 @@ const NavBar = () => {
 
   const navState = !nav ? "hidden" : "";
 
-  const subLinks = ["Test1", "Test2", "Test3"];
+  // const studiesSubLinks = ["Sub1", "Sub2", "Sub3"];
+  const studiesSubLinks = [
+    "Sub1",
+    "Sub2",
+    "Sub3",
+    "Sub4",
+    "Sub5",
+    "Sub6",
+    "Sub7",
+    "Sub8",
+  ];
+  const filesSubLinks = ["Declaration", "Guidelines"];
 
   return (
     <nav className={`nav-bar ${navState}`}>
@@ -28,30 +39,36 @@ const NavBar = () => {
         </div>
       </div>
 
-      <ul className="nav-items">
-        <NavItem name="Dashboard" nav={nav} icon={faFolder} />
-        <NavItem name="Timetable" nav={nav} icon={faFolder} />
-        <NavItem name="Grades" nav={nav} icon={faFolder} />
-        <NavItem
-          name="Your studies"
-          nav={nav}
-          icon={faFolder}
-          subLinks={subLinks}
-        />
-        <NavItem name="Payments" nav={nav} icon={faFolder} />
-        <NavItem name="Shared drive" nav={nav} icon={faFolder} />
-        <NavItem name="Files" nav={nav} icon={faFolder} />
-        <NavItem name="Groups" nav={nav} icon={faFolder} />
-      </ul>
-
-      <div className="user-info">
-        <Link to="/">
-          <FontAwesomeIcon
-            icon={faArrowRightFromBracket}
-            size="xl"
-            className="logout-icon"
+      <div className="wrapper">
+        <ul className="nav-items">
+          <NavItem name="Dashboard" nav={nav} icon={faFolder} />
+          <NavItem name="Timetable" nav={nav} icon={faFolder} />
+          <NavItem name="Grades" nav={nav} icon={faFolder} />
+          <NavItem
+            name="Your studies"
+            nav={nav}
+            icon={faFolder}
+            subLinks={studiesSubLinks}
           />
-        </Link>
+          <NavItem name="Payments" nav={nav} icon={faFolder} />
+          <NavItem name="Shared drive" nav={nav} icon={faFolder} />
+          <NavItem
+            name="Files"
+            nav={nav}
+            icon={faFolder}
+            subLinks={filesSubLinks}
+          />
+          <NavItem name="Groups" nav={nav} icon={faFolder} />
+        </ul>
+        <div className="user-info">
+          <Link to="/">
+            <FontAwesomeIcon
+              icon={faArrowRightFromBracket}
+              size="xl"
+              className="logout-icon"
+            />
+          </Link>
+        </div>
       </div>
     </nav>
   );
