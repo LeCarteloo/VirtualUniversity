@@ -3,7 +3,6 @@
 .dashboard-section {
   width: 100%;
   height: 100%;
-  //   background-color: red;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,10 +10,11 @@
 }
 
 .announcements {
-  //   background-color: red;
   display: flex;
   align-items: center;
   flex-direction: column;
+
+  width: 100%;
 
   .title {
     font-size: 1.8em;
@@ -28,16 +28,47 @@
   }
 }
 
+//TODO: Change this later
+.blocks-wrapper {
+  width: 70%;
+  height: 100%;
+  @media (max-width: 756px) {
+    width: 100%;
+  }
+}
+
 .nav-blocks {
   display: grid;
-  align-content: center;
-  justify-content: center;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1em;
-  margin-top: 2em;
-  width: 50%;
+  overflow: hidden;
   height: 100%;
+  gap: 4em;
+  justify-items: center;
+  align-content: center;
+  grid-template-columns: repeat(4, 1fr);
 
+  .nav-block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 10px;
+    width: 100%;
+    height: 150%;
+    background-color: global.$secondary;
+    cursor: pointer;
+
+    &:hover {
+      background-color: transparent;
+      color: global.$primary;
+      box-shadow: inset 0 0 0 2px global.$primary;
+    }
+
+    .block-icon {
+      font-size: 5em;
+    }
+  }
+
+  //TODO: Change this later
   @media (max-width: 1200px) {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -46,19 +77,17 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .nav-block {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    border-radius: 10px;
-    width: 100px;
-    padding: 50px;
-    background-color: global.$secondary;
-    cursor: pointer;
+  @media (max-width: 756px) {
+    gap: 3em;
+    grid-template-columns: repeat(2, 1fr);
 
-    &:hover {
-      background-color: global.$primary;
+    .nav-block {
+      width: 100%;
+      height: 150%;
+
+      .block-icon {
+        font-size: 3em;
+      }
     }
   }
 }

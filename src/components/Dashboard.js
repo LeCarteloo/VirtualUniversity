@@ -2,9 +2,22 @@ import "../styles/dashboard.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFolder } from "@fortawesome/free-solid-svg-icons";
 
+import NavBlock from "./NavBlock";
+
 const Dashboard = () => {
-  // Object with future announcements
-  const anns = {};
+  // Array with future announcements
+  const anns = [];
+  // const anns = [
+  //   {
+  //     title: "Test Announcement",
+  //     date: "25.03.2022",
+  //     desc:
+  //       "Lorem, ipsum dolor sit amet consectetur adipisicing " +
+  //       "elit. Doloremque fugit aliquid alias nihil mollitia " +
+  //       "sed libero id impedit labore fuga!",
+  //   },
+  // ];
+
   return (
     <section className="dashboard-section">
       <div className="announcements">
@@ -14,39 +27,17 @@ const Dashboard = () => {
           ? "Future announcements"
           : "No announcements to display"}
       </div>
-      <div className="nav-blocks">
-        {/* <div className="nav-block">
-          <FontAwesomeIcon icon={faFolder} size="5x" className="block-icon" />
-          <span className="block-name">Shared drive</span>
+      <div className="blocks-wrapper">
+        <div className="nav-blocks">
+          <NavBlock />
+          <NavBlock />
+          <NavBlock />
+          <NavBlock />
+          <NavBlock />
+          <NavBlock />
+          <NavBlock />
+          <NavBlock />
         </div>
-        <div className="nav-block">
-          <FontAwesomeIcon icon={faFolder} size="5x" className="block-icon" />
-          <span className="block-name">Shared drive</span>
-        </div>
-        <div className="nav-block">
-          <FontAwesomeIcon icon={faFolder} size="5x" className="block-icon" />
-          <span className="block-name">Shared drive</span>
-        </div>
-        <div className="nav-block">
-          <FontAwesomeIcon icon={faFolder} size="5x" className="block-icon" />
-          <span className="block-name">Shared drive</span>
-        </div>
-        <div className="nav-block">
-          <FontAwesomeIcon icon={faFolder} size="5x" className="block-icon" />
-          <span className="block-name">Shared drive</span>
-        </div>
-        <div className="nav-block">
-          <FontAwesomeIcon icon={faFolder} size="5x" className="block-icon" />
-          <span className="block-name">Shared drive</span>
-        </div>
-        <div className="nav-block">
-          <FontAwesomeIcon icon={faFolder} size="5x" className="block-icon" />
-          <span className="block-name">Shared drive</span>
-        </div>
-        <div className="nav-block">
-          <FontAwesomeIcon icon={faFolder} size="5x" className="block-icon" />
-          <span className="block-name">Shared drive</span>
-        </div> */}
       </div>
     </section>
   );

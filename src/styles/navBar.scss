@@ -4,6 +4,7 @@
   height: 100%;
   background-color: global.$secondary;
   transition: 0.5s;
+  border-right: 2px solid global.$bg;
 
   &.hidden {
     width: 80px;
@@ -70,18 +71,18 @@
   .nav-items {
     overflow-y: auto;
 
-    height: calc(100% - 86px);
+    height: calc(100% - 50px - 2em);
     padding: 1em 0.75em;
   }
 
   .wrapper {
-    height: calc(100% - 46px);
+    height: calc(100% - 50px);
   }
 
   .user-info {
     width: 100%;
     height: 50px;
-    background-color: global.$third;
+    background-color: global.$primary-dark;
     // position: relative;
     // bottom: 0;
     display: flex;

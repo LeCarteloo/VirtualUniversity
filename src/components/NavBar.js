@@ -8,6 +8,14 @@ import Logo from "../assets/logo.png";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFolder } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarDays } from "@fortawesome/free-solid-svg-icons";
+import { faLayerGroup } from "@fortawesome/free-solid-svg-icons";
+import { faFileArrowDown } from "@fortawesome/free-solid-svg-icons";
+import { faGraduationCap } from "@fortawesome/free-solid-svg-icons";
+import { faHouse } from "@fortawesome/free-solid-svg-icons";
+import { faMoneyCheckDollar } from "@fortawesome/free-solid-svg-icons";
+import { fa5 } from "@fortawesome/free-solid-svg-icons";
+
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 const NavBar = () => {
@@ -17,14 +25,10 @@ const NavBar = () => {
 
   // const studiesSubLinks = ["Sub1", "Sub2", "Sub3"];
   const studiesSubLinks = [
-    "Sub1",
-    "Sub2",
-    "Sub3",
-    "Sub4",
-    "Sub5",
-    "Sub6",
-    "Sub7",
-    "Sub8",
+    "Course of study",
+    "Insurance",
+    "Optional subjects",
+    "Graduation work",
   ];
   const filesSubLinks = ["Declaration", "Guidelines"];
 
@@ -41,24 +45,44 @@ const NavBar = () => {
 
       <div className="wrapper">
         <ul className="nav-items">
-          <NavItem name="Dashboard" nav={nav} icon={faFolder} />
-          <NavItem name="Timetable" nav={nav} icon={faFolder} />
-          <NavItem name="Grades" nav={nav} icon={faFolder} />
+          <NavItem
+            name="Dashboard"
+            nav={nav}
+            icon={faHouse}
+            path="/dashboard"
+          />
+          <NavItem
+            name="Timetable"
+            nav={nav}
+            icon={faCalendarDays}
+            path="/timetable"
+          />
+          <NavItem name="Grades" nav={nav} icon={fa5} path="/grades" />
           <NavItem
             name="Your studies"
             nav={nav}
-            icon={faFolder}
+            icon={faGraduationCap}
             subLinks={studiesSubLinks}
           />
-          <NavItem name="Payments" nav={nav} icon={faFolder} />
-          <NavItem name="Shared drive" nav={nav} icon={faFolder} />
+          <NavItem
+            name="Payments"
+            nav={nav}
+            icon={faMoneyCheckDollar}
+            path="/payments"
+          />
+          <NavItem
+            name="Shared drive"
+            nav={nav}
+            icon={faFolder}
+            path="/drive"
+          />
           <NavItem
             name="Files"
             nav={nav}
-            icon={faFolder}
+            icon={faFileArrowDown}
             subLinks={filesSubLinks}
           />
-          <NavItem name="Groups" nav={nav} icon={faFolder} />
+          <NavItem name="Groups" nav={nav} icon={faLayerGroup} path="/groups" />
         </ul>
         <div className="user-info">
           <Link to="/">
