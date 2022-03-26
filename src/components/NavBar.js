@@ -45,19 +45,14 @@ const NavBar = () => {
 
       <div className="wrapper">
         <ul className="nav-items">
-          <NavItem
-            name="Dashboard"
-            nav={nav}
-            icon={faHouse}
-            path="/dashboard"
-          />
+          <NavItem name="Dashboard" nav={nav} icon={faHouse} path="dashboard" />
           <NavItem
             name="Timetable"
             nav={nav}
             icon={faCalendarDays}
-            path="/timetable"
+            path="timetable"
           />
-          <NavItem name="Grades" nav={nav} icon={fa5} path="/grades" />
+          <NavItem name="Grades" nav={nav} icon={fa5} path="grades" />
           <NavItem
             name="Your studies"
             nav={nav}
@@ -68,21 +63,16 @@ const NavBar = () => {
             name="Payments"
             nav={nav}
             icon={faMoneyCheckDollar}
-            path="/payments"
+            path="payments"
           />
-          <NavItem
-            name="Shared drive"
-            nav={nav}
-            icon={faFolder}
-            path="/drive"
-          />
+          <NavItem name="Shared drive" nav={nav} icon={faFolder} path="drive" />
           <NavItem
             name="Files"
             nav={nav}
             icon={faFileArrowDown}
             subLinks={filesSubLinks}
           />
-          <NavItem name="Groups" nav={nav} icon={faLayerGroup} path="/groups" />
+          <NavItem name="Groups" nav={nav} icon={faLayerGroup} path="groups" />
         </ul>
         <div className="user-info">
           <Link to="/">

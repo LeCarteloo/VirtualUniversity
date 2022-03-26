@@ -1,6 +1,4 @@
 import "../styles/dashboard.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFolder } from "@fortawesome/free-solid-svg-icons";
 
 import NavBlock from "./NavBlock";
 
