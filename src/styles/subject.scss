@@ -1,0 +1,102 @@
+@use "./global" as global;
+
+.subject-item {
+  overflow: hidden;
+
+  width: 70%;
+  height: 80px;
+  margin-top: 2em;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: global.$secondary;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+
+  //   transition: ease-in 0.5s;
+
+  // Later add this animation
+  //   transition: transform ease-in 0.2s;
+  //   &:hover {
+  //     transform: scale(1.1);
+  //   }
+
+  .subject-content {
+    margin-left: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    .subject-info {
+      display: flex;
+      justify-content: space-around;
+      padding-right: 10px;
+
+      span {
+        display: block;
+      }
+
+      .subject-accordion {
+        display: none;
+      }
+    }
+
+    .subject-grades {
+      table {
+        width: 100%;
+        th {
+          color: global.$primary;
+        }
+        td {
+          text-align: center;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 805px) {
+    align-items: initial;
+    .subject-icon {
+      margin-top: 0.3em;
+    }
+
+    .subject-content {
+      margin-top: 2em;
+      .subject-info .subject-accordion {
+        display: block;
+      }
+      .subject-grades {
+        visibility: hidden;
+        height: 0px;
+      }
+      table {
+        border-collapse: collapse;
+        tr {
+          display: table-cell;
+          text-align: left;
+          width: 50%;
+        }
+        tbody {
+          position: relative;
+        }
+        th,
+        td {
+          display: block;
+          padding: 10px 0;
+        }
+      }
+    }
+    &:hover {
+      transition: 0.5s;
+      height: 240px;
+      .subject-content {
+        .subject-grades {
+          transition: height 5s;
+
+          visibility: visible;
+          height: auto;
+        }
+      }
+    }
+  }
+}

@@ -40,6 +40,25 @@
       flex-direction: column;
       cursor: pointer;
 
+      // Not sure if this is even needed
+      &:hover {
+        .hamburger-line {
+          animation: blink 1s alternate;
+
+          @keyframes blink {
+            30% {
+              background-color: global.$font;
+            }
+            60% {
+              background-color: global.$primary;
+            }
+            100% {
+              background-color: global.$font;
+            }
+          }
+        }
+      }
+
       .hamburger-line {
         width: 25px;
         height: 2px;

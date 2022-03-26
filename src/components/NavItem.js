@@ -6,7 +6,6 @@ import ConditionalWrapper from "./ConditionalWrapper";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
 import "../styles/navItem.scss";
-import { Outlet } from "react-router-dom";
 
 const NavItem = ({ icon, name, nav, path, subLinks }) => {
   const navState = !nav ? "hidden" : "";
