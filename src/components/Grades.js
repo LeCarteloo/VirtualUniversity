@@ -4,9 +4,9 @@ import Subject from "./Subject";
 const Grades = () => {
   return (
     <section className="grades-section">
-      <Subject />
-      {/* <Subject />
-      <Subject /> */}
+      <Subject title="Artificial Intelligence" type="Lecture" />
+      <Subject title="Artificial Intelligence" type="Laboratory" />
+      <Subject title="Artificial Intelligence" type="Exercises" />
     </section>
   );
 };
