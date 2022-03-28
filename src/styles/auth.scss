@@ -2,6 +2,13 @@
 
 .auth-section {
   height: 100%;
+
+  .transition-svg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    fill: green;
+  }
 }
 
 .auth-blob {

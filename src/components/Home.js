@@ -11,7 +11,7 @@ const Home = () => {
       <NavBar />
       <section className="content-section">
         <Routes>
-          <Route path="dashboard" exact element={<Dashboard />} />
+          <Route index path="dashboard" exact element={<Dashboard />} />
           <Route path="grades" exact element={<Grades />} />
         </Routes>
       </section>
