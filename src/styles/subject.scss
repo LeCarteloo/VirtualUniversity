@@ -9,6 +9,7 @@
   background-color: global.$secondary;
   display: flex;
   overflow: hidden;
+  cursor: pointer;
   transition: 0.3s;
 
   .subject-icon {

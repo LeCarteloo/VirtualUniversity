@@ -1,6 +1,7 @@
 import "../styles/dashboard.scss";
 
 import NavBlock from "./NavBlock";
+import Article from "./Article";
 
 const Dashboard = () => {
   // Array with future announcements
@@ -24,6 +25,9 @@ const Dashboard = () => {
         {anns.length > 0
           ? "Future announcements"
           : "No announcements to display"}
+        <Article />
+        <Article />
+        <Article />
       </div>
       <div className="blocks-wrapper">
         <div className="nav-blocks">

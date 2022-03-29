@@ -32,6 +32,12 @@
     color: global.$font;
     display: flex;
 
+    &.active {
+      border-radius: 10px;
+      // box-shadow: inset 0 0 0 2px global.$primary;
+      color: global.$primary;
+    }
+
     &.open {
       background-color: global.$primary;
     }

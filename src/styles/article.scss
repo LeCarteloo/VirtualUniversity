@@ -1,0 +1,38 @@
+.article-item {
+  width: 70%;
+  display: flex;
+  align-items: center;
+  .article-short {
+    margin-left: 1em;
+    .article-date,
+    .article-tags {
+      line-height: 2em;
+      font-weight: 200;
+    }
+    .article-tags {
+      a {
+        position: relative;
+        text-decoration: none;
+        color: rgb(163, 162, 162);
+        &:after {
+          position: absolute;
+          display: block;
+          content: "";
+          top: 1em;
+          left: 0;
+          width: 100%;
+          transform: scaleX(0);
+          border-bottom: 1.5px solid rgb(163, 162, 162);
+          transition: 0.2s;
+          z-index: -1;
+        }
+        &:hover:after {
+          transform: scaleX(1);
+        }
+      }
+    }
+    .article-title {
+      line-break: loose;
+    }
+  }
+}

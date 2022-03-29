@@ -5,8 +5,6 @@ import "../styles/auth.scss";
 import LoginPeople from "../assets/login_people.svg";
 import BgAuth from "../assets/bg-auth.svg";
 
-import { animated, useSpring } from "react-spring";
-
 import Button from "./Button";
 import TextInput from "./TextInput";
 
@@ -16,15 +14,6 @@ const Login = () => {
 
   const [loginError, setLoginError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-
-  const anim = [
-    "M143.106-7.574s2.2,610.439,0,608.234,0,472.5,0,472.5h1920.01L2063.093-7.574",
-    "M895.043-7.574s-72.186,438.929,406.056,596S1582.035,1073,1582.035,1073l481.081.16L2063.093-7.574",
-  ];
-
-  const animationProps = useSpring({
-    anim: anim,
-  });
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -77,21 +66,6 @@ const Login = () => {
           <img src={LoginPeople} alt="People" />
         </div>
       </div>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="1171.954"
-        height="1080.738"
-        viewBox="0 0 1171.954 1080.738"
-        className="transition-svg"
-      >
-        <g transform="translate(-748.162 0.574)">
-          <animated.path
-            class="a"
-            d="M895.043-7.574s-72.186,438.929,406.056,596S1582.035,1073,1582.035,1073l481.081.16L2063.093-7.574"
-            transform="translate(-143 7)"
-          />
-        </g>
-      </svg>
     </section>
   );
 };
