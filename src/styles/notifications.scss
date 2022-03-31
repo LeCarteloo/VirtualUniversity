@@ -1,0 +1,33 @@
+@use "./global";
+
+.notifications {
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+
+  .notif-icon {
+    padding: 0.5em 0.75em;
+  }
+
+  .notif-amount {
+    transition: 1s;
+    visibility: hidden;
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
+    width: 20px;
+    height: 20px;
+    font-weight: 800;
+    text-align: center;
+    &.show {
+      visibility: visible;
+      background-color: global.$primary;
+      border-radius: 100%;
+    }
+  }
+
+  //   &:hover {
+
+  //   }
+}

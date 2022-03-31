@@ -4,10 +4,12 @@ import { Routes, Route } from "react-router-dom";
 import NavBar from "./NavBar";
 import Dashboard from "./Dashboard";
 import Grades from "./Grades";
+import Notifications from "./Notifications";
 
 const Home = () => {
   return (
     <section className="home-section">
+      <Notifications />
       <NavBar />
       <section className="content-section">
         <Routes>

@@ -25,9 +25,8 @@ const Dashboard = () => {
         {anns.length > 0
           ? "Future announcements"
           : "No announcements to display"}
-        <Article />
-        <Article />
-        <Article />
+        {/* <Article />
+        <Article /> */}
       </div>
       <div className="blocks-wrapper">
         <div className="nav-blocks">
