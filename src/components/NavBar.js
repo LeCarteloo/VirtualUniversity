@@ -47,10 +47,10 @@ const NavBar = () => {
         <ul className="nav-items">
           <NavItem name="Dashboard" nav={nav} icon={faHouse} path="dashboard" />
           <NavItem
-            name="Timetable"
+            name="Calendar"
             nav={nav}
             icon={faCalendarDays}
-            path="timetable"
+            path="calendar"
           />
           <NavItem name="Grades" nav={nav} icon={fa5} path="grades" />
           <NavItem
