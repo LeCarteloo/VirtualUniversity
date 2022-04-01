@@ -1,63 +1,114 @@
 @use "./global";
 
 .calendar-section {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
   .calendar {
     width: 100%;
-    height: 50px;
-    background-color: global.$secondary;
-    border-radius: 10px;
+    height: 100%;
+  }
+  .calendar-header {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    .calendar-arrow {
-      padding: 0.5em;
-      background-color: transparent;
+    .calendar-corner {
+      min-width: 70px;
+      height: 70px;
+      border: 1px solid global.$font;
     }
     .calendar-days {
+      width: calc(100% - 70px);
+      height: 70px;
+      border: 1px solid global.$font;
       display: flex;
-      overflow-x: hidden;
-    }
-  }
+      .calendar-day {
+        width: 100%;
+        padding: 1em;
+        border-right: 1px solid global.$font;
 
-  .calendar-table {
-    display: flex;
-    margin-top: 2em;
-    .calendar-hours {
-      width: 50px;
-      border: 1px solid gray;
-      .hour {
-        height: 100px;
-        text-align: center;
-        &:nth-child(1) {
-          border-top: 1px solid gray;
-          margin-top: 80px;
+        @media (max-width: 780px) {
+          &:not(:nth-child(1)) {
+            display: none;
+          }
+        }
+
+        .day-number {
+          font-weight: 800;
+        }
+        .day-name {
+          font-weight: 200;
         }
       }
     }
+  }
 
-    .calendar-day {
-      padding: 1em;
-      border: 1px solid gray;
-      .day-number {
-        font-weight: 800;
-      }
-      .day-name {
-        font-weight: 300;
-      }
+  .calendar-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    overflow-y: auto;
+
+    // Hidding scrollbar
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    &::-webkit-scrollbar {
+      display: none;
     }
   }
-}
 
-.day {
-  min-width: 50px;
-  height: 50px;
-  margin-right: 1em;
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 10px;
+  .calendar-hours {
+    min-width: 70px;
+    border: 1px solid global.$font;
+    .hour {
+      text-align: center;
+      height: 100px;
+    }
+  }
 
-  &.today {
-    background-color: global.$primary;
+  .calendar-column {
+    position: relative;
+    height: 1000px;
+    width: 100%;
+    border: 1px solid global.$font;
+
+    @media (max-width: 780px) {
+      &:not(:nth-child(2)) {
+        display: none;
+      }
+    }
+
+    .calendar-row {
+      width: 100%;
+      height: 50px;
+      border-bottom: 1px dashed global.$font;
+      opacity: 0.3;
+    }
+
+    .event-item {
+      margin: 0 5px 0 5px;
+      position: absolute;
+      border-radius: 10px;
+      background-color: global.$secondary;
+      display: flex;
+
+      .event-marker {
+        width: 5px;
+        height: 100%;
+        background-color: global.$primary;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+      }
+
+      .event-content {
+        padding: 0.5em;
+        display: flex;
+        flex-direction: column;
+        .event-title {
+          font-weight: 800;
+        }
+        .event-author {
+          font-weight: 200;
+        }
+      }
+    }
   }
 }

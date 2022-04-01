@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import NavBar from "./NavBar";
 import Dashboard from "./Dashboard";
 import Grades from "./Grades";
-import Calendar from "./Calendar";
+import Calendar from "./calendar/Calendar";
 import Notifications from "./Notifications";
 
 const Home = () => {
