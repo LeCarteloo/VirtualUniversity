@@ -1,15 +1,16 @@
-const EventItem = ({ he, to, bg }) => {
-  he = "100px";
-  to = "100px";
+const EventItem = ({ title, author, startTime, length, isCanceled }) => {
   return (
     <div
-      style={{ height: "100px", top: "102px", backgroundColor: { bg } }}
-      className="event-item"
+      style={{
+        height: length * 101.5 + "px",
+        top: (startTime - 8) * 101.5 + "px",
+      }}
+      className={`event-item ${isCanceled && "canceled"}`}
     >
       <div className="event-marker"></div>
       <div className="event-content">
-        <span className="event-title">Artificial Intelligence</span>
-        <span className="event-author">John Doe</span>
+        <span className="event-title"> {title} </span>
+        <span className="event-author"> {author} </span>
       </div>
     </div>
   );

@@ -42,11 +42,9 @@
   }
 
   .calendar-content {
-    width: 100%;
     height: 100%;
     display: flex;
-    overflow-y: auto;
-
+    overflow: auto;
     // Hidding scrollbar
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
@@ -56,6 +54,7 @@
   }
 
   .calendar-hours {
+    height: 1457px;
     min-width: 70px;
     border: 1px solid global.$font;
     .hour {
@@ -66,8 +65,10 @@
 
   .calendar-column {
     position: relative;
-    height: 1000px;
+    height: 1457px;
     width: 100%;
+    display: inline-block;
+
     border: 1px solid global.$font;
 
     @media (max-width: 780px) {
@@ -77,37 +78,61 @@
     }
 
     .calendar-row {
-      width: 100%;
       height: 50px;
       border-bottom: 1px dashed global.$font;
       opacity: 0.3;
     }
 
-    .event-item {
-      margin: 0 5px 0 5px;
+    .event-list {
       position: absolute;
-      border-radius: 10px;
-      background-color: global.$secondary;
-      display: flex;
+      top: 0;
+      width: 100%;
+    }
+  }
 
+  .event-item {
+    position: relative;
+    border-radius: 10px;
+    background-color: global.$secondary;
+    display: flex;
+    margin: 0 0.5em 0 0.5em;
+    // width: 95%;
+
+    &.canceled {
+      text-decoration: line-through;
+      opacity: 0.6;
       .event-marker {
-        width: 5px;
-        height: 100%;
-        background-color: global.$primary;
-        border-top-left-radius: 10px;
-        border-bottom-left-radius: 10px;
+        background: repeating-linear-gradient(
+          40deg,
+          global.$secondary,
+          global.$secondary 2px,
+          global.$primary-dark 3px,
+          global.$primary-dark 6px
+        );
       }
+      &:hover {
+        opacity: 1;
+        text-decoration: none;
+      }
+    }
 
-      .event-content {
-        padding: 0.5em;
-        display: flex;
-        flex-direction: column;
-        .event-title {
-          font-weight: 800;
-        }
-        .event-author {
-          font-weight: 200;
-        }
+    .event-marker {
+      width: 5px;
+      height: 100%;
+      background-color: global.$primary;
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+    }
+
+    .event-content {
+      padding: 0.5em;
+      display: flex;
+      flex-direction: column;
+      .event-title {
+        font-weight: 800;
+      }
+      .event-author {
+        font-weight: 200;
       }
     }
   }

@@ -1,10 +1,10 @@
 import "../../styles/calendar.scss";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
 import CalendarDay from "./CalendarDay";
-import EventItem from "./EventItem";
+import CalendarColumn from "./CalendarColumn";
 
 const Calendar = () => {
   const getDays = () => {
@@ -44,17 +44,11 @@ const Calendar = () => {
               </div>
             ))}
           </div>
-          <div className="calendar-column">
-            {[...Array(30)].map((e, i) => (
-              <div className="calendar-row" key={"row-" + i}></div>
-            ))}
-            <EventItem height="100px" top="102px" bg="white" />
-            <EventItem height="100px" top="202px" bg="white" />
-          </div>
-          <div className="calendar-column"></div>
-          <div className="calendar-column"></div>
-          <div className="calendar-column"></div>
-          <div className="calendar-column"></div>
+          <CalendarColumn />
+          <CalendarColumn />
+          <CalendarColumn />
+          <CalendarColumn />
+          <CalendarColumn />
         </div>
       </div>
     </section>
