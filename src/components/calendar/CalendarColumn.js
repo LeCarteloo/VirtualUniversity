@@ -19,6 +19,7 @@ const CalendarColumn = () => {
           author={"John Smith"}
           startTime={10.5}
           length={2}
+          isOnline={true}
         />
         <EventItem
           title={"Cloud Computing"}
