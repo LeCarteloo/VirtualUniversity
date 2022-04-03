@@ -10,14 +10,21 @@ const CalendarColumn = () => {
         <EventItem
           title={"Artificial Intelligence"}
           author={"John Doe"}
-          startTime={9}
+          startTime={8}
+          length={2}
+          isCanceled={true}
+        />
+        <EventItem
+          title={"Cloud Computing"}
+          author={"John Smith"}
+          startTime={10.5}
           length={2}
         />
         <EventItem
           title={"Cloud Computing"}
           author={"John Smith"}
-          startTime={11.5}
-          length={1}
+          startTime={13}
+          length={0.5}
         />
       </div>
     </div>
