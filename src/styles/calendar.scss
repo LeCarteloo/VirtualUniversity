@@ -155,17 +155,18 @@
       visibility: hidden;
       transform: translateY(-8%);
       opacity: 0;
-      z-index: 2;
-      transition: 0.2s;
+      z-index: 1;
+      transition: opacity 0.2s;
     }
 
     &:hover {
       .event-tooltip {
         top: calc(100% + 10px);
-        width: 100%;
+        min-width: 100%;
         background-color: global.$secondary;
         border-radius: 5px;
         box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.511);
+        transition: 0.2s;
         visibility: visible;
         opacity: 1;
         transform: translateY(0);

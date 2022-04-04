@@ -21,7 +21,22 @@ const Calendar = () => {
 
   const days = getDays();
 
-  const events = [{}];
+  // For tests
+  const startDate = new Date();
+  const endDate = new Date();
+  endDate.setHours(endDate.getHours() + 1);
+  endDate.setMinutes(endDate.getMinutes() + 30);
+
+  // Object will contain future API call
+  const events = [
+    {
+      title: "Artificial Intelligence",
+      author: "John Doe",
+      startDate: startDate,
+      endDate: endDate,
+      isOnline: true,
+    },
+  ];
 
   return (
     <section className="calendar-section">
@@ -44,7 +59,7 @@ const Calendar = () => {
               </div>
             ))}
           </div>
-          <CalendarColumn />
+          <CalendarColumn events={events} />
           <CalendarColumn />
           <CalendarColumn />
           <CalendarColumn />

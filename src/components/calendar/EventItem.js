@@ -4,24 +4,44 @@ import {
   faScroll,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+// import { useState } from "react";
 
 const EventItem = ({
   title,
   author,
-  startTime,
-  length,
+  startDate,
+  endDate,
   isCanceled,
   isOnline,
   desc,
   room,
   code,
 }) => {
+  const datesDiff = (endDate - startDate) / 1000;
+
+  const hours = Math.floor(datesDiff / 3600) % 24;
+  const minutes = Math.floor(datesDiff / 60) % 60;
+  const length = hours + minutes / 60;
+
+  const date =
+    startDate.toLocaleDateString("default", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    }) +
+    " - " +
+    endDate.toLocaleTimeString("default", {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+
   return (
     <div
       style={{
         height: length * 102 + "px",
-        top: (startTime - 8) * 102 + "px",
+        top: (startDate.getHours() - 8) * 102 + "px",
       }}
       className={`event-item ${isCanceled && "canceled"}`}
     >
@@ -41,14 +61,14 @@ const EventItem = ({
       <FontAwesomeIcon className="event-info" icon={faScroll} />
       <span className="event-tooltip">
         <div className="tooltip-wrapper">
-          <span>01 mar 2022 16:30 - 18:00</span>
+          <span> {date} </span>
           <h4 className="tooltip-title">
             {isCanceled && "Canceled: "}
             {title}
           </h4>
           <p>{desc}</p>
-          <p>Room: {room}</p>
-          <p>Code: {code}</p>
+          <p>Room: {room} </p>
+          <p>Code: {code} </p>
           <hr style={{ margin: "1em 0em 1em 0em" }} />
           <footer>
             <div>

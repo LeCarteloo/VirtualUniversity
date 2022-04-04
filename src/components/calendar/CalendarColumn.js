@@ -1,32 +1,19 @@
 import EventItem from "./EventItem";
 
-const CalendarColumn = () => {
+const CalendarColumn = ({ events }) => {
   return (
     <div className="calendar-column">
       {[...Array(30)].map((e, i) => (
         <div className="calendar-row" key={"row-" + i}></div>
       ))}
       <div className="event-list">
-        <EventItem
-          title={"Artificial Intelligence"}
-          author={"John Doe"}
-          startTime={8}
-          length={2}
-          isCanceled={true}
-        />
-        <EventItem
-          title={"Cloud Computing"}
-          author={"John Smith"}
-          startTime={10.5}
-          length={2}
-          isOnline={true}
-        />
-        <EventItem
-          title={"Cloud Computing"}
-          author={"John Smith"}
-          startTime={13}
-          length={0.5}
-        />
+        {events ? (
+          events.map((event) => <EventItem key={event.startDate} {...event} />)
+        ) : (
+          <p style={{ textAlign: "center", margin: "0.75em 1em 0 0 " }}>
+            No Events
+          </p>
+        )}
       </div>
     </div>
   );
