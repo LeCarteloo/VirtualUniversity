@@ -7,25 +7,27 @@ import CalendarDay from "./CalendarDay";
 import CalendarColumn from "./CalendarColumn";
 
 const Calendar = () => {
-  const getDays = () => {
-    // 2022, 2 for tests
-    const date = new Date(2022, 2);
-    const currMonth = date.getMonth();
-    let days = [];
-    while (date.getMonth() === currMonth) {
-      days.push(date.getDate());
-      date.setDate(date.getDate() + 1);
-    }
-    return days;
-  };
-
-  const days = getDays();
-
   // For tests
   const startDate = new Date();
   const endDate = new Date();
   endDate.setHours(endDate.getHours() + 1);
   endDate.setMinutes(endDate.getMinutes() + 30);
+
+  // Current week
+  const currentDate = new Date();
+  let firstDate = new Date(
+    currentDate.setDate(currentDate.getDate() - currentDate.getDay() + 1)
+  );
+
+  // First day of weekend starting at Monday
+  let currentWeek = [];
+  for (let i = 0; i < 5; i++) {
+    currentWeek.push({
+      number: firstDate.getDate(),
+      name: firstDate.toLocaleDateString("en-US", { weekday: "long" }),
+    });
+    firstDate.setDate(firstDate.getDate() + 1);
+  }
 
   // Object will contain future API call
   const events = [
@@ -44,11 +46,13 @@ const Calendar = () => {
         <div className="calendar-header">
           <div className="calendar-corner"></div>
           <div className="calendar-days">
-            <CalendarDay number={"01"} name={"Monday"} />
-            <CalendarDay number={"02"} name={"Tuesday"} />
-            <CalendarDay number={"03"} name={"Wednesday"} />
-            <CalendarDay number={"04"} name={"Thursday"} />
-            <CalendarDay number={"05"} name={"Friday"} />
+            {currentWeek.map((weekDay) => (
+              <CalendarDay
+                key={weekDay.name}
+                number={("0" + weekDay.number).slice(-2)}
+                name={weekDay.name}
+              />
+            ))}
           </div>
         </div>
         <div className="calendar-content">

@@ -17,14 +17,19 @@ const EventItem = ({
   room,
   code,
 }) => {
+  // Event start time
+  const startTime = startDate.getHours() + startDate.getMinutes() / 60;
+
+  // Counting the length of event
   const datesDiff = (endDate - startDate) / 1000;
 
   const hours = Math.floor(datesDiff / 3600) % 24;
   const minutes = Math.floor(datesDiff / 60) % 60;
   const length = hours + minutes / 60;
 
+  // Date display in tooltip
   const date =
-    startDate.toLocaleDateString("default", {
+    startDate.toLocaleDateString("en-US", {
       day: "2-digit",
       month: "short",
       year: "numeric",
@@ -32,7 +37,7 @@ const EventItem = ({
       minute: "2-digit",
     }) +
     " - " +
-    endDate.toLocaleTimeString("default", {
+    endDate.toLocaleTimeString("en-US", {
       hour: "2-digit",
       minute: "2-digit",
     });
@@ -41,7 +46,7 @@ const EventItem = ({
     <div
       style={{
         height: length * 102 + "px",
-        top: (startDate.getHours() - 8) * 102 + "px",
+        top: (startTime - 8) * 102 + "px",
       }}
       className={`event-item ${isCanceled && "canceled"}`}
     >
