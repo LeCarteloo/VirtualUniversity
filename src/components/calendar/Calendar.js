@@ -1,4 +1,5 @@
 import "../../styles/calendar.scss";
+import { useState } from "react";
 
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
@@ -7,6 +8,8 @@ import CalendarDay from "./CalendarDay";
 import CalendarColumn from "./CalendarColumn";
 
 const Calendar = () => {
+  const [changeWeek, setChangeWeek] = useState(new Date());
+
   // For tests
   const startDate = new Date();
   const endDate = new Date();
@@ -14,7 +17,7 @@ const Calendar = () => {
   endDate.setMinutes(endDate.getMinutes() + 30);
 
   // Current week
-  const currentDate = new Date();
+  const currentDate = changeWeek;
   let firstDate = new Date(
     currentDate.setDate(currentDate.getDate() - currentDate.getDay() + 1)
   );
@@ -25,6 +28,7 @@ const Calendar = () => {
     currentWeek.push({
       number: firstDate.getDate(),
       name: firstDate.toLocaleDateString("en-US", { weekday: "long" }),
+      isToday: firstDate.toDateString() === new Date().toDateString(),
     });
     firstDate.setDate(firstDate.getDate() + 1);
   }
@@ -43,15 +47,29 @@ const Calendar = () => {
   return (
     <section className="calendar-section">
       <div className="calendar">
+        <button
+          onClick={() =>
+            setChangeWeek(
+              new Date(changeWeek.setDate(changeWeek.getDate() - 7))
+            )
+          }
+        >
+          Prev
+        </button>
+        <button
+          onClick={() =>
+            setChangeWeek(
+              new Date(changeWeek.setDate(changeWeek.getDate() + 7))
+            )
+          }
+        >
+          Next
+        </button>
         <div className="calendar-header">
           <div className="calendar-corner"></div>
           <div className="calendar-days">
             {currentWeek.map((weekDay) => (
-              <CalendarDay
-                key={weekDay.name}
-                number={("0" + weekDay.number).slice(-2)}
-                name={weekDay.name}
-              />
+              <CalendarDay key={weekDay.name} {...weekDay} />
             ))}
           </div>
         </div>

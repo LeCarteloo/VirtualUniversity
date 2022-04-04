@@ -31,6 +31,10 @@
           }
         }
 
+        &.today {
+          color: global.$primary;
+        }
+
         .day-number {
           font-weight: 800;
         }
