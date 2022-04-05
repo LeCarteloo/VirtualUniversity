@@ -1,20 +1,20 @@
 import "../styles/article.scss";
 
-const Article = () => {
+const Article = ({ image, date, title, hashtags }) => {
   return (
     <div className="article-item">
-      <img src="http://placehold.jp/100x100.png" alt="Placeholder" />
+      <div className="article-img">
+        <img src={image} alt="Placeholder" />
+      </div>
       <div className="article-short">
-        <span className="article-date">29.03.2022</span>
-        <h3 className="article-title">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta autem
-          obcaecati, nisi fugit voluptatum nulla! Eum illum illo iure eligendi,
-          saepe voluptatibus soluta odit quidem velit quae libero, alias natus?
-        </h3>
+        <span className="article-date"> {date} </span>
+        <h3 className="article-title"> {title} </h3>
         <span className="article-tags">
-          <a href="#">#IT </a>
-          <a href="#">#AI </a>
-          <a href="#">#Technology </a>
+          {hashtags.map((hashtag) => (
+            <a href="#" key={hashtag}>
+              {hashtag + " "}
+            </a>
+          ))}
         </span>
       </div>
     </div>

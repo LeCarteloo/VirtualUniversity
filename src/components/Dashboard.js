@@ -4,18 +4,20 @@ import NavBlock from "./NavBlock";
 import Article from "./Article";
 
 const Dashboard = () => {
+  //TODO: All keys should be later changed to ids from database
+
   // Array with future announcements
-  const anns = [];
-  // const anns = [
-  //   {
-  //     title: "Test Announcement",
-  //     date: "25.03.2022",
-  //     desc:
-  //       "Lorem, ipsum dolor sit amet consectetur adipisicing " +
-  //       "elit. Doloremque fugit aliquid alias nihil mollitia " +
-  //       "sed libero id impedit labore fuga!",
-  //   },
-  // ];
+  const anns = [
+    {
+      image:
+        "https://browsecat.net/sites/default/files/brain-artificial-intelligence-human-hd-wallpapers-51017-747977-830989.png",
+      date: "05.04.2022",
+      title:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit" +
+        "temporibus quod voluptatem dolores accusamus at.",
+      hashtags: ["#IT", "#AI", "#Technology"],
+    },
+  ];
 
   return (
     <section className="dashboard-section">
@@ -23,12 +25,10 @@ const Dashboard = () => {
         <h1 className="title">Announcements</h1>
         <hr />
         {anns.length > 0
-          ? "Future announcements"
+          ? anns.map((ann) => <Article key={ann.title} {...ann} />)
           : "No announcements to display"}
-        {/* <Article />
-        <Article /> */}
       </div>
-      <div className="blocks-wrapper">
+      {/* <div className="blocks-wrapper">
         <div className="nav-blocks">
           <NavBlock />
           <NavBlock />
@@ -39,7 +39,7 @@ const Dashboard = () => {
           <NavBlock />
           <NavBlock />
         </div>
-      </div>
+      </div> */}
     </section>
   );
 };
