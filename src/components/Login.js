@@ -48,7 +48,7 @@ const Login = () => {
                 setPassword(e.target.value);
               }}
             />
-            <Link to="/home/dashboard">
+            <Link to="/home/articles">
               <Button text="Login in" />
             </Link>
           </form>

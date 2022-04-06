@@ -1,5 +1,7 @@
 import "../styles/article.scss";
 
+import { Link } from "react-router-dom";
+
 const Article = ({ image, date, title, hashtags }) => {
   return (
     <div className="article-item">
@@ -15,6 +17,9 @@ const Article = ({ image, date, title, hashtags }) => {
               {hashtag + " "}
             </a>
           ))}
+          <Link to=":id" className="read-more">
+            Read more...
+          </Link>
         </span>
       </div>
     </div>

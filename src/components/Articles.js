@@ -1,9 +1,9 @@
-import "../styles/dashboard.scss";
+import "../styles/articles.scss";
 
 import NavBlock from "./NavBlock";
 import Article from "./Article";
 
-const Dashboard = () => {
+const Articles = () => {
   //TODO: All keys should be later changed to ids from database
 
   // Array with future announcements
@@ -20,7 +20,7 @@ const Dashboard = () => {
   ];
 
   return (
-    <section className="dashboard-section">
+    <section className="articles-section">
       <div className="announcements">
         <h1 className="title">Announcements</h1>
         <hr />
@@ -44,4 +44,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default Articles;

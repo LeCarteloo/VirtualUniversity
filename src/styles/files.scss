@@ -1,0 +1,39 @@
+@use "./global" as global;
+
+.files-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  justify-items: center;
+  align-content: center;
+  gap: 1em;
+  @media (max-width: 756px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.file {
+  width: 100%;
+  height: 100px;
+  background-color: global.$secondary;
+  border-radius: 10px;
+  cursor: pointer;
+
+  &:hover {
+    // transform: scale(1.1);
+  }
+
+  .file-wrapper {
+    height: calc(100% - 2em);
+    display: flex;
+    align-items: center;
+    padding: 1em;
+
+    .file-icon {
+      //   font-size: 3vw;
+      color: global.$primary;
+    }
+    .file-title {
+      margin-left: 1em;
+    }
+  }
+}
