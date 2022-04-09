@@ -7,7 +7,7 @@ import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 
 import "../styles/navItem.scss";
 
-const NavItem = ({ icon, name, nav, path, subLinks }) => {
+const NavItem = ({ icon, name, nav, path, subLinks, onClose }) => {
   const navState = !nav ? "hidden" : "";
   const [item, setItem] = useState(false);
 
@@ -25,6 +25,7 @@ const NavItem = ({ icon, name, nav, path, subLinks }) => {
           <NavLink
             to={path ? path : ""}
             className={`nav-link ${item ? "open" : ""}`}
+            onClick={onClose}
           >
             {children}
           </NavLink>
@@ -48,16 +49,21 @@ const NavItem = ({ icon, name, nav, path, subLinks }) => {
         <div className={`sub-links ${item ? "open" : ""}`}>
           {subLinks &&
             subLinks.map((subLink) => (
-              <div key={subLink} className="nav-link">
+              <NavLink
+                to={subLink.path}
+                key={subLink.name}
+                className="nav-link"
+                onClick={onClose}
+              >
                 <FontAwesomeIcon
                   icon={icon}
                   size="xl"
                   className="nav-icon sub-icon"
                 />
                 <span className={`nav-name sub-name ${navState} `}>
-                  {subLink}
+                  {subLink.name}
                 </span>
-              </div>
+              </NavLink>
             ))}
         </div>
       )}

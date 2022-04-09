@@ -23,15 +23,56 @@ import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 const NavBar = () => {
   const [nav, setNav] = useState(false);
-
   const navState = !nav ? "hidden" : "";
 
-  // const studiesSubLinks = ["Sub1", "Sub2", "Sub3"];
-  const studiesSubLinks = [
-    "Course of study",
-    "Insurance",
-    "Optional subjects",
-    "Graduation work",
+  // Navbar navigation items
+  const navItems = [
+    {
+      name: "Articles",
+      nav: nav,
+      icon: faNewspaper,
+      path: "articles",
+    },
+    {
+      name: "Calendar",
+      icon: faCalendarDays,
+      path: "calendar",
+    },
+    {
+      name: "Grades",
+      icon: fa5,
+      path: "grades",
+    },
+    {
+      name: "Your studies",
+      icon: faGraduationCap,
+      subLinks: [
+        { name: "Course of study", path: "course" },
+        { name: "Insurance", path: "insurance" },
+        { name: "Optional subjects", path: "optional_subjects" },
+        { name: "Graduation work", path: "graduation_work" },
+      ],
+    },
+    {
+      name: "Payments",
+      icon: faMoneyCheckDollar,
+      path: "payments",
+    },
+    {
+      name: "Shared drive",
+      icon: faFolder,
+      path: "drive",
+    },
+    {
+      name: "Files",
+      icon: faFileArrowDown,
+      path: "files",
+    },
+    {
+      name: "Groups",
+      icon: faLayerGroup,
+      path: "groups",
+    },
   ];
 
   return (
@@ -47,34 +88,14 @@ const NavBar = () => {
 
       <div className="wrapper">
         <ul className="nav-items">
-          <NavItem
-            name="Articles"
-            nav={nav}
-            icon={faNewspaper}
-            path="articles"
-          />
-          <NavItem
-            name="Calendar"
-            nav={nav}
-            icon={faCalendarDays}
-            path="calendar"
-          />
-          <NavItem name="Grades" nav={nav} icon={fa5} path="grades" />
-          <NavItem
-            name="Your studies"
-            nav={nav}
-            icon={faGraduationCap}
-            subLinks={studiesSubLinks}
-          />
-          <NavItem
-            name="Payments"
-            nav={nav}
-            icon={faMoneyCheckDollar}
-            path="payments"
-          />
-          <NavItem name="Shared drive" nav={nav} icon={faFolder} path="drive" />
-          <NavItem name="Files" nav={nav} icon={faFileArrowDown} path="files" />
-          <NavItem name="Groups" nav={nav} icon={faLayerGroup} path="groups" />
+          {navItems.map((navItem) => (
+            <NavItem
+              key={navItem.name}
+              {...navItem}
+              nav={nav}
+              onClose={() => setNav(false)}
+            />
+          ))}
         </ul>
         <div className="user-info">
           <Link to="/">
