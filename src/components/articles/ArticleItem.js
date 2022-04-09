@@ -1,8 +1,8 @@
-import "../styles/article.scss";
+import "../../styles/articleItem.scss";
 
 import { Link } from "react-router-dom";
 
-const Article = ({ image, date, title, hashtags }) => {
+const Article = ({ id, image, date, title, hashtags }) => {
   return (
     <div className="article-item">
       <div className="article-img">
@@ -13,11 +13,11 @@ const Article = ({ image, date, title, hashtags }) => {
         <h3 className="article-title"> {title} </h3>
         <span className="article-tags">
           {hashtags.map((hashtag) => (
-            <a href="#" key={hashtag}>
+            <a href="#" key={hashtag} className="hashtag">
               {hashtag + " "}
             </a>
           ))}
-          <Link to=":id" className="read-more">
+          <Link to={`${id}`} className="read-more">
             Read more...
           </Link>
         </span>

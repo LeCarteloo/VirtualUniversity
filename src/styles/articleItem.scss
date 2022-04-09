@@ -1,0 +1,77 @@
+@use "./global" as global;
+
+.article-item {
+  display: flex;
+  margin-bottom: 1em;
+  align-items: center;
+  background-color: global.$secondary;
+  border-radius: 10px;
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.511);
+  @media (max-width: 756px) {
+    flex-direction: column;
+  }
+
+  .article-img {
+    height: 100%;
+    display: flex;
+    img {
+      border-radius: 10px 0 0 10px;
+      width: 330px;
+    }
+    @media (max-width: 756px) {
+      border-radius: 10px 10px 0 0;
+      width: 100%;
+      padding-top: 40%;
+      overflow: hidden;
+      position: relative;
+      img {
+        width: 100%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+  }
+
+  .article-short {
+    padding: 1em;
+    .article-date,
+    .article-tags {
+      line-height: 2.5em;
+      font-weight: 200;
+    }
+    .article-tags {
+      //TODO: Add class later
+      .hashtag {
+        position: relative;
+        text-decoration: none;
+        color: rgb(163, 162, 162);
+        &:after {
+          content: "";
+          position: absolute;
+          display: block;
+          top: 1em;
+          left: 0;
+          width: 100%;
+          transform: scaleX(0);
+          border-bottom: 1.5px solid rgb(163, 162, 162);
+          transition: 0.2s;
+        }
+        &:hover:after {
+          transform: scaleX(1);
+        }
+      }
+      .read-more {
+        text-decoration: none;
+        color: global.$primary;
+      }
+    }
+
+    .read-more {
+      font-weight: bold;
+      cursor: pointer;
+      float: right;
+    }
+  }
+}
