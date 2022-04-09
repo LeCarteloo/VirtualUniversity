@@ -9,6 +9,7 @@ import {
 
 import CalendarDay from "./CalendarDay";
 import CalendarColumn from "./CalendarColumn";
+import TimeMarker from "./TimeMarker";
 
 const Calendar = () => {
   const [width, setWidth] = useState(window.innerWidth);
@@ -113,7 +114,6 @@ const Calendar = () => {
                 }`}
           </span>
         </div>
-
         <div className="calendar-header">
           <div className="calendar-corner"></div>
           <div className="calendar-days">
@@ -123,6 +123,7 @@ const Calendar = () => {
           </div>
         </div>
         <div className="calendar-content">
+          <TimeMarker />
           <div className="calendar-hours">
             {[...Array(15)].map((e, i) => (
               <div className="hour" key={i}>

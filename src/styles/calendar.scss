@@ -65,6 +65,8 @@
     height: 100%;
     display: flex;
     overflow: auto;
+    position: relative;
+
     // Hidding scrollbar
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
@@ -224,5 +226,12 @@
         }
       }
     }
+  }
+
+  .time-marker {
+    position: absolute;
+    width: 100%;
+    border-bottom: 2px dashed global.$primary;
+    z-index: 10;
   }
 }
