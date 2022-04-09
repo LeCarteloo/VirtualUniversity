@@ -10,6 +10,25 @@
     height: 100%;
   }
 
+  .calendar-navigation {
+    border: 1px solid global.$font;
+    border-bottom: 0;
+    padding: 0.5em;
+    button {
+      background-color: transparent;
+      border: none;
+      color: global.$font;
+      cursor: pointer;
+
+      &:hover {
+        color: global.$primary;
+      }
+    }
+    .icn {
+      margin: 0 0.5em 0 0.5em;
+    }
+  }
+
   .calendar-header {
     display: flex;
     .calendar-corner {
@@ -53,7 +72,7 @@
   }
 
   .calendar-hours {
-    height: 1457px;
+    height: 1582px;
     min-width: 70px;
     border: 1px solid global.$font;
     .hour {
@@ -64,7 +83,7 @@
 
   .calendar-column {
     position: relative;
-    height: 1457px;
+    height: 1582px;
     width: 100%;
     display: inline-block;
 

@@ -1,4 +1,3 @@
-import PropTypes from "react";
 import "../styles/buttons.scss";
 
 const Button = ({ text, bgColor, fontColor, onClick }) => {
