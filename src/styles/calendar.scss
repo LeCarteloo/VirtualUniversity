@@ -26,13 +26,6 @@
         width: 100%;
         padding: 1em;
         border-right: 1px solid global.$font;
-
-        @media (max-width: 780px) {
-          &:not(:nth-child(1)) {
-            display: none;
-          }
-        }
-
         &.today {
           color: global.$primary;
         }
@@ -75,13 +68,7 @@
     width: 100%;
     display: inline-block;
 
-    border: 1px solid global.$font;
-
-    @media (max-width: 780px) {
-      &:not(:nth-child(2)) {
-        display: none;
-      }
-    }
+    border-right: 1px solid global.$font;
 
     .calendar-row {
       height: 50px;

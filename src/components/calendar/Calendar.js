@@ -1,6 +1,5 @@
 import "../../styles/calendar.scss";
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
 // import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 
@@ -8,7 +7,33 @@ import CalendarDay from "./CalendarDay";
 import CalendarColumn from "./CalendarColumn";
 
 const Calendar = () => {
-  const [changeWeek, setChangeWeek] = useState(new Date());
+  const [width, setWidth] = useState(window.innerWidth);
+
+  let currentDate = new Date();
+  const [changeWeek, setChangeWeek] = useState(
+    new Date(
+      currentDate.setDate(currentDate.getDate() - currentDate.getDay() + 1)
+    )
+  );
+
+  // This whoel
+  useEffect(() => {
+    function handleResize() {
+      setWidth(window.innerWidth);
+      if (width > 790) {
+        setChangeWeek(
+          new Date(
+            changeWeek.setDate(changeWeek.getDate() - changeWeek.getDay() + 1)
+          )
+        );
+      }
+    }
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [width, changeWeek]);
+
+  const columns = width > 790 ? 5 : 1;
+  const week = width > 790 ? 7 : 1;
 
   // For tests
   const startDate = new Date();
@@ -16,21 +41,17 @@ const Calendar = () => {
   endDate.setHours(endDate.getHours() + 1);
   endDate.setMinutes(endDate.getMinutes() + 30);
 
-  // Current week
-  const currentDate = changeWeek;
-  let firstDate = new Date(
-    currentDate.setDate(currentDate.getDate() - currentDate.getDay() + 1)
-  );
-
   // First day of weekend starting at Monday
   let currentWeek = [];
-  for (let i = 0; i < 5; i++) {
+  let tempWeek = new Date(changeWeek);
+  for (let i = 0; i < columns; i++) {
     currentWeek.push({
-      number: firstDate.getDate(),
-      name: firstDate.toLocaleDateString("en-US", { weekday: "long" }),
-      isToday: firstDate.toDateString() === new Date().toDateString(),
+      number: tempWeek.getDate(),
+      name: tempWeek.toLocaleDateString("en-US", { weekday: "long" }),
+      month: tempWeek.toLocaleDateString("en-US", { month: "long" }),
+      isToday: tempWeek.toDateString() === new Date().toDateString(),
     });
-    firstDate.setDate(firstDate.getDate() + 1);
+    tempWeek.setDate(tempWeek.getDate() + 1);
   }
 
   // Object will contain future API call
@@ -48,20 +69,23 @@ const Calendar = () => {
     <section className="calendar-section">
       <div className="calendar">
         <button
-          onClick={() =>
+          onClick={() => {
+            const prevWeek = changeWeek.getDay() <= 1 ? 7 : week;
             setChangeWeek(
-              new Date(changeWeek.setDate(changeWeek.getDate() - 7))
-            )
-          }
+              new Date(changeWeek.setDate(changeWeek.getDate() - prevWeek))
+            );
+          }}
         >
           Prev
         </button>
         <button
-          onClick={() =>
+          onClick={() => {
+            const nextWeek = changeWeek.getDay() >= 5 ? 3 : week;
+            console.log(changeWeek);
             setChangeWeek(
-              new Date(changeWeek.setDate(changeWeek.getDate() + 7))
-            )
-          }
+              new Date(changeWeek.setDate(changeWeek.getDate() + nextWeek))
+            );
+          }}
         >
           Next
         </button>
@@ -81,11 +105,9 @@ const Calendar = () => {
               </div>
             ))}
           </div>
-          <CalendarColumn events={events} />
-          <CalendarColumn />
-          <CalendarColumn />
-          <CalendarColumn />
-          <CalendarColumn />
+          {[...Array(columns)].map((e, i) => (
+            <CalendarColumn key={i} events={events} />
+          ))}
         </div>
       </div>
     </section>
