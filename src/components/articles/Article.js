@@ -7,6 +7,7 @@ const Article = () => {
 
   // Future api call
   const article = {};
+
   return (
     <article>
       <div className="article-image">

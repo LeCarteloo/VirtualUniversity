@@ -5,18 +5,19 @@
   top: 0;
   right: 0;
   z-index: 9;
-  cursor: pointer;
 
   .notif-icon {
-    padding: 0.5em 0.75em;
+    padding: 0.5em 1em;
+    cursor: pointer;
   }
 
   .notif-amount {
     transition: 1s;
     visibility: hidden;
     position: absolute;
+    pointer-events: none;
     top: 0.5em;
-    right: 0.5em;
+    right: 1em;
     width: 20px;
     height: 20px;
     font-weight: 800;
@@ -28,7 +29,60 @@
     }
   }
 
-  //   &:hover {
+  .notif-tooltip {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    top: 3em;
+    right: 1em;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.511);
+    border-radius: 10px;
 
-  //   }
+    &::before {
+      content: "";
+      position: absolute;
+      top: -20px;
+      right: 3%;
+      margin-left: -10px;
+      border-width: 10px;
+      border-style: solid;
+      border-color: transparent transparent global.$primary transparent;
+    }
+
+    .tooltip-header {
+      display: flex;
+      position: relative;
+      z-index: 5;
+      height: 20%;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      align-items: center;
+      justify-content: center;
+      background-color: global.$primary;
+    }
+
+    .tooltip-content {
+      height: 80%;
+      background-color: global.$fourth;
+      border-bottom-left-radius: 10px;
+      border-bottom-right-radius: 10px;
+      overflow: auto;
+      // Hidding scrollbar
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+
+    .notification {
+      padding: 1em;
+      display: flex;
+      border-bottom: 1px solid global.$font;
+      .notification-text {
+        margin-left: 1em;
+        display: inline;
+      }
+    }
+  }
 }

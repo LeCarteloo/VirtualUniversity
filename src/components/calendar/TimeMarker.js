@@ -5,7 +5,7 @@ const TimeMarker = () => {
     const time = new Date();
 
     if (time.getHours() >= 8 && time.getHours() <= 22)
-      return (time.getHours() + time.getMinutes() / 60 - 8) * 100;
+      return (time.getHours() + time.getMinutes() / 60 - 8) * 102;
 
     return -5;
   };
@@ -13,6 +13,7 @@ const TimeMarker = () => {
   const [top, setTop] = useState(getTime());
 
   useEffect(() => {
+    console.log("YO");
     const interval = setInterval(() => setTop(getTime()), 60000);
     return () => {
       clearInterval(interval);

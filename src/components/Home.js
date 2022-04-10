@@ -6,7 +6,7 @@ import Articles from "./articles/Articles";
 import Article from "./articles/Article";
 import Grades from "./Grades";
 import Calendar from "./calendar/Calendar";
-import Notifications from "./Notifications";
+import Notifications from "./notifications/Notifications";
 import Files from "./files/Files";
 
 const Home = () => {
