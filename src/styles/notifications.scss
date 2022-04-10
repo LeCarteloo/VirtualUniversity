@@ -37,6 +37,16 @@
     right: 1em;
     box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.511);
     border-radius: 10px;
+    visibility: hidden;
+    transform: translateY(-8%);
+    opacity: 0;
+    transition: 0.2s;
+
+    &.open {
+      visibility: visible;
+      transform: translateY(0);
+      opacity: 1;
+    }
 
     &::before {
       content: "";
@@ -59,6 +69,8 @@
       align-items: center;
       justify-content: center;
       background-color: global.$primary;
+
+      font-size: 1.4em;
     }
 
     .tooltip-content {
@@ -79,6 +91,7 @@
       padding: 1em;
       display: flex;
       border-bottom: 1px solid global.$font;
+      cursor: pointer;
       .notification-text {
         margin-left: 1em;
         display: inline;

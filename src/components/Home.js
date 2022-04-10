@@ -10,9 +10,32 @@ import Notifications from "./notifications/Notifications";
 import Files from "./files/Files";
 
 const Home = () => {
+  const notifs = [
+    {
+      id: 1,
+      text: "You got a new grade in",
+      topic: "Artifical Inteligence",
+    },
+    {
+      id: 2,
+      text: "You got a new grade in",
+      topic: "Artifical Inteligence",
+    },
+    {
+      id: 3,
+      text: "You got a new grade in",
+      topic: "Artifical Inteligence",
+    },
+    {
+      id: 4,
+      text: "You got a new grade in",
+      topic: "Artifical Inteligence",
+    },
+  ];
+
   return (
     <section className="home-section">
-      <Notifications />
+      <Notifications notifs={notifs} />
       <NavBar />
       <section className="content-section">
         <Routes>
