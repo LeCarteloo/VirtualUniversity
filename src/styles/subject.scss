@@ -7,16 +7,16 @@
   padding: 1.5em;
   border-radius: 10px;
   background-color: global.$secondary;
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.511);
   display: flex;
   overflow: hidden;
   cursor: pointer;
   position: relative;
-  transition: 0.3s;
+  transition: height 0.3s;
 
   &::after {
     content: "";
     position: absolute;
-    transition: 1s;
     top: 0;
     left: -150%;
     width: 100%;
@@ -27,11 +27,11 @@
       rgba(255, 255, 255, 0.1),
       transparent
     );
-    transition: 1.5s;
   }
 
   &:hover {
     &::after {
+      transition: 1.3s;
       left: 150%;
     }
   }

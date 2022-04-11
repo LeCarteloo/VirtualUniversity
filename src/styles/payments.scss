@@ -1,0 +1,48 @@
+@use "global" as global;
+
+.payments-section {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.charges,
+.accounts {
+  margin-bottom: 2em;
+  width: 85%;
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.511);
+  .header {
+    display: flex;
+    justify-content: space-between;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 1em;
+    background-color: global.$primary;
+    font-size: 1.2em;
+  }
+  .content {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 1em;
+    background-color: global.$secondary;
+    color: global.$gray;
+  }
+}
+
+// This code is duplicated
+.pay-item {
+  background-color: global.$fourth;
+  border-radius: 10px;
+  margin-bottom: 1em;
+  table {
+    padding: 0.5em;
+    width: 100%;
+    th {
+      color: global.$primary;
+      width: 33%;
+    }
+    td {
+      text-align: center;
+    }
+  }
+}

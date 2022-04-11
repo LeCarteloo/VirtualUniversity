@@ -5,6 +5,7 @@ import NavBar from "./NavBar";
 import Articles from "./articles/Articles";
 import Article from "./articles/Article";
 import Grades from "./Grades";
+import Payments from "./payments/Payments";
 import Calendar from "./calendar/Calendar";
 import Notifications from "./notifications/Notifications";
 import Files from "./files/Files";
@@ -42,6 +43,7 @@ const Home = () => {
           <Route index path="articles" exact element={<Articles />} />
           <Route path="articles/:id" exact element={<Article />} />
           <Route path="grades" exact element={<Grades />} />
+          <Route path="payments" exact element={<Payments />} />
           <Route path="calendar" exact element={<Calendar />} />
           <Route path="files" exact element={<Files />} />
         </Routes>
