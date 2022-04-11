@@ -1,21 +1,47 @@
 import "../../styles/payments.scss";
 import PayItem from "./PayItem";
+import AccountItem from "./AccountItem";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInfoCircle } from "@fortawesome/free-solid-svg-icons";
+import {
+  faInfoCircle,
+  faPlusCircle,
+  faAngleDown,
+  faAngleUp,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Payments = () => {
   return (
     <section className="payments-section">
       <div className="accounts">
-        <div className="header">Your bank accounts</div>
-        <div className="content">No bank accounts to display</div>
+        <div className="header">
+          Your bank accounts
+          <div>
+            <FontAwesomeIcon
+              icon={faPlusCircle}
+              size="lg"
+              style={{ marginRight: "0.5em" }}
+            />
+            <FontAwesomeIcon icon={faAngleDown} size="lg" />
+          </div>
+        </div>
+        <div className="content">
+          {/* No bank accounts to display */}
+          <AccountItem />
+        </div>
       </div>
 
       <div className="charges">
         <div className="header">
           Your charges
-          <FontAwesomeIcon icon={faInfoCircle} size="lg" />
+          <div>
+            <FontAwesomeIcon
+              icon={faInfoCircle}
+              size="lg"
+              style={{ marginRight: "0.5em" }}
+            />
+            <FontAwesomeIcon icon={faAngleDown} size="lg" />
+          </div>
         </div>
         <div className="content">
           {/* No charges to display */}

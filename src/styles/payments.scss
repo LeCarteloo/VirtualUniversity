@@ -11,6 +11,7 @@
   margin-bottom: 2em;
   width: 85%;
   box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.511);
+  border-radius: 10px;
   .header {
     display: flex;
     justify-content: space-between;
@@ -25,24 +26,44 @@
     border-bottom-right-radius: 10px;
     padding: 1em;
     background-color: global.$secondary;
-    color: global.$gray;
+    color: global.$font;
   }
 }
 
-// This code is duplicated
-.pay-item {
+//TODO: This code is duplicated so it will be later moved
+.pay-item,
+.account-item {
   background-color: global.$fourth;
   border-radius: 10px;
   margin-bottom: 1em;
   table {
     padding: 0.5em;
     width: 100%;
+    table-layout: fixed;
     th {
       color: global.$primary;
       width: 33%;
     }
     td {
       text-align: center;
+    }
+    @media (max-width: 756px) {
+      tbody,
+      tr {
+        display: table-cell;
+        height: auto;
+      }
+      th,
+      td {
+        text-align: left;
+        width: auto;
+        height: 100%;
+        display: block;
+        margin: 0.5em;
+      }
+      td {
+        margin-left: 1.5em;
+      }
     }
   }
 }
