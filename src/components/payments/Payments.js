@@ -1,6 +1,4 @@
 import "../../styles/payments.scss";
-import PayItem from "./PayItem";
-import AccountItem from "./AccountItem";
 import PaymentGroup from "./PaymentGroup";
 
 import { faInfoCircle, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
@@ -8,17 +6,14 @@ import { faInfoCircle, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 const Payments = () => {
   const info = {
     headers: ["Album", "Name of bank", "Account number"],
-    rows: [
-      ["111111", "Bank Test SA", "49 1020 2892 2276 3005 0000 0000"],
-      ["222222", "Bank Test SA", "49 1020 2892 2276 3005 0000 0000"],
-    ],
+    rows: [["111111", "Bank Test SA", "49 1020 2892 2276 3005 0000 0000"]],
   };
 
   const account = {
     headers: ["Bank name", "Account number", "Currency", "Confirmed"],
     rows: [
       ["Test I O. Warsaw", "49 1020 2892 2276 3005 0000 0000", "USD", "Yes"],
-      ["Test I O. Warsaw", "49 1020 2892 2276 3005 0000 0000", "USD", "Yes"],
+      ["Test I O. Warsaw", "49 1020 2892 2276 3005 0000 0000", "PLN", "Yes"],
     ],
   };
 

@@ -22,7 +22,11 @@ const PaymentGroup = ({ title, icon, object }) => {
               size="lg"
             />
           )}
-          <FontAwesomeIcon icon={faAngleDown} size="lg" />
+          <FontAwesomeIcon
+            className="payment-accor"
+            icon={faAngleDown}
+            size="lg"
+          />
         </div>
       </div>
       <div className="content">

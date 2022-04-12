@@ -1,4 +1,5 @@
 @use "./global" as global;
+@use "./animation" as animation;
 
 .files-section {
   display: grid;
@@ -18,9 +19,8 @@
   border-radius: 10px;
   cursor: pointer;
 
-  &:hover {
-    // transform: scale(1.1);
-  }
+  // Hover animation
+  // @include animation.shine();
 
   .file-wrapper {
     height: calc(100% - 2em);
