@@ -6,22 +6,23 @@
   flex-direction: column;
 }
 
-.charges,
-.accounts,
-.finanse-info {
+.payment-group {
   margin-bottom: 2em;
   width: 85%;
   box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.511);
   border-radius: 10px;
+  overflow: hidden;
   .header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-radius: 10px;
     padding: 1em;
     background-color: global.$primary;
     font-size: 1.2em;
+    transition: border-radius 0.3s;
+    cursor: pointer;
+
     .icon-group {
       display: flex;
     }
@@ -29,52 +30,25 @@
   .content {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    padding: 1em;
     background-color: global.$secondary;
     color: global.$font;
+    padding: 0em 1em 0em 1em;
+
+    overflow: hidden;
   }
+
+  &.open {
+    .header {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+    .content {
+      padding: 1em;
+      transform: scaleY(1);
+    }
+  }
+
   @media (max-width: 756px) {
     width: 90%;
-  }
-}
-
-.pay-item,
-.account-item {
-  background-color: global.$fourth;
-  border-radius: 10px;
-  margin-bottom: 1em;
-
-  //TODO: This code is duplicated so it will be later moved
-  table {
-    padding: 0.5em;
-    width: 100%;
-    background-color: global.$fourth;
-    border-radius: 10px;
-    margin-bottom: 1em;
-    th {
-      color: global.$primary;
-      text-align: center;
-    }
-    td {
-      text-align: center;
-    }
-    @media (max-width: 756px) {
-      table-layout: fixed;
-      tbody {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between;
-      }
-      tr {
-        display: flex;
-        flex-direction: column;
-      }
-      td,
-      th {
-        text-align: left;
-        height: 100%;
-        padding: 0.3em;
-      }
-    }
   }
 }

@@ -1,0 +1,32 @@
+@use "./global" as global;
+table {
+  padding: 0.5em;
+  width: 100%;
+  background-color: global.$fourth;
+  border-radius: 10px;
+  margin-bottom: 1em;
+  th {
+    color: global.$primary;
+    text-align: center;
+  }
+  td {
+    text-align: center;
+  }
+  @media (max-width: 756px) {
+    table-layout: fixed;
+    tbody {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    tr {
+      display: flex;
+      flex-direction: column;
+    }
+    td,
+    th {
+      text-align: left;
+      padding: 0.3em;
+    }
+  }
+}
