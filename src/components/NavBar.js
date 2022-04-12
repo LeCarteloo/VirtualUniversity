@@ -79,11 +79,15 @@ const NavBar = () => {
     <nav className={`nav-bar ${navState}`}>
       <div className="nav-header">
         <div className={`nav-logo ${navState}`}>Placeholder</div>
-        <div className="nav-hamburger" onClick={() => setNav(!nav)}>
+        <button
+          tabIndex={0}
+          className="nav-hamburger"
+          onClick={() => setNav(!nav)}
+        >
           <div className={`hamburger-line ${nav ? "active" : ""}`}></div>
           <div className={`hamburger-line ${nav ? "active" : ""}`}></div>
           <div className={`hamburger-line ${nav ? "active" : ""}`}></div>
-        </div>
+        </button>
       </div>
 
       <div className="wrapper">

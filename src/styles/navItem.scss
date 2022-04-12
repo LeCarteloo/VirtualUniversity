@@ -7,7 +7,8 @@
   border-radius: 10px;
   overflow: hidden;
 
-  &:hover {
+  &:hover,
+  &:focus-within {
     background-color: transparent;
     box-shadow: inset 0 0 0 2px global.$primary;
     .nav-link {
@@ -19,7 +20,8 @@
   &.open {
     box-shadow: inset 0 0 0 2px global.$primary;
     color: global.$font;
-    &:hover {
+    &:hover,
+    &:focus-within {
       .nav-link {
         transition: 0ms;
         color: global.$font;

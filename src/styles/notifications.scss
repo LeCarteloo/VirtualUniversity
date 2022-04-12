@@ -5,9 +5,11 @@
   top: 0;
   right: 0;
   z-index: 9;
+  // color: global.$font;
 
   .notif-icon {
-    padding: 0.5em 1em;
+    padding: 0.5em 0.9em;
+    color: global.$font;
     cursor: pointer;
   }
 

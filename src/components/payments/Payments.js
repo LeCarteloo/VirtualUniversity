@@ -13,10 +13,18 @@ import {
 const Payments = () => {
   return (
     <section className="payments-section">
+      <div className="finanse-info">
+        <div className="header">
+          <span>University information</span>
+          <FontAwesomeIcon icon={faAngleDown} size="lg" />
+        </div>
+        <div className="content">No bank accounts to display</div>
+      </div>
+
       <div className="accounts">
         <div className="header">
-          Your bank accounts
-          <div>
+          <span>Your bank accounts</span>
+          <div className="icon-group">
             <FontAwesomeIcon
               icon={faPlusCircle}
               size="lg"
@@ -34,7 +42,7 @@ const Payments = () => {
       <div className="charges">
         <div className="header">
           Your charges
-          <div>
+          <div className="icon-group">
             <FontAwesomeIcon
               icon={faInfoCircle}
               size="lg"

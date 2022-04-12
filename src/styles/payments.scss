@@ -1,4 +1,4 @@
-@use "global" as global;
+@use "./global" as global;
 
 .payments-section {
   display: flex;
@@ -7,7 +7,8 @@
 }
 
 .charges,
-.accounts {
+.accounts,
+.finanse-info {
   margin-bottom: 2em;
   width: 85%;
   box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.511);
@@ -15,11 +16,15 @@
   .header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     padding: 1em;
     background-color: global.$primary;
     font-size: 1.2em;
+    .icon-group {
+      display: flex;
+    }
   }
   .content {
     border-bottom-left-radius: 10px;
@@ -28,41 +33,47 @@
     background-color: global.$secondary;
     color: global.$font;
   }
+  @media (max-width: 756px) {
+    width: 90%;
+  }
 }
 
-//TODO: This code is duplicated so it will be later moved
 .pay-item,
 .account-item {
   background-color: global.$fourth;
   border-radius: 10px;
   margin-bottom: 1em;
+
+  //TODO: This code is duplicated so it will be later moved
   table {
     padding: 0.5em;
     width: 100%;
-    table-layout: fixed;
+    background-color: global.$fourth;
+    border-radius: 10px;
+    margin-bottom: 1em;
     th {
       color: global.$primary;
-      width: 33%;
+      text-align: center;
     }
     td {
       text-align: center;
     }
     @media (max-width: 756px) {
-      tbody,
+      table-layout: fixed;
+      tbody {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+      }
       tr {
-        display: table-cell;
-        height: auto;
+        display: flex;
+        flex-direction: column;
       }
-      th,
-      td {
+      td,
+      th {
         text-align: left;
-        width: auto;
         height: 100%;
-        display: block;
-        margin: 0.5em;
-      }
-      td {
-        margin-left: 1.5em;
+        padding: 0.3em;
       }
     }
   }

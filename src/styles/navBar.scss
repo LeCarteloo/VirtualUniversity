@@ -43,7 +43,8 @@
       cursor: pointer;
 
       // Not sure if this is even needed
-      &:hover {
+      &:hover,
+      &:focus-within {
         .hamburger-line {
           animation: blink 1s alternate;
 
@@ -120,7 +121,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      &:hover {
+      &:hover,
+      &:focus-within {
         background-color: global.$primary;
       }
       .logout-icon {

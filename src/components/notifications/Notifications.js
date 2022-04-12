@@ -11,12 +11,9 @@ const Notifications = ({ notifs }) => {
 
   return (
     <div className="notifications">
-      <FontAwesomeIcon
-        icon={faBell}
-        size="xl"
-        className="notif-icon"
-        onClick={() => setNotif(!notif)}
-      />
+      <button onClick={() => setNotif(!notif)}>
+        <FontAwesomeIcon icon={faBell} size="2xl" className="notif-icon" />
+      </button>
       <span className="notif-amount show">{notifs.length}</span>
       <div className={`notif-tooltip ${notif && "open"}`}>
         <div className="tooltip-header">Notifications</div>

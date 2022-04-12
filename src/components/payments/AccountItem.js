@@ -11,7 +11,7 @@ const AccountItem = () => {
           </tr>
           <tr>
             <td>Test I O. Warsaw</td>
-            <td>55 55555555554444</td>
+            <td>5544 5555 5555 5544</td>
             <td>USD</td>
             <td>
               <input type="checkbox" style={{ width: "15px" }} disabled />
