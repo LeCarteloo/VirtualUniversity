@@ -1,13 +1,7 @@
 @use "./global" as global;
 @use "./animation" as animation;
 
-.payments-section {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-}
-
-.payment-group {
+.table-group {
   position: relative;
   margin-bottom: 2em;
   width: 85%;
@@ -32,7 +26,7 @@
     .icon-group {
       display: flex;
     }
-    .payment-accor {
+    .group-accor {
       display: block;
       transition: 0.5s;
       transform: rotate(0);
@@ -52,7 +46,7 @@
     .header {
       border-bottom-left-radius: 0;
       border-bottom-right-radius: 0;
-      .payment-accor {
+      .group-accor {
         transform: rotate(540deg);
       }
     }

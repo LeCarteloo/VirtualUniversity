@@ -9,6 +9,7 @@ import Payments from "./payments/Payments";
 import Calendar from "./calendar/Calendar";
 import Notifications from "./notifications/Notifications";
 import Files from "./files/Files";
+import Groups from "./groups/Groups";
 
 const Home = () => {
   const notifs = [
@@ -46,6 +47,7 @@ const Home = () => {
           <Route path="payments" exact element={<Payments />} />
           <Route path="calendar" exact element={<Calendar />} />
           <Route path="files" exact element={<Files />} />
+          <Route path="groups" exact element={<Groups />} />
         </Routes>
       </section>
     </section>

@@ -1,4 +1,5 @@
 @use "./global";
+@use "./animation" as animation;
 
 .notifications {
   position: absolute;
@@ -94,6 +95,9 @@
       padding: 1em;
       display: flex;
       border-bottom: 1px solid global.$font;
+
+      @include animation.shine();
+
       cursor: pointer;
       .notification-text {
         margin-left: 1em;

@@ -1,18 +1,16 @@
-import Table from "../Table";
+import Table from "./Table";
+import "../styles/groupTable.scss";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDown, faAngleUp } from "@fortawesome/free-solid-svg-icons";
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
-const PaymentGroup = ({ title, icon, object }) => {
+const GroupTable = ({ title, icon, object }) => {
   const [collapse, setCollapse] = useState(false);
 
   return (
-    <div
-      className={`payment-group ${collapse && "open"}`}
-      onClick={() => setCollapse(!collapse)}
-    >
-      <div className="header">
+    <div className={`table-group ${collapse && "open"}`}>
+      <div className="header" onClick={() => setCollapse(!collapse)}>
         <span> {title} </span>
         <div className="icon-group">
           {icon && (
@@ -23,7 +21,7 @@ const PaymentGroup = ({ title, icon, object }) => {
             />
           )}
           <FontAwesomeIcon
-            className="payment-accor"
+            className="group-accor"
             icon={faAngleDown}
             size="lg"
           />
@@ -40,4 +38,4 @@ const PaymentGroup = ({ title, icon, object }) => {
   );
 };
 
-export default PaymentGroup;
+export default GroupTable;

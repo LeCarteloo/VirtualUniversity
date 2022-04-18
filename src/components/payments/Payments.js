@@ -1,5 +1,4 @@
-import "../../styles/payments.scss";
-import PaymentGroup from "./PaymentGroup";
+import GroupTable from "../GroupTable";
 
 import { faInfoCircle, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
@@ -26,14 +25,17 @@ const Payments = () => {
   };
 
   return (
-    <section className="payments-section">
-      <PaymentGroup title="University information" object={info} />
-      <PaymentGroup
+    <section
+      className="payments-section"
+      style={{ display: "flex", alignItems: "center", flexDirection: "column" }}
+    >
+      <GroupTable title="University information" object={info} />
+      <GroupTable
         title="Your bank accounts"
         icon={faPlusCircle}
         object={account}
       />
-      <PaymentGroup title="Your charges" icon={faInfoCircle} object={charges} />
+      <GroupTable title="Your charges" icon={faInfoCircle} object={charges} />
     </section>
   );
 };

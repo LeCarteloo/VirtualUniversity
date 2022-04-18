@@ -8,7 +8,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const File = ({ title, file }) => {
-  // Later after clicking on file download will begin
+  //TODO: Later after clicking on file download will begin
+
+  // Choosing the right icon for file extension
   let icon;
   switch (file.split(".").pop()) {
     case "pdf":

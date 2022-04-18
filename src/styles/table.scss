@@ -1,5 +1,6 @@
 @use "./global" as global;
 table {
+  table-layout: fixed;
   padding: 0.5em;
   width: 100%;
   background-color: global.$fourth;
@@ -13,7 +14,6 @@ table {
     text-align: center;
   }
   @media (max-width: 756px) {
-    table-layout: fixed;
     tbody {
       display: flex;
       flex-direction: row;
