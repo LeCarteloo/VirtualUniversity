@@ -4,6 +4,7 @@ import { useState } from "react";
 import { faBookBookmark } from "@fortawesome/free-solid-svg-icons";
 
 import "../styles/subject.scss";
+import Table from "./Table";
 
 const Subject = ({ icon, title, type, grades }) => {
   const [subjectItem, setSubjectItem] = useState(false);
@@ -29,24 +30,24 @@ const Subject = ({ icon, title, type, grades }) => {
           />
         </div>
         <div className="subject-grades">
-          <table>
-            <tbody>
-              <tr>
-                <th>First term</th>
-                <th>Second term</th>
-                <th>Conditional</th>
-                <th>Promotion</th>
-                <th>Committee</th>
-              </tr>
-              <tr>
-                <td> {grades.first} </td>
-                <td> {grades.second} </td>
-                <td> {grades.cond} </td>
-                <td> {grades.promo} </td>
-                <td> {grades.comit} </td>
-              </tr>
-            </tbody>
-          </table>
+          <Table
+            headers={[
+              "First term",
+              "Second term",
+              "Conditional",
+              "Promotion",
+              "Committee",
+            ]}
+            rows={[
+              grades.first,
+              grades.second,
+              grades.cond,
+              grades.promo,
+              grades.comit,
+            ]}
+            bg="transparent"
+            padd={"0"}
+          />
         </div>
       </div>
     </div>

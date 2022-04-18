@@ -1,6 +1,7 @@
 // Hover animation
 @mixin shine($opacity: 0.1) {
   position: relative;
+  overflow: hidden;
 
   &::after {
     content: "";

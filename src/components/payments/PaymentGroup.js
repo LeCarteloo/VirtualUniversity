@@ -31,8 +31,8 @@ const PaymentGroup = ({ title, icon, object }) => {
       </div>
       <div className="content">
         {object.rows.length > 0
-          ? object.rows.map((row) => (
-              <Table headers={object.headers} rows={row} />
+          ? object.rows.map((row, i) => (
+              <Table key={i} headers={object.headers} rows={row} />
             ))
           : "No data to display"}
       </div>

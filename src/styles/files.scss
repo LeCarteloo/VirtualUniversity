@@ -20,7 +20,7 @@
   cursor: pointer;
 
   // Hover animation
-  // @include animation.shine();
+  @include animation.shine();
 
   .file-wrapper {
     height: calc(100% - 2em);
