@@ -1,0 +1,17 @@
+.student-section {
+  display: flex;
+}
+
+.left-column,
+.right-column {
+  display: flex;
+}
+
+.left-column {
+  flex-direction: column;
+  align-items: center;
+}
+
+.right-column {
+  justify-content: center;
+}

@@ -47,6 +47,7 @@ const NavBar = () => {
       name: "Your studies",
       icon: faGraduationCap,
       subLinks: [
+        { name: "Student data", path: "student" },
         { name: "Course of study", path: "course" },
         { name: "Insurance", path: "insurance" },
         { name: "Optional subjects", path: "optional_subjects" },
