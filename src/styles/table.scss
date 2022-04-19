@@ -1,50 +1,100 @@
 @use "./global" as global;
-table {
-  table-layout: fixed;
-  padding: 0.5em;
-  width: 100%;
+.table {
+  display: flex;
   background-color: global.$fourth;
   border-radius: 10px;
   margin-bottom: 1em;
-  th {
+  padding: 0.5em;
+
+  .row {
+    height: 100%;
+  }
+
+  .row-header,
+  .row-content {
+    padding: 0.3em;
+  }
+
+  .row-header {
     color: global.$primary;
-    text-align: center;
-  }
-  td {
-    text-align: center;
+    font-weight: bold;
   }
 
-  &.vertical {
-    tbody {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
+  .row-content {
+    height: 100%;
+  }
+
+  .column {
+    width: 100%;
+  }
+
+  &.horizontal {
+    .column {
+      text-align: center;
+      .row {
+        display: flex;
+        flex-direction: column;
+        .row-content {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
     }
-    tr {
-      display: flex;
+
+    // Horizontal table mobile view
+    @media (max-width: 756px) {
       flex-direction: column;
+      .column {
+        text-align: left;
+        .row {
+          flex-direction: row;
+          justify-content: space-between;
+          .row-content {
+            text-align: right;
+          }
+        }
+      }
     }
-    td,
-    th {
-      text-align: left;
-      padding: 0.3em;
+
+    // Other idea for now unused
+    // @media (max-width: 756px) {
+    //   flex-direction: column;
+    //   .column {
+    //     text-align: left;
+    //     .row {
+    //       .row-content {
+    //         display: block;
+    //         text-align: left;
+    //       }
+    //     }
+    //   }
+    // }
+  }
+
+  &.vertical-tb {
+    flex-direction: column;
+    .column {
+      .row {
+        display: flex;
+        flex-direction: column;
+        .row-content {
+          text-align: left;
+        }
+      }
     }
   }
 
-  @media (max-width: 756px) {
-    tbody {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-between;
-    }
-    tr {
-      display: flex;
-      flex-direction: column;
-    }
-    td,
-    th {
-      text-align: left;
-      padding: 0.3em;
+  &.vertical-rl {
+    flex-direction: column;
+    .column {
+      .row {
+        display: flex;
+        justify-content: space-between;
+        .row-content {
+          text-align: right;
+        }
+      }
     }
   }
 }

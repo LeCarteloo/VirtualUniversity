@@ -1,26 +1,27 @@
 import "../styles/table.scss";
 
 const Table = ({ headers, rows, bg, padd, orientation }) => {
+  // orientation = "vertical-rl";
   return (
-    <table className={orientation} style={{ backgroundColor: bg }}>
-      <tbody>
-        <tr>
-          {headers.map((header, i) => (
-            <th key={i} style={{ padding: padd }}>
+    <div className={`table ${orientation}`} style={{ backgroundColor: bg }}>
+      {headers.map((header, i) => (
+        <div key={i} className="column">
+          <div className="row">
+            <span className="row-header" style={{ padding: padd }}>
               {header}
-            </th>
-          ))}
-        </tr>
-        <tr>
-          {rows.map((row, i) => (
-            <td key={i} style={{ padding: padd }}>
-              {row}
-            </td>
-          ))}
-        </tr>
-      </tbody>
-    </table>
+            </span>
+            <span className="row-content" style={{ padding: padd }}>
+              {rows[i]}
+            </span>
+          </div>
+        </div>
+      ))}
+    </div>
   );
+};
+
+Table.defaultProps = {
+  orientation: "horizontal",
 };
 
 export default Table;

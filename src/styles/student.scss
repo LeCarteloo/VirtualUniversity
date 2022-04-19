@@ -1,5 +1,8 @@
 .student-section {
   display: flex;
+  @media (max-width: 756px) {
+    display: block;
+  }
 }
 
 .left-column,

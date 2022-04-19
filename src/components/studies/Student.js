@@ -32,16 +32,18 @@ const Student = () => {
       "Rok studiów",
       "Semestr",
       "Kierunek Studiów",
-      "Średnia za semestr",
-      "Średnia za rok",
-      "Średnia za studia",
       "Kolegium",
       "Rodzaj studiów",
       "Typ studiów",
       "Profil kształcenia",
       "Status kierunku",
     ],
-    rows: [["-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-", "-"]],
+    rows: [["-", "-", "-", "-", "-", "-", "-", "-", "-", "-"]],
+  };
+
+  const data11 = {
+    headers: ["Za semestr", "Za rok", "Za studia", "Za poprzedni semestr"],
+    rows: [["-", "-", "-", "-"]],
   };
 
   return (
@@ -53,7 +55,12 @@ const Student = () => {
           isCollapsed={false}
           tabOrient={"vertical"}
         />
-        <GroupTable title={"Student Data"} object={data} isCollapsed={false} />
+        <GroupTable
+          title={"Average Data"}
+          object={data11}
+          isCollapsed={false}
+          tabOrient={"vertical"}
+        />
       </div>
       <div className="right-column">
         <GroupTable

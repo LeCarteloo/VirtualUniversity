@@ -46,7 +46,7 @@ const Subject = ({ icon, title, type, grades }) => {
               grades.comit,
             ]}
             bg="transparent"
-            padd={"0"}
+            padd={"0.3em 0.3em 0.3em 0"}
           />
         </div>
       </div>
