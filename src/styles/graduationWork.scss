@@ -1,0 +1,14 @@
+.graduation-section {
+  display: flex;
+  justify-content: center;
+}
+
+.graduation-grid {
+  width: 92%;
+  display: grid;
+  justify-items: center;
+  grid-template-columns: 1fr 1fr;
+  @media (max-width: 756px) {
+    grid-template-columns: 1fr;
+  }
+}

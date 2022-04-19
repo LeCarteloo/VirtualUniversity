@@ -77,12 +77,30 @@
       font-size: 1.4em;
     }
 
-    .tooltip-content {
+    .tooltip-wrapper {
       height: 80%;
+      position: relative;
+
+      &::after {
+        content: "";
+        height: 100%;
+        width: 100%;
+        border-radius: 5px;
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        pointer-events: none;
+        box-shadow: inset 0 -20px 20px -10px global.$secondary;
+      }
+    }
+
+    .tooltip-content {
+      height: 100%;
       background-color: global.$fourth;
       border-bottom-left-radius: 10px;
       border-bottom-right-radius: 10px;
       overflow: auto;
+
       // Hidding scrollbar
       -ms-overflow-style: none; /* IE and Edge */
       scrollbar-width: none; /* Firefox */

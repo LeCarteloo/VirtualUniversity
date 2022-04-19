@@ -1,8 +1,8 @@
 import "../styles/table.scss";
 
-const Table = ({ headers, rows, bg, padd }) => {
+const Table = ({ headers, rows, bg, padd, orientation }) => {
   return (
-    <table style={{ backgroundColor: bg }}>
+    <table className={orientation} style={{ backgroundColor: bg }}>
       <tbody>
         <tr>
           {headers.map((header, i) => (

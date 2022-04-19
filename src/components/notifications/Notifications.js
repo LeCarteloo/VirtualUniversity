@@ -17,10 +17,12 @@ const Notifications = ({ notifs }) => {
       <span className="notif-amount show">{notifs.length}</span>
       <div className={`notif-tooltip ${notif && "open"}`}>
         <div className="tooltip-header">Notifications</div>
-        <div className="tooltip-content">
-          {notifs.map((notif) => (
-            <NotificationItem key={notif.id} {...notif} />
-          ))}
+        <div className="tooltip-wrapper">
+          <div className="tooltip-content">
+            {notifs.map((notif) => (
+              <NotificationItem key={notif.id} {...notif} />
+            ))}
+          </div>
         </div>
       </div>
     </div>

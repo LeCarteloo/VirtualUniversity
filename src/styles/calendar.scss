@@ -1,5 +1,5 @@
-@use "./global";
-
+@use "./global" as global;
+@use "./animation" as animation;
 .calendar-section {
   width: 100%;
   height: 100%;

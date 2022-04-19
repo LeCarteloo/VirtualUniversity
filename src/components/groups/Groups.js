@@ -1,7 +1,7 @@
 import GroupTable from "../GroupTable";
 
 const Groups = () => {
-  const charges = {
+  const groups = {
     headers: ["Group name", "Type", "University teacher"],
     rows: [
       ["Group A", "Exercises", "prof. John Doe"],
@@ -18,7 +18,7 @@ const Groups = () => {
       className="groups-section"
       style={{ display: "flex", justifyContent: "center" }}
     >
-      <GroupTable title={"Groups"} object={charges} />
+      <GroupTable title={"Groups"} object={groups} />
     </section>
   );
 };
