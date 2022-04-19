@@ -10,19 +10,11 @@ const Student = () => {
       "Place of birth",
       "Identity card",
       "Telephone number",
-      "Email",
+      <span>
+        Email <FontAwesomeIcon icon={faPenToSquare} />
+      </span>,
     ],
-    rows: [
-      [
-        "-",
-        "-",
-        "-",
-        "-",
-        <p>
-          test@gmail.com <FontAwesomeIcon icon={faPenToSquare} />
-        </p>,
-      ],
-    ],
+    rows: [["-", "-", "-", "-", "test@gmail.com"]],
   };
 
   const data1 = {
@@ -50,16 +42,16 @@ const Student = () => {
     <section className="student-section">
       <div className="left-column">
         <GroupTable
-          title={"Student Data"}
+          title={"Student data"}
           object={data}
           isCollapsed={false}
-          tabOrient={"vertical"}
+          tabOrient={"vertical-rl"}
         />
         <GroupTable
-          title={"Average Data"}
+          title={"Grades average data"}
           object={data11}
           isCollapsed={false}
-          tabOrient={"vertical"}
+          tabOrient={"vertical-rl"}
         />
       </div>
       <div className="right-column">
@@ -67,7 +59,7 @@ const Student = () => {
           title={"Course data"}
           object={data1}
           isCollapsed={false}
-          tabOrient={"vertical"}
+          tabOrient={"vertical-tb"}
         />
       </div>
     </section>

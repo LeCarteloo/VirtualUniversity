@@ -33,7 +33,7 @@ const GroupTable = ({ title, icon, object, isCollapsed, tabOrient }) => {
                 key={i}
                 headers={object.headers}
                 rows={row}
-                orientation={tabOrient}
+                orient={tabOrient}
               />
             ))
           : "No data to display"}

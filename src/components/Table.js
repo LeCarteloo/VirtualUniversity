@@ -1,9 +1,9 @@
 import "../styles/table.scss";
 
-const Table = ({ headers, rows, bg, padd, orientation }) => {
+const Table = ({ headers, rows, bg, padd, orient, mOrient }) => {
   // orientation = "vertical-rl";
   return (
-    <div className={`table ${orientation}`} style={{ backgroundColor: bg }}>
+    <div className={`table ${orient}`} style={{ backgroundColor: bg }}>
       {headers.map((header, i) => (
         <div key={i} className="column">
           <div className="row">
@@ -21,7 +21,7 @@ const Table = ({ headers, rows, bg, padd, orientation }) => {
 };
 
 Table.defaultProps = {
-  orientation: "horizontal",
+  orient: "horizontal",
 };
 
 export default Table;

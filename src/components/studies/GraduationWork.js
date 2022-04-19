@@ -46,25 +46,25 @@ const GraduationWork = () => {
           title={"Data on the diploma"}
           object={data}
           isCollapsed={false}
-          tabOrient={"vertical"}
+          tabOrient={"vertical-rl"}
         />
         <GroupTable
           title={"Board of Examiners"}
           object={board}
           isCollapsed={false}
-          tabOrient={"vertical"}
+          tabOrient={"vertical-rl"}
         />
         <GroupTable
           title={"Thesis defence"}
           object={thesis}
           isCollapsed={false}
-          tabOrient={"vertical"}
+          tabOrient={"vertical-rl"}
         />
         <GroupTable
           title={"Grades"}
           object={grade}
           isCollapsed={false}
-          tabOrient={"vertical"}
+          tabOrient={"vertical-rl"}
         />
       </div>
     </section>
