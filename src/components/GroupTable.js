@@ -4,6 +4,7 @@ import "../styles/groupTable.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import Modal from "./Modal";
 
 const GroupTable = ({ title, icon, object, isCollapsed, tabOrient }) => {
   const [collapse, setCollapse] = useState(isCollapsed);
@@ -13,11 +14,13 @@ const GroupTable = ({ title, icon, object, isCollapsed, tabOrient }) => {
         <span> {title} </span>
         <div className="icon-group">
           {icon && (
-            <FontAwesomeIcon
-              style={{ marginRight: "0.5em" }}
-              icon={icon}
-              size="lg"
-            />
+            <button className="special-btn">
+              <FontAwesomeIcon
+                style={{ marginRight: "0.5em" }}
+                icon={icon}
+                size="xl"
+              />
+            </button>
           )}
           <FontAwesomeIcon
             className="group-accor"

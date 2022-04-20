@@ -2,7 +2,6 @@
 @use "./animation" as animation;
 
 .table-group {
-  position: relative;
   margin-bottom: 2em;
   width: 85%;
   border-radius: 10px;
@@ -24,6 +23,19 @@
 
     .icon-group {
       display: flex;
+    }
+    .special-btn {
+      position: relative;
+      color: global.$font;
+      z-index: 5;
+      transition: transform 0.1s ease-in;
+      cursor: pointer;
+      &:hover {
+        transform: scale(1.2);
+      }
+      &:active {
+        opacity: 0.7;
+      }
     }
     .group-accor {
       display: block;

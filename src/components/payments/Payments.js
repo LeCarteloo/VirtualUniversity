@@ -1,6 +1,6 @@
 import GroupTable from "../GroupTable";
 
-import { faInfoCircle, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+import { faFilter, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
 const Payments = () => {
   const info = {
@@ -35,7 +35,7 @@ const Payments = () => {
         icon={faPlusCircle}
         object={account}
       />
-      <GroupTable title="Your charges" icon={faInfoCircle} object={charges} />
+      <GroupTable title="Your charges" icon={faFilter} object={charges} />
     </section>
   );
 };
