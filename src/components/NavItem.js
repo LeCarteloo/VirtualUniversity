@@ -56,7 +56,7 @@ const NavItem = ({ icon, name, nav, path, subLinks, onClose }) => {
                 onClick={onClose}
               >
                 <FontAwesomeIcon
-                  icon={icon}
+                  icon={subLink.icon}
                   size="xl"
                   className="nav-icon sub-icon"
                 />
