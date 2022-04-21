@@ -6,18 +6,25 @@ import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import Modal from "./Modal";
 
-const GroupTable = ({ title, icon, object, isCollapsed, tabOrient }) => {
+const GroupTable = ({
+  title,
+  actionIcon,
+  onAction,
+  object,
+  isCollapsed,
+  tabOrient,
+}) => {
   const [collapse, setCollapse] = useState(isCollapsed);
   return (
     <div className={`table-group ${!collapse && "open"}`}>
       <div className="header" onClick={() => setCollapse(!collapse)}>
         <span> {title} </span>
         <div className="icon-group">
-          {icon && (
-            <button className="special-btn">
+          {actionIcon && (
+            <button className="action-btn" onClick={onAction}>
               <FontAwesomeIcon
                 style={{ marginRight: "0.5em" }}
-                icon={icon}
+                icon={actionIcon}
                 size="xl"
               />
             </button>
