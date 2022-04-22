@@ -5,7 +5,7 @@ import { faFilter, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 
 const Payments = () => {
-  const [showModal, setShowModal] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   const info = {
     headers: ["Album", "Name of bank", "Account number"],
@@ -33,7 +33,11 @@ const Payments = () => {
       className="payments-section"
       style={{ display: "flex", alignItems: "center", flexDirection: "column" }}
     >
-      <Modal show={showModal} onClose={() => setShowModal(!showModal)}>
+      <Modal
+        title={"Add bank account"}
+        show={showModal}
+        onClose={() => setShowModal(!showModal)}
+      >
         <p>TEST</p>
       </Modal>
       <GroupTable title="University information" object={info} />

@@ -1,30 +1,54 @@
 @use "./global" as global;
 
-label {
-  display: block;
-  margin: 0.5em 0 0.5em 0;
-  font-size: 20px;
-}
+.input-container {
+  .input {
+    position: relative;
+    margin: 1.2em 0 1em 0;
+    input {
+      outline: none;
+      border: none;
+      width: 250px;
+      height: 1.5em;
+      font-size: 1em;
+      padding: 0.7em;
+      background-color: global.$secondary;
+      color: global.$font;
 
-input {
-  background-color: global.$secondary;
-  border: none;
-  padding: 12px;
-  border-radius: 15px;
-  outline: none;
-  color: global.$font;
-  font-size: 16px;
-  width: 250px;
-  transition: ease 0.5s;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      border-bottom: 1.5px solid global.$font;
+    }
+    label {
+      position: absolute;
+      top: 25%;
+      left: 5%;
+      font-size: 1.2em;
+      transition: ease-in-out 0.3s;
+      pointer-events: none;
+    }
 
-  &.error {
-    box-shadow: inset 0px 0px 0px 2px global.$error;
-    transition: ease 0.2s;
+    input:focus {
+      border-color: global.$primary;
+    }
+
+    input:focus ~ label,
+    input:not(:placeholder-shown) ~ label {
+      color: global.$primary;
+      top: -20%;
+      left: 1%;
+      transform: scale(0.85);
+    }
+
+    input.error {
+      border-color: global.$error;
+    }
+    input.error ~ label {
+      color: global.$error;
+    }
   }
-}
-
-.display-error {
-  color: global.$error;
-  margin-top: 0.25em;
-  transition: 0.5s;
+  .display-error {
+    color: global.$error;
+    margin-top: 0.25em;
+    transition: 0.5s;
+  }
 }
