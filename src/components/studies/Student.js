@@ -1,18 +1,22 @@
 import GroupTable from "../GroupTable";
 import "../../styles/student.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
+
+import Modal from "../Modal";
+import Button from "../Button";
+import TextInput from "../TextInput";
 
 const Student = () => {
+  const [showModal, setShowModal] = useState(false);
+
   const data = {
     headers: [
       "Album number",
       "Place of birth",
       "Identity card",
       "Telephone number",
-      <span>
-        Email <FontAwesomeIcon icon={faPenToSquare} />
-      </span>,
+      "Email",
     ],
     rows: [["-", "-", "-", "-", "test@gmail.com"]],
   };
@@ -40,12 +44,30 @@ const Student = () => {
 
   return (
     <section className="student-section">
+      <Modal
+        title={"Add bank account"}
+        show={showModal}
+        onClose={() => setShowModal(!showModal)}
+        footer={"* Bank will be checked in 48h"}
+      >
+        <form>
+          {/* onClick={(e) => e.preventDefault()} */}
+          <TextInput label={"Email"} />
+          <TextInput label={"Telephone number"} />
+          <Button text={"Change data"} />
+        </form>
+      </Modal>
       <div className="left-column">
         <GroupTable
           title={"Student data"}
           object={data}
           isCollapsed={false}
           tabOrient={"vertical-rl"}
+          actionIcon={faPenToSquare}
+          onAction={(e) => {
+            e.stopPropagation();
+            setShowModal(!showModal);
+          }}
         />
         <GroupTable
           title={"Grades average data"}

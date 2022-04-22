@@ -3,6 +3,8 @@ import Modal from "../Modal";
 
 import { faFilter, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import TextInput from "../TextInput";
+import Button from "../Button";
 
 const Payments = () => {
   const [showModal, setShowModal] = useState(false);
@@ -37,8 +39,14 @@ const Payments = () => {
         title={"Add bank account"}
         show={showModal}
         onClose={() => setShowModal(!showModal)}
+        footer={"* Bank will be checked in 48h"}
       >
-        <p>TEST</p>
+        <form>
+          <TextInput label={"Account number"} />
+          <TextInput label={"Bank name"} />
+          <TextInput label={"Currency"} />
+          <Button text={"Add bank"} />
+        </form>
       </Modal>
       <GroupTable title="University information" object={info} />
       <GroupTable
