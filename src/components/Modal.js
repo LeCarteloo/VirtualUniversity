@@ -19,7 +19,7 @@ const Modal = ({ title, footer, show, children, onClose }) => {
           </button>
         </div>
         <div className="modal-body">{children}</div>
-        <div className="modal-footer">{footer}</div>
+        {footer && <div className="modal-footer">{footer}</div>}
       </div>
     </div>,
     document.getElementById("root")

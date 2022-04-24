@@ -11,6 +11,7 @@ import Notifications from "./notifications/Notifications";
 import Files from "./files/Files";
 import Groups from "./groups/Groups";
 import GraduationWork from "./studies/GraduationWork";
+import Syllabus from "./studies/Syllabus";
 import Student from "./studies/Student";
 
 const Home = () => {
@@ -49,6 +50,7 @@ const Home = () => {
           {/* Your studies */}
           <Route path="student" exact element={<Student />} />
           <Route path="graduation_work" exact element={<GraduationWork />} />
+          <Route path="syllabus" exact element={<Syllabus />} />
           {/* Your studies */}
           <Route path="payments" exact element={<Payments />} />
           <Route path="calendar" exact element={<Calendar />} />

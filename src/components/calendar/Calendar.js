@@ -5,6 +5,7 @@ import {
   faAngleLeft,
   faAngleRight,
   faCalendarDay,
+  faFileDownload,
 } from "@fortawesome/free-solid-svg-icons";
 
 import CalendarDay from "./CalendarDay";
@@ -85,7 +86,7 @@ const Calendar = () => {
           <button
             onClick={() => {
               /* If the weekday is monday (1) or saturday (0) 
-            then button change the whole week to omit weekend */
+            then button changes the whole week to omit weekend */
               const prevWeek = changeWeek.getDay() <= 1 ? 7 : week;
               setChangeWeek(
                 new Date(changeWeek.setDate(changeWeek.getDate() - prevWeek))
@@ -97,7 +98,7 @@ const Calendar = () => {
           <button
             onClick={() => {
               /* If the weekday is friday (1) or greater
-            then button change the date by 3 to omit weekend */
+            then button changes the date by 3 to omit weekend */
               const nextWeek = changeWeek.getDay() >= 5 ? 3 : week;
               setChangeWeek(
                 new Date(changeWeek.setDate(changeWeek.getDate() + nextWeek))
@@ -113,6 +114,14 @@ const Calendar = () => {
                   currentWeek[currentWeek.length - 1].month
                 }`}
           </span>
+          <button style={{ float: "right" }}>
+            Download
+            <FontAwesomeIcon
+              icon={faFileDownload}
+              size={"xl"}
+              className="icn"
+            />
+          </button>
         </div>
         <div className="calendar-header">
           <div className="calendar-corner"></div>

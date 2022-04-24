@@ -6,6 +6,7 @@
   width: 85%;
   border-radius: 10px;
   overflow: hidden;
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.511);
 
   .header {
     display: flex;
@@ -47,7 +48,6 @@
   .content {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.511);
     background-color: global.$secondary;
     color: global.$font;
     padding: 0em 1em 0em 1em;

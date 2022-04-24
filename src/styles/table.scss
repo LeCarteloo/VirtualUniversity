@@ -5,10 +5,8 @@
   border-radius: 10px;
   margin-bottom: 1em;
   padding: 0.5em;
-
-  .row {
-    height: 100%;
-  }
+  width: calc(100% - 1em);
+  justify-content: space-around;
 
   .row-header,
   .row-content {
@@ -20,12 +18,13 @@
     font-weight: bold;
   }
 
+  .row,
   .row-content {
     height: 100%;
   }
 
   .column {
-    width: 100%;
+    // width: 100%;
   }
 
   &.horizontal {

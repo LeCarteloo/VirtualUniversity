@@ -16,7 +16,7 @@ import {
   faIdCard,
   faListCheck,
   faBook,
-  faUserGraduate,
+  faTimeline,
   faBriefcaseMedical,
   faMoneyCheckDollar,
   fa5,
@@ -52,7 +52,7 @@ const NavBar = () => {
       icon: faGraduationCap,
       subLinks: [
         { name: "Student data", path: "student", icon: faIdCard },
-        { name: "Course of study", path: "course", icon: faUserGraduate },
+        { name: "Syllabus", path: "syllabus", icon: faTimeline },
         { name: "Insurance", path: "insurance", icon: faBriefcaseMedical },
         {
           name: "Optional subjects",

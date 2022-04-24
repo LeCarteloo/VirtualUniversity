@@ -45,10 +45,9 @@ const Student = () => {
   return (
     <section className="student-section">
       <Modal
-        title={"Add bank account"}
+        title={"Change your data"}
         show={showModal}
         onClose={() => setShowModal(!showModal)}
-        footer={"* Bank will be checked in 48h"}
       >
         <form>
           {/* onClick={(e) => e.preventDefault()} */}
