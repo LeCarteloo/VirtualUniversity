@@ -1,10 +1,17 @@
 import "../../styles/graduationWork.scss";
 import GroupTable from "../GroupTable";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
+import TextInput from "../TextInput";
+import Button from "../Button";
+import Modal from "../Modal";
 
 const GraduationWork = () => {
+  const [showModal, setShowModal] = useState(false);
+
   const data = {
-    headers: ["Title", "Status", "Obtained degree"],
-    rows: [["-", "-", "-"]],
+    headers: ["Status", "Obtained degree"],
+    rows: [["-", "-"]],
   };
 
   const thesis = {
@@ -39,11 +46,40 @@ const GraduationWork = () => {
     rows: [["-", "-", "-", "-", "-", "-"]],
   };
 
+  const add = {
+    headers: ["Title", "Language", "Synopsis", "Keywords"],
+    rows: [["-", "-", "-", "-"]],
+  };
+
   return (
     <section className="graduation-section">
+      <Modal
+        title={"Add diploma information"}
+        show={showModal}
+        onClose={() => setShowModal(!showModal)}
+      >
+        <form>
+          <TextInput label={"Title"} />
+          <TextInput label={"Language"} />
+          <TextInput label={"Synopsis"} />
+          <TextInput label={"Keywords"} />
+          <Button text={"Add information"} />
+        </form>
+      </Modal>
+      <GroupTable
+        title={"Diploma information"}
+        object={add}
+        actionIcon={faEdit}
+        onAction={(e) => {
+          e.stopPropagation();
+          setShowModal(!showModal);
+        }}
+        isCollapsed={false}
+        tabOrient={"vertical-tb"}
+      />
       <div className="graduation-grid">
         <GroupTable
-          title={"Data on the diploma"}
+          title={"Status of the diploma"}
           object={data}
           isCollapsed={false}
           tabOrient={"vertical-tb"}
@@ -64,7 +100,7 @@ const GraduationWork = () => {
           title={"Grades"}
           object={grade}
           isCollapsed={false}
-          tabOrient={"vertical-tb"}
+          tabOrient={"vertical-rl"}
         />
       </div>
     </section>
