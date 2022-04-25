@@ -55,8 +55,8 @@ const NavBar = () => {
         { name: "Syllabus", path: "syllabus", icon: faTimeline },
         { name: "Insurance", path: "insurance", icon: faBriefcaseMedical },
         {
-          name: "Optional subjects",
-          path: "optional_subjects",
+          name: "Choices",
+          path: "choices",
           icon: faListCheck,
         },
         { name: "Graduation work", path: "graduation_work", icon: faBook },

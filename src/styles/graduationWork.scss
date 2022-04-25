@@ -6,12 +6,16 @@
 
 .graduation-grid {
   width: 92%;
-  display: grid;
-  justify-items: center;
-  grid-template-columns: 1fr 1fr;
-  @media (max-width: 756px) {
-    width: 100%;
+  display: flex;
 
-    grid-template-columns: 1fr;
+  .grid-right,
+  .grid-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  @media (max-width: 756px) {
   }
 }

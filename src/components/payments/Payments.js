@@ -39,7 +39,7 @@ const Payments = () => {
         title={"Add bank account"}
         show={showModal}
         onClose={() => setShowModal(!showModal)}
-        footer={"* Bank will be checked in 48h"}
+        footer={"*Bank account will be checked in two working days"}
       >
         <form>
           <TextInput label={"Account number"} />

@@ -10,8 +10,8 @@ const GraduationWork = () => {
   const [showModal, setShowModal] = useState(false);
 
   const data = {
-    headers: ["Status", "Obtained degree"],
-    rows: [["-", "-"]],
+    headers: ["Status", "Obtained degree", "Plagiarism status", "Similarity"],
+    rows: [["-", "-", "-", "-"]],
   };
 
   const thesis = {
@@ -61,7 +61,12 @@ const GraduationWork = () => {
         <form>
           <TextInput label={"Title"} />
           <TextInput label={"Language"} />
-          <TextInput label={"Synopsis"} />
+          <div className="input-container">
+            <div className="input">
+              <textarea placeholder=" " cols="30" rows="10"></textarea>
+              <label>Synopsis</label>
+            </div>
+          </div>
           <TextInput label={"Keywords"} />
           <Button text={"Add information"} />
         </form>
@@ -78,30 +83,30 @@ const GraduationWork = () => {
         tabOrient={"vertical-tb"}
       />
       <div className="graduation-grid">
-        <GroupTable
-          title={"Status of the diploma"}
-          object={data}
-          isCollapsed={false}
-          tabOrient={"vertical-tb"}
-        />
-        <GroupTable
-          title={"Board of Examiners"}
-          object={board}
-          isCollapsed={false}
-          tabOrient={"vertical-tb"}
-        />
-        <GroupTable
-          title={"Thesis defence"}
-          object={thesis}
-          isCollapsed={false}
-          tabOrient={"vertical-tb"}
-        />
-        <GroupTable
-          title={"Grades"}
-          object={grade}
-          isCollapsed={false}
-          tabOrient={"vertical-rl"}
-        />
+        <div className="grid-left">
+          <GroupTable
+            title={"Status of the diploma"}
+            object={data}
+            tabOrient={"vertical-tb"}
+          />
+          <GroupTable
+            title={"Thesis defence"}
+            object={thesis}
+            tabOrient={"vertical-tb"}
+          />
+        </div>
+        <div className="grid-right">
+          <GroupTable
+            title={"Board of Examiners"}
+            object={board}
+            tabOrient={"vertical-tb"}
+          />
+          <GroupTable
+            title={"Grades"}
+            object={grade}
+            tabOrient={"vertical-rl"}
+          />
+        </div>
       </div>
     </section>
   );

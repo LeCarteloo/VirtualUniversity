@@ -13,6 +13,7 @@ import Groups from "./groups/Groups";
 import GraduationWork from "./studies/GraduationWork";
 import Syllabus from "./studies/Syllabus";
 import Student from "./studies/Student";
+import Choices from "./studies/Choices";
 
 const Home = () => {
   const notifs = [
@@ -51,6 +52,7 @@ const Home = () => {
           <Route path="student" exact element={<Student />} />
           <Route path="graduation_work" exact element={<GraduationWork />} />
           <Route path="syllabus" exact element={<Syllabus />} />
+          <Route path="choices" exact element={<Choices />} />
           {/* Your studies */}
           <Route path="payments" exact element={<Payments />} />
           <Route path="calendar" exact element={<Calendar />} />

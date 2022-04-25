@@ -4,19 +4,25 @@
   .input {
     position: relative;
     margin: 1.5em 0 1em 0;
-    input {
+    input,
+    textarea {
       outline: none;
       border: none;
-      width: 95%;
+      width: 100%;
       height: 1.5em;
       font-size: 1em;
       padding: 0.7em;
-      background-color: global.$secondary;
+      background-color: global.$fourth;
       color: global.$font;
 
       border-top-left-radius: 10px;
       border-top-right-radius: 10px;
       border-bottom: 1.5px solid global.$font;
+    }
+    textarea {
+      height: 9em;
+      // font-size: 1.2em;
+      font-family: "Roboto", sans-serif;
     }
     label {
       position: absolute;
@@ -27,7 +33,8 @@
       pointer-events: none;
     }
 
-    input:focus {
+    input:focus,
+    textarea:focus {
       border-color: global.$primary;
     }
 
@@ -35,6 +42,14 @@
     input:not(:placeholder-shown) ~ label {
       color: global.$primary;
       top: -20%;
+      left: 1%;
+      transform: scale(0.85);
+    }
+
+    textarea:focus ~ label,
+    textarea:not(:placeholder-shown) ~ label {
+      color: global.$primary;
+      top: -6%;
       left: 1%;
       transform: scale(0.85);
     }
