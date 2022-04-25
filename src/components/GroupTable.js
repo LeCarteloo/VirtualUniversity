@@ -12,6 +12,7 @@ const GroupTable = ({
   object,
   isCollapsed,
   tabOrient,
+  children,
 }) => {
   const [collapse, setCollapse] = useState(isCollapsed);
   return (
@@ -36,16 +37,17 @@ const GroupTable = ({
         </div>
       </div>
       <div className="content">
-        {object.rows.length > 0
-          ? object.rows.map((row, i) => (
-              <Table
-                key={i}
-                headers={object.headers}
-                rows={row}
-                orient={tabOrient}
-              />
-            ))
-          : "No data to display"}
+        {object &&
+          object.rows.length > 0 &&
+          object.rows.map((row, i) => (
+            <Table
+              key={i}
+              headers={object.headers}
+              rows={row}
+              orient={tabOrient}
+            />
+          ))}
+        {!children && !object ? "No data to display" : children}
       </div>
     </div>
   );

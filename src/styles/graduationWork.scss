@@ -17,5 +17,7 @@
   }
 
   @media (max-width: 756px) {
+    flex-direction: column;
+    width: 100%;
   }
 }
