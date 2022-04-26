@@ -32,7 +32,7 @@ const ChoiceItem = ({ title, choices }) => {
             style={{ display: "flex", justifyContent: "space-between" }}
           >
             <label htmlFor={option.id}>{option.name}</label>
-            <span>prof. John Doe</span>
+            <span>{option.person}</span>
             <input
               type="checkbox"
               id={option.id}
