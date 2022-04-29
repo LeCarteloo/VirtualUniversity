@@ -24,6 +24,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import Language from "./Language";
 
 const NavBar = () => {
   const [nav, setNav] = useState(false);
@@ -111,6 +112,7 @@ const NavBar = () => {
           ))}
         </ul>
         <div className="user-info">
+          <Language />
           <Link to="/">
             <FontAwesomeIcon
               icon={faArrowRightFromBracket}

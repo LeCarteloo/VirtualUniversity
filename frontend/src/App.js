@@ -3,28 +3,45 @@ import "./App.css";
 
 // React stuff
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import i18n from "i18next";
+import { initReactI18next, useTranslation } from "react-i18next";
 
 // Importing Components
 import Login from "./components/Login";
 import Remind from "./components/Remind";
 import Home from "./components/Home";
+import { Suspense } from "react";
 
-// Download toastify later and fontawensome
-// Choose colors for app
+const translationEn = {};
+const translationPl = {};
+
+i18n.use(initReactI18next).init({
+  resources: {
+    en: { translation: translationEn },
+    pl: { translation: translationPl },
+  },
+  lng: "en",
+  fallbackLng: "en",
+  interpolation: { escapeValue: false },
+});
 
 function App() {
-  return (
-    <Router>
-      <div className="container">
-        <Routes>
-          <Route path="/" exact element={<Login />} />
-          <Route path="remind" exact element={<Remind />} />
-          <Route path="home/*" exact element={<Home />} />
+  const { t } = useTranslation();
 
-          {/* <Route path="*" element={} /> */}
-        </Routes>
-      </div>
-    </Router>
+  return (
+    <Suspense fallback="Loading...">
+      <Router>
+        <div className="container">
+          <Routes>
+            <Route path="/" exact element={<Login />} />
+            <Route path="remind" exact element={<Remind />} />
+            <Route path="home/*" exact element={<Home />} />
+
+            {/* <Route path="*" element={} /> */}
+          </Routes>
+        </div>
+      </Router>
+    </Suspense>
   );
 }
 
