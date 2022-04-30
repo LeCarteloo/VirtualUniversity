@@ -5,6 +5,7 @@ import NavItem from "./NavItem";
 
 import "../styles/navBar.scss";
 import Logo from "../assets/logo.png";
+import { useTranslation } from "react-i18next";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -30,56 +31,67 @@ const NavBar = () => {
   const [nav, setNav] = useState(false);
   const navState = !nav ? "hidden" : "";
 
+  // Translation hook
+  const [t] = useTranslation("translation");
+
   // Navbar navigation items
   const navItems = [
     {
-      name: "Articles",
+      name: t("navbar.articles"),
       nav: nav,
       icon: faNewspaper,
       path: "articles",
     },
     {
-      name: "Calendar",
+      name: t("navbar.calendar"),
       icon: faCalendarDays,
       path: "calendar",
     },
     {
-      name: "Grades",
+      name: t("navbar.grades"),
       icon: fa5,
       path: "grades",
     },
     {
-      name: "Your studies",
+      name: t("navbar.yourstudies"),
       icon: faGraduationCap,
       subLinks: [
-        { name: "Student data", path: "student", icon: faIdCard },
-        { name: "Syllabus", path: "syllabus", icon: faTimeline },
-        { name: "Insurance", path: "insurance", icon: faBriefcaseMedical },
+        { name: t("navbar.studentdata"), path: "student", icon: faIdCard },
+        { name: t("navbar.syllabus"), path: "syllabus", icon: faTimeline },
         {
-          name: "Choices",
+          name: t("navbar.insurance"),
+          path: "insurance",
+          icon: faBriefcaseMedical,
+        },
+        {
+          name: t("navbar.choices"),
           path: "choices",
           icon: faListCheck,
         },
-        { name: "Graduation work", path: "graduation_work", icon: faBook },
+        {
+          name: t("navbar.graduationwork"),
+          path: "graduation_work",
+          icon: faBook,
+        },
       ],
     },
     {
-      name: "Payments",
+      name: t("navbar.payments"),
       icon: faMoneyCheckDollar,
       path: "payments",
     },
     {
-      name: "Shared drive",
+      name: t("navbar.shareddrive"),
       icon: faFolder,
       path: "drive",
     },
     {
-      name: "Files",
+      name: t("navbar.files"),
       icon: faFileArrowDown,
       path: "files",
     },
     {
-      name: "Groups",
+      name: t("navbar.groups"),
       icon: faLayerGroup,
       path: "groups",
     },

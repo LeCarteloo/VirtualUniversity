@@ -1,0 +1,21 @@
+{
+	"calendar": {
+		"download": "Download",
+		"today": "Today"
+	},
+	"navbar": {
+		"articles": "Articles",
+		"calendar": "Calendar",
+		"choices": "Choices",
+		"files": "Files",
+		"grades": "Grades",
+		"graduationwork": "Graduation work",
+		"groups": "Groups",
+		"insurance": "Insurance",
+		"payments": "Payments",
+		"shareddrive": "Shared drive",
+		"studentdata": "Student data",
+		"syllabus": "Syllabus",
+		"yourstudies": "Your studies"
+	}
+}

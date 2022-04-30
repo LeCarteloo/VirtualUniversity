@@ -1,0 +1,21 @@
+{
+	"calendar": {
+		"download": "Pobierz",
+		"today": "Dziś"
+	},
+	"navbar": {
+		"articles": "Artykuły",
+		"calendar": "Kalendarz",
+		"choices": "Wybory",
+		"files": "Pliki",
+		"grades": "Oceny",
+		"graduationwork": "Praca dyplomowa",
+		"groups": "Grupy",
+		"insurance": "Ubezpieczenie",
+		"payments": "Płatności",
+		"shareddrive": "Dysk wspólny",
+		"studentdata": "Dane studenta",
+		"syllabus": "Sylabus",
+		"yourstudies": "Twoje studia"
+	}
+}

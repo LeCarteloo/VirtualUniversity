@@ -134,13 +134,14 @@
       position: relative;
       background-color: global.$third;
       margin-right: 2em;
-      .selected-lang {
+      .lang {
+        width: 89.8px;
         padding: 0.4em;
         display: flex;
         align-items: center;
         cursor: pointer;
         position: relative;
-        z-index: 30;
+        z-index: 1;
       }
 
       ul {

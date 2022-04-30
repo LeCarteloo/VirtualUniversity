@@ -1,5 +1,4 @@
 import "../../styles/calendar.scss";
-import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleLeft,
@@ -7,20 +6,33 @@ import {
   faCalendarDay,
   faFileDownload,
 } from "@fortawesome/free-solid-svg-icons";
+import i18n from "i18next";
 
+// Hooks
+import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+
+//Components
 import CalendarDay from "./CalendarDay";
 import CalendarColumn from "./CalendarColumn";
 import TimeMarker from "./TimeMarker";
 
 const Calendar = () => {
+  // Initializing hooks
   const [width, setWidth] = useState(window.innerWidth);
-
+  const [t] = useTranslation("translation");
   let currentDate = new Date();
   const [changeWeek, setChangeWeek] = useState(
     new Date(
       currentDate.setDate(currentDate.getDate() - currentDate.getDay() + 1)
     )
   );
+
+  const dateLocale = i18n.language === "en" ? "en-US" : "pl-PL";
+
+  const capitalize = (string) => {
+    return string[0].toUpperCase() + string.slice(1);
+  };
 
   //! This thing is affecting  performance a bit
   // Watching a width of device
@@ -57,8 +69,12 @@ const Calendar = () => {
   for (let i = 0; i < columns; i++) {
     currentWeek.push({
       number: tempWeek.getDate(),
-      name: tempWeek.toLocaleDateString("en-US", { weekday: "long" }),
-      month: tempWeek.toLocaleDateString("en-US", { month: "long" }),
+      name: capitalize(
+        tempWeek.toLocaleDateString(dateLocale, { weekday: "long" })
+      ),
+      month: capitalize(
+        tempWeek.toLocaleDateString(dateLocale, { month: "long" })
+      ),
       isToday: tempWeek.toDateString() === new Date().toDateString(),
     });
     tempWeek.setDate(tempWeek.getDate() + 1);
@@ -81,7 +97,7 @@ const Calendar = () => {
         <div className="calendar-navigation">
           <button onClick={() => setChangeWeek(new Date())}>
             <FontAwesomeIcon icon={faCalendarDay} size={"xl"} className="icn" />
-            Today
+            {t("calendar.today")}
           </button>
           <button
             onClick={() => {
@@ -115,7 +131,7 @@ const Calendar = () => {
                 }`}
           </span>
           <button style={{ float: "right" }}>
-            Download
+            {t("calendar.download")}
             <FontAwesomeIcon
               icon={faFileDownload}
               size={"xl"}
