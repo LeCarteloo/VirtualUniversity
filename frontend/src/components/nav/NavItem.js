@@ -1,11 +1,11 @@
+import "../../styles/navItem.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
+
 import { NavLink } from "react-router-dom";
 import { useState } from "react";
 
 import ConditionalWrapper from "./ConditionalWrapper";
-import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
-
-import "../styles/navItem.scss";
 
 const NavItem = ({ icon, name, nav, path, subLinks, onClose }) => {
   const navState = !nav ? "hidden" : "";

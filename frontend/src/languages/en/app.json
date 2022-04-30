@@ -3,6 +3,13 @@
 		"download": "Download",
 		"today": "Today"
 	},
+	"grades": {
+		"committe": "Committee",
+		"conditional": "Conditional",
+		"firstTerm": "First term",
+		"promotion": "Promotion",
+		"secondTerm": "Second term"
+	},
 	"navbar": {
 		"articles": "Articles",
 		"calendar": "Calendar",
@@ -17,5 +24,12 @@
 		"studentdata": "Student data",
 		"syllabus": "Syllabus",
 		"yourstudies": "Your studies"
+	},
+	"student": {
+		"albumNumber": "Album number",
+		"id": "Identity card",
+		"placeOfBirth": "Place of birth",
+		"studentData": "Student data",
+		"telephone": "Telephone number"
 	}
 }

@@ -1,12 +1,6 @@
-import { useState } from "react";
+import "../../styles/navBar.scss";
 import { Link } from "react-router-dom";
-
-import NavItem from "./NavItem";
-
-import "../styles/navBar.scss";
-import Logo from "../assets/logo.png";
-import { useTranslation } from "react-i18next";
-
+import Logo from "../../assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFolder,
@@ -22,16 +16,20 @@ import {
   faMoneyCheckDollar,
   fa5,
   faNewspaper,
+  faArrowRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
-import Language from "./Language";
+// Hooks
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+
+// Components
+import NavItem from "./NavItem";
+import Language from "../Language";
 
 const NavBar = () => {
   const [nav, setNav] = useState(false);
   const navState = !nav ? "hidden" : "";
-
-  // Translation hook
   const [t] = useTranslation("translation");
 
   // Navbar navigation items

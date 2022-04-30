@@ -1,7 +1,7 @@
 import "../styles/home.scss";
 import { Routes, Route } from "react-router-dom";
 
-import NavBar from "./NavBar";
+import NavBar from "./nav/NavBar";
 import Articles from "./articles/Articles";
 import Article from "./articles/Article";
 import Grades from "./Grades";

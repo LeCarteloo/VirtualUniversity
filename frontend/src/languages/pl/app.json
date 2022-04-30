@@ -3,6 +3,13 @@
 		"download": "Pobierz",
 		"today": "Dziś"
 	},
+	"grades": {
+		"committe": "Komisyjny",
+		"conditional": "Warunek",
+		"firstTerm": "Pierwszy termin",
+		"promotion": "Awans",
+		"secondTerm": "Drugi termin"
+	},
 	"navbar": {
 		"articles": "Artykuły",
 		"calendar": "Kalendarz",
@@ -17,5 +24,12 @@
 		"studentdata": "Dane studenta",
 		"syllabus": "Sylabus",
 		"yourstudies": "Twoje studia"
+	},
+	"student": {
+		"albumNumber": "Numer albumu",
+		"id": "Dowód osobisty",
+		"placeOfBirth": "Miejsce urodzenia",
+		"studentData": "Dane studenta",
+		"telephone": "Numer telefonu"
 	}
 }

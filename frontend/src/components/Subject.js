@@ -1,13 +1,17 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
-import { faBookBookmark } from "@fortawesome/free-solid-svg-icons";
-
 import "../styles/subject.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faAngleDown, faBookBookmark } from "@fortawesome/free-solid-svg-icons";
+
+// Hooks
+import { useTranslation } from "react-i18next";
+import { useState } from "react";
+
+// Components
 import Table from "./Table";
 
 const Subject = ({ icon, title, type, grades }) => {
   const [subjectItem, setSubjectItem] = useState(false);
+  const [t] = useTranslation("translation");
 
   return (
     <div
@@ -32,11 +36,11 @@ const Subject = ({ icon, title, type, grades }) => {
         <div className="subject-grades">
           <Table
             headers={[
-              "First term",
-              "Second term",
-              "Conditional",
-              "Promotion",
-              "Committee",
+              t("grades.firstTerm"),
+              t("grades.secondTerm"),
+              t("grades.conditional"),
+              t("grades.promotion"),
+              t("grades.committe"),
             ]}
             rows={[
               grades.first,

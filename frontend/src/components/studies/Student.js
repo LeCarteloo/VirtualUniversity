@@ -1,21 +1,26 @@
-import GroupTable from "../GroupTable";
 import "../../styles/student.scss";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
 
+// Hooks
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+
+// Components
 import Modal from "../Modal";
 import Button from "../Button";
 import TextInput from "../TextInput";
+import GroupTable from "../GroupTable";
 
 const Student = () => {
   const [showModal, setShowModal] = useState(false);
+  const [t] = useTranslation("translation");
 
   const data = {
     headers: [
-      "Album number",
-      "Place of birth",
-      "Identity card",
-      "Telephone number",
+      t("student.albumNumber"),
+      t("student.placeOfBirth"),
+      t("student.id"),
+      t("student.telephone"),
       "Email",
     ],
     rows: [["-", "-", "-", "-", "test@gmail.com"]],
@@ -58,7 +63,7 @@ const Student = () => {
       </Modal>
       <div className="left-column">
         <GroupTable
-          title={"Student data"}
+          title={t("student.studentData")}
           object={data}
           isCollapsed={false}
           tabOrient={"vertical-rl"}
