@@ -1,5 +1,5 @@
 // Stylesheet
-import "./App.css";
+import "./App.scss";
 
 // React stuff
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -27,6 +27,9 @@ i18n.use(initReactI18next).init({
 });
 
 function App() {
+  const lang = localStorage.getItem("language");
+  i18n.changeLanguage(lang);
+
   return (
     <Suspense fallback="Loading...">
       <Router>

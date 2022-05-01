@@ -16,7 +16,8 @@ import {
   faMoneyCheckDollar,
   fa5,
   faNewspaper,
-  faArrowRightFromBracket,
+  faPowerOff,
+  faGear,
 } from "@fortawesome/free-solid-svg-icons";
 
 // Hooks
@@ -24,14 +25,16 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 // Components
-import NavItem from "./NavItem";
 import Language from "./Language";
+import NavItem from "./NavItem";
 import Switch from "./Switch";
+import Modal from "../Modal";
 
 const NavBar = () => {
   const [nav, setNav] = useState(false);
   const navState = !nav ? "hidden" : "";
   const [t] = useTranslation("translation");
+  const [showModal, setShowModal] = useState(false);
 
   // Navbar navigation items
   const navItems = [
@@ -110,7 +113,6 @@ const NavBar = () => {
           <div className={`hamburger-line ${nav ? "active" : ""}`}></div>
         </button>
       </div>
-
       <div className="wrapper">
         <ul className="nav-items">
           {navItems.map((navItem) => (
@@ -123,14 +125,21 @@ const NavBar = () => {
           ))}
         </ul>
         <div className="user-info">
-          <Language />
-          <Switch />
+          <Modal
+            title={t("navbar.options")}
+            show={showModal}
+            onClose={() => setShowModal(false)}
+          >
+            <h3>{t("navbar.language")}</h3>
+            <Language />
+            <h3>{t("navbar.theme")}</h3>
+            <Switch />
+          </Modal>
+          <button onClick={() => setShowModal(!showModal)}>
+            <FontAwesomeIcon icon={faGear} size="2xl" className="icon" />
+          </button>
           <Link to="/">
-            <FontAwesomeIcon
-              icon={faArrowRightFromBracket}
-              size="xl"
-              className="logout-icon"
-            />
+            <FontAwesomeIcon icon={faPowerOff} size="xl" className="icon" />
           </Link>
         </div>
       </div>

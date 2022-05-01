@@ -1,10 +1,13 @@
-import GroupTable from "../GroupTable";
-import Modal from "../Modal";
-
 import { faFilter, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
+
+// Hooks
 import { useState } from "react";
+
+// Components
+import GroupTable from "../GroupTable";
 import TextInput from "../TextInput";
 import Button from "../Button";
+import Modal from "../Modal";
 
 const Payments = () => {
   const [showModal, setShowModal] = useState(false);

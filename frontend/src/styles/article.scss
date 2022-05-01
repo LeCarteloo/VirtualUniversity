@@ -16,6 +16,7 @@ article {
   }
   .article-content {
     padding: 0em 4em 4em 4em;
+    color: global.$font;
     @media (max-width: 756px) {
       padding: 1.1em;
     }

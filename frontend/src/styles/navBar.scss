@@ -111,12 +111,12 @@
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-
-    a {
+    a,
+    button {
       text-decoration: none;
       color: global.$font;
       height: 50px;
-      width: 50px;
+      width: 100%;
       border-radius: 10px;
       display: flex;
       align-items: center;
@@ -124,54 +124,16 @@
       &:hover,
       &:focus-within {
         background-color: global.$primary;
-      }
-      .logout-icon {
-        transform: scaleX(-1);
+
+        .icon {
+          transform: rotate(360deg) scale(1.3);
+        }
       }
     }
 
-    .lang-dropdown {
-      position: relative;
-      // background-color: global.$third;
-      // margin-right: 2em;
-      .lang {
-        width: 89.8px;
-        padding: 0.4em;
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-        position: relative;
-        z-index: 1;
-      }
-
-      ul {
-        visibility: hidden;
-        position: absolute;
-        background-color: global.$third;
-        list-style: none;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-end;
-        bottom: 0.3em;
-        opacity: 0;
-        transition: ease-in-out 0.2s;
-        &.open {
-          opacity: 1;
-          visibility: visible;
-          bottom: 2.6em;
-        }
-      }
-
-      li {
-        padding: 0.4em;
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-        @include animation.shine();
-      }
-      img {
-        margin-right: 0.5em;
-      }
+    .icon {
+      transition: 0.2s ease-in-out;
+      color: global.$font;
     }
   }
 }

@@ -1,4 +1,6 @@
+@use "./styles/global" as global;
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
+
 * {
   margin: 0;
   padding: 0;
@@ -6,7 +8,7 @@
 
 body {
   font-family: "Roboto", sans-serif;
-  background-color: #1c1c2c;
+  background-color: global.$bg;
   color: #fff;
 }
 
