@@ -25,7 +25,8 @@ import { useTranslation } from "react-i18next";
 
 // Components
 import NavItem from "./NavItem";
-import Language from "../Language";
+import Language from "./Language";
+import Switch from "./Switch";
 
 const NavBar = () => {
   const [nav, setNav] = useState(false);
@@ -123,6 +124,7 @@ const NavBar = () => {
         </ul>
         <div className="user-info">
           <Language />
+          <Switch />
           <Link to="/">
             <FontAwesomeIcon
               icon={faArrowRightFromBracket}

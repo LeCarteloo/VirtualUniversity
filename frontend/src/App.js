@@ -5,12 +5,12 @@ import "./App.css";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+import { Suspense } from "react";
 
 // Importing Components
 import Login from "./components/Login";
 import Remind from "./components/Remind";
 import Home from "./components/Home";
-import { Suspense } from "react";
 
 import en_US from "./languages/en/app.json";
 import pl_PL from "./languages/pl/app.json";

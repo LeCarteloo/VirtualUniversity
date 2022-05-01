@@ -16,3 +16,33 @@ button {
   cursor: pointer;
   // outline: none;
 }
+
+.switch {
+  background-color: global.$gray;
+  width: 80px;
+  height: 40px;
+  border-radius: 40px;
+  cursor: pointer;
+  position: relative;
+  transition: 0.35s ease-in-out;
+  &::after {
+    content: "";
+    width: 35px;
+    height: 35px;
+    background-color: global.$secondary;
+    position: absolute;
+    top: 2.5px;
+    right: calc(80px - 39px);
+    border-radius: 100%;
+    transition: 0.35s ease-in-out;
+  }
+
+  &.turned {
+    background-color: global.$primary;
+
+    &::after {
+      // background-color: global.$secondary;
+      right: 4px;
+    }
+  }
+}
