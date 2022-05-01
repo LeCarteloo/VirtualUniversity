@@ -1,6 +1,5 @@
 import "../../styles/navBar.scss";
 import { Link } from "react-router-dom";
-import Logo from "../../assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faFolder,
@@ -20,6 +19,9 @@ import {
   faGear,
 } from "@fortawesome/free-solid-svg-icons";
 
+// Images
+import Logo from "../../assets/logo.png";
+
 // Hooks
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -27,14 +29,15 @@ import { useTranslation } from "react-i18next";
 // Components
 import Language from "./Language";
 import NavItem from "./NavItem";
-import Switch from "./Switch";
+import Theme from "./Theme";
 import Modal from "../Modal";
 
 const NavBar = () => {
   const [nav, setNav] = useState(false);
-  const navState = !nav ? "hidden" : "";
   const [t] = useTranslation("translation");
   const [showModal, setShowModal] = useState(false);
+
+  const navState = !nav ? "hidden" : "";
 
   // Navbar navigation items
   const navItems = [
@@ -130,10 +133,11 @@ const NavBar = () => {
             show={showModal}
             onClose={() => setShowModal(false)}
           >
-            <h3>{t("navbar.language")}</h3>
+            <h3 style={{ margin: "1em 0em 0.5em" }}>{t("navbar.language")}</h3>
             <Language />
-            <h3>{t("navbar.theme")}</h3>
-            <Switch />
+            <h3 style={{ margin: "1em 0em 0.5em" }}>{t("navbar.theme")}</h3>
+            <Theme />
+            {/* <Switch /> */}
           </Modal>
           <button onClick={() => setShowModal(!showModal)}>
             <FontAwesomeIcon icon={faGear} size="2xl" className="icon" />

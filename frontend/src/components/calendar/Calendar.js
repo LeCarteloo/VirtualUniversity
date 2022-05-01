@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faAngleLeft,
   faAngleRight,
-  faCalendarDay,
+  faCalendarWeek,
   faFileDownload,
 } from "@fortawesome/free-solid-svg-icons";
 import i18n from "i18next";
@@ -55,7 +55,8 @@ const Calendar = () => {
 
   // Changing the layout info
   const columns = width > 790 ? 5 : 1;
-  const week = width > 790 ? 7 : 1;
+  const moveDays = width > 790 ? 7 : 1;
+  const slideDays = width > 790 ? 7 : 3;
 
   // For tests
   const startDate = new Date();
@@ -95,15 +96,30 @@ const Calendar = () => {
     <section className="calendar-section">
       <div className="calendar">
         <div className="calendar-navigation">
-          <button onClick={() => setChangeWeek(new Date())}>
-            <FontAwesomeIcon icon={faCalendarDay} size={"xl"} className="icn" />
-            {t("calendar.today")}
+          <button
+            onClick={() => {
+              setChangeWeek(
+                new Date(
+                  currentDate.setDate(
+                    currentDate.getDate() - currentDate.getDay() + 1
+                  )
+                )
+              );
+            }}
+          >
+            <FontAwesomeIcon
+              icon={faCalendarWeek}
+              size={"xl"}
+              className="icn"
+            />
+            <span className="this-week">{t("calendar.thisWeek")}</span>
           </button>
           <button
             onClick={() => {
               /* If the weekday is monday (1) or saturday (0) 
             then button changes the whole week to omit weekend */
-              const prevWeek = changeWeek.getDay() <= 1 ? 7 : week;
+              const prevWeek = changeWeek.getDay() <= 1 ? slideDays : moveDays;
+
               setChangeWeek(
                 new Date(changeWeek.setDate(changeWeek.getDate() - prevWeek))
               );
@@ -115,7 +131,7 @@ const Calendar = () => {
             onClick={() => {
               /* If the weekday is friday (1) or greater
             then button changes the date by 3 to omit weekend */
-              const nextWeek = changeWeek.getDay() >= 5 ? 3 : week;
+              const nextWeek = changeWeek.getDay() >= 5 ? 3 : moveDays;
               setChangeWeek(
                 new Date(changeWeek.setDate(changeWeek.getDate() + nextWeek))
               );

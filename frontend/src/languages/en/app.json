@@ -1,7 +1,7 @@
 {
 	"calendar": {
 		"download": "Download",
-		"today": "Today"
+		"thisWeek": "This week"
 	},
 	"grades": {
 		"committe": "Committee",

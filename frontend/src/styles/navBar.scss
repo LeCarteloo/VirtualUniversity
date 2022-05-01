@@ -102,15 +102,16 @@
   }
 
   .wrapper {
-    height: calc(100% - 50px);
+    height: calc(100% - 100px);
   }
 
   .user-info {
-    height: 50px;
+    height: 100px;
     background-color: global.$primary-dark;
     display: flex;
     align-items: center;
     justify-content: space-evenly;
+    flex-direction: column;
     a,
     button {
       text-decoration: none;
