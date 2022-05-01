@@ -10,6 +10,12 @@
 		"promotion": "Awans",
 		"secondTerm": "Drugi termin"
 	},
+	"groups": {
+		"groupName": "Nazwa grupy",
+		"groups": "Grupy",
+		"type": "Typ",
+		"uniTeacher": "Prowadzący"
+	},
 	"navbar": {
 		"articles": "Artykuły",
 		"calendar": "Kalendarz",
@@ -30,11 +36,29 @@
 		"theme": "Motyw",
 		"yourstudies": "Twoje studia"
 	},
+	"payments": {
+		"accountNumber": "Numer konta",
+		"bankName": "Nazwa banku",
+		"confirmed": "Potwierdzony",
+		"currency": "Waluta",
+		"dueDate": "Termin",
+		"title": "Tytuł",
+		"uniInfo": "Informacje uniwersytetu",
+		"value": "Wartość",
+		"yourBank": "Twoje konta bankowe",
+		"yourCharges": "Twoje opłaty"
+	},
 	"student": {
 		"albumNumber": "Numer albumu",
+		"classType": "Typ zajęć",
+		"credit": "Zaliczenie",
+		"ects": "Punkty ECTS",
+		"hours": "Godziny",
 		"id": "Dowód osobisty",
+		"lecturer": "Prowadzący",
 		"placeOfBirth": "Miejsce urodzenia",
 		"studentData": "Dane studenta",
+		"subject": "Przedmiot",
 		"telephone": "Numer telefonu"
 	}
 }

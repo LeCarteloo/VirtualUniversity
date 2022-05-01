@@ -10,6 +10,12 @@
 		"promotion": "Promotion",
 		"secondTerm": "Second term"
 	},
+	"groups": {
+		"groupName": "Group name",
+		"groups": "Groups",
+		"type": "Type",
+		"uniTeacher": "University teacher"
+	},
 	"navbar": {
 		"articles": "Articles",
 		"calendar": "Calendar",
@@ -30,11 +36,29 @@
 		"theme": "Theme",
 		"yourstudies": "Your studies"
 	},
+	"payments": {
+		"accountNumber": "Account number",
+		"bankName": "Bank name",
+		"confirmed": "Confirmed",
+		"currency": "Currency",
+		"dueDate": "Due date",
+		"title": "Title",
+		"uniInfo": "University information",
+		"value": "Value",
+		"yourBank": "Your bank accounts",
+		"yourCharges": "Your charges"
+	},
 	"student": {
 		"albumNumber": "Album number",
+		"classType": "Class Type",
+		"credit": "Credit",
+		"ects": "ECTS points",
+		"hours": "Hours",
 		"id": "Identity card",
+		"lecturer": "Lecturer",
 		"placeOfBirth": "Place of birth",
 		"studentData": "Student data",
+		"subject": "Subject",
 		"telephone": "Telephone number"
 	}
 }

@@ -75,6 +75,11 @@ button {
   flex-direction: column;
   border-radius: 10px;
 
+  &.active {
+    box-shadow: 1px 0px 10px 0px global.$primary;
+    border: 2px solid global.$primary;
+  }
+
   .theme-header,
   .theme-footer {
     color: global.$font;

@@ -1,14 +1,18 @@
+import { useTranslation } from "react-i18next";
+
 import GroupTable from "../GroupTable";
 
 const Syllabus = () => {
+  const [t] = useTranslation("translation");
+
   const sylla = {
     headers: [
-      "Subject",
-      "Lecturer",
-      "Class type",
-      "Hours",
-      "ECTS points",
-      "Zaliczenie",
+      t("student.subject"),
+      t("student.lecturer"),
+      t("student.classType"),
+      t("student.hours"),
+      t("student.ects"),
+      t("student.credit"),
     ],
     rows: [
       [
