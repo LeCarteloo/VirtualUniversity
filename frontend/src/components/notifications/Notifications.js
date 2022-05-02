@@ -1,13 +1,15 @@
+import "../../styles/notifications.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
+
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import NotificationItem from "./NotificationItem";
 
-import "../../styles/notifications.scss";
-
 const Notifications = ({ notifs }) => {
   const [notif, setNotif] = useState(false);
+  const [t] = useTranslation("translation");
 
   return (
     <div className="notifications">
@@ -16,7 +18,7 @@ const Notifications = ({ notifs }) => {
       </button>
       <span className="notif-amount show">{notifs.length}</span>
       <div className={`notif-tooltip ${notif && "open"}`}>
-        <div className="tooltip-header">Notifications</div>
+        <div className="tooltip-header">{t("notif.notifications")}</div>
         <div className="tooltip-wrapper">
           <div className="tooltip-content">
             {notifs.map((notif) => (

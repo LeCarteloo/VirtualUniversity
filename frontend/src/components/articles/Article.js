@@ -1,5 +1,6 @@
-import { useParams } from "react-router-dom";
 import "../../styles/article.scss";
+
+import { useParams } from "react-router-dom";
 
 const Article = () => {
   // Getting the id of article

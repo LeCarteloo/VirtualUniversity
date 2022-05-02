@@ -1,8 +1,11 @@
 import "../../styles/articleItem.scss";
 
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Article = ({ id, image, date, title, hashtags }) => {
+  const [t] = useTranslation("translation");
+
   return (
     <div className="article-item">
       <div className="article-img">
@@ -18,7 +21,7 @@ const Article = ({ id, image, date, title, hashtags }) => {
             </a>
           ))}
           <Link to={`${id}`} className="read-more">
-            Read more...
+            {t("articles.readmore")}
           </Link>
         </span>
       </div>

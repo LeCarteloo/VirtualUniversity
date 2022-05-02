@@ -1,4 +1,7 @@
 {
+	"articles": {
+		"readmore": "Read more..."
+	},
 	"calendar": {
 		"download": "Download",
 		"thisWeek": "This week"
@@ -15,6 +18,17 @@
 		"groups": "Groups",
 		"type": "Type",
 		"uniTeacher": "University teacher"
+	},
+	"gw": {
+		"diplomaInfo": "Diploma information",
+		"diplomaStatus": "Diploma status",
+		"keywords": "Keywords",
+		"language": "Language",
+		"obtainedDegree": "Obtained degree",
+		"plagiarismStatus": "Plagiarism status",
+		"similarity": "Similarity",
+		"synopsis": "Synopsis",
+		"title": "Title"
 	},
 	"navbar": {
 		"articles": "Articles",
@@ -35,6 +49,9 @@
 		"syllabus": "Syllabus",
 		"theme": "Theme",
 		"yourstudies": "Your studies"
+	},
+	"notif": {
+		"notifications": "Notifications"
 	},
 	"payments": {
 		"accountNumber": "Account number",

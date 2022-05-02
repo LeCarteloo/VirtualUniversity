@@ -1,4 +1,7 @@
 {
+	"articles": {
+		"readmore": "Czytaj więcej..."
+	},
 	"calendar": {
 		"download": "Pobierz",
 		"thisWeek": "Ten tydzień"
@@ -15,6 +18,17 @@
 		"groups": "Grupy",
 		"type": "Typ",
 		"uniTeacher": "Prowadzący"
+	},
+	"gw": {
+		"diplomaInfo": "Dane pracy dyplomowej",
+		"diplomaStatus": "Status pracy",
+		"keywords": "Słowa kluczowe",
+		"language": "Język",
+		"obtainedDegree": "Uzyskany tytuł",
+		"plagiarismStatus": "Status plagiatu",
+		"similarity": "Podobieństwo",
+		"synopsis": "Streszczenie",
+		"title": "Tytuł"
 	},
 	"navbar": {
 		"articles": "Artykuły",
@@ -35,6 +49,9 @@
 		"syllabus": "Sylabus",
 		"theme": "Motyw",
 		"yourstudies": "Twoje studia"
+	},
+	"notif": {
+		"notifications": "Powiadomienia"
 	},
 	"payments": {
 		"accountNumber": "Numer konta",
