@@ -1,28 +1,10 @@
 import express from "express";
-import { createConnection } from "mysql2";
+import db from "../config/index.js";
 
-// Create connection
-const db = createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "unidb",
-});
-
-// Connect to MySql
-db.connect((err) => {
-  if (err) {
-    console.log(err);
-    return;
-  }
-  console.log("Connected with MySql...");
-});
-
-const app = express();
-const port = 3300;
+const router = express.Router();
 
 // Get all subjects
-app.get("/getsubjects", (req, res) => {
+router.get("/getsubjects", (req, res) => {
   const query =
     "SELECT s.*, t.* " +
     "FROM subjects as s, teacher as t " +
@@ -38,7 +20,7 @@ app.get("/getsubjects", (req, res) => {
 });
 
 // Get subject by id
-app.get("/getsubject/:id", (req, res) => {
+router.get("/getsubjects/:id", (req, res) => {
   const query =
     "SELECT s.*, t.* " +
     "FROM subjects as s, teacher as t " +
@@ -55,6 +37,4 @@ app.get("/getsubject/:id", (req, res) => {
   });
 });
 
-app.listen(port, () => {
-  console.log(`Server started on port ${port}...`);
-});
+export default router;
