@@ -80,50 +80,42 @@ const generateToken = (id, role) => {
   return jwt.sign({ id, role }, process.env.JWT_SECRET, { expiresIn: "3d" });
 };
 
-// @desc Get info about users
+// @desc Get all users
 // @route GET /api/users
-// @access Atm. Public
+// @access Private admin
 const getUsers = asyncHandler(async (req, res) => {
+  // Getting role from auth middleware
+  const { role } = req.user;
+
+  if (role !== "admin") {
+    throw new Error("Not authorized");
+  }
+
   // Get all users
-  const users = await User.find();
+  const users = await User.find().select("-password");
 
   res.status(200).json(users);
 });
 
-// @desc Add user
-// @route POST /api/users
-// @access Atm. Public
-const addUser = asyncHandler(async (req, res) => {
-  const { name, surname, email, password, album } = req.body;
+// @desc Get user by email
+// @route GET /api/users/:email
+// @access Private admin
+const getUser = asyncHandler(async (req, res) => {
+  const { role } = req.user;
 
-  // Check if all fields are provided
-  if (!name || !surname || !email || !password || !album) {
-    res.status(400);
-    throw new Error("Please add all fields");
+  if (role !== "admin") {
+    throw new Error("Not authorized");
   }
 
-  // Check if user exists
-  const userExists = await User.findOne({ email });
-
-  if (userExists) {
-    res.status(400);
-    throw new Error("User already exists");
-  }
-
-  const user = await User.create({
-    name,
-    surname,
-    email,
-    password,
-    album,
-  });
+  const user = await User.findOne({ email: req.params.email }).select(
+    "-password -role"
+  );
 
   if (!user) {
-    res.status(400);
-    throw new Error("Invalid user data");
+    throw new Error("User does not exists");
   }
 
-  res.status(201).json({
+  res.status(200).json({
     name: user.name,
     surname: user.surname,
     email: user.email,
@@ -131,4 +123,4 @@ const addUser = asyncHandler(async (req, res) => {
   });
 });
 
-export { registerUser, loginUser, getUsers, addUser };
+export { registerUser, loginUser, getUsers, getUser };
