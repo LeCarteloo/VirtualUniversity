@@ -20,6 +20,10 @@ const userSchema = mongoose.Schema({
   album: {
     type: Number,
   },
+  role: {
+    type: String,
+    required: [true, "Please add role"],
+  },
 });
 
 export default mongoose.model("User", userSchema);
