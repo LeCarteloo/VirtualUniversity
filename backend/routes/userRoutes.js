@@ -9,7 +9,7 @@ import { protectUser } from "../middleware/authMiddleware.js";
 
 const userRouter = express.Router();
 
-// Authentication middlewear
+// Authentication middleware for all rotues
 // userRouter.use(protectUser);
 
 // Adding routes with functions from controller

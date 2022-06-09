@@ -1,7 +1,7 @@
 import asyncHandler from "express-async-handler";
 import Subject from "../models/subjectModel.js";
 
-// @desc Register a new user
+// @desc Add a new subject
 // @route POST /api/subjects
 // @access Private
 const addSubject = asyncHandler(async (req, res) => {
@@ -14,7 +14,7 @@ const addSubject = asyncHandler(async (req, res) => {
 
   const subject = await Subject.create({
     ...req.body,
-    lecturer: req.user.id,
+    // lecturer: req.user.id,
   });
 
   res.status(200).json(subject);

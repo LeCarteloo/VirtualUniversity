@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
 
 const courseSchema = mongoose.Schema({
-  major: {
+  name: {
     type: String,
-    required: ["Please add major!"],
+    required: ["Please add name!"],
   },
   degree: {
     type: String,
