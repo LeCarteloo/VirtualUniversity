@@ -20,7 +20,7 @@ const addCourse = asyncHandler(async (req, res) => {
     const exists = await Subject.findById(subjectId);
 
     if (!exists) {
-      throw new Error("Please provide correct subjects");
+      throw new Error("Please provide correct subject");
     }
   }
 

@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler";
 import User from "../models/userModel.js";
+import Course from "../models/courseModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
@@ -7,10 +8,11 @@ import jwt from "jsonwebtoken";
 // @route POST /api/users/register
 // @access Public
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, surname, email, password, album, role } = req.body;
+  // TODO: In future album should be auto generated
+  const { name, surname, email, password, album, role, course } = req.body;
 
   // Checking if all fields are provided
-  if (!name || !surname || !email || !password || !album || !role) {
+  if (!name || !surname || !email || !password || !album || !role || !course) {
     res.status(400);
     throw new Error("Please add all fields");
   }
@@ -21,6 +23,27 @@ const registerUser = asyncHandler(async (req, res) => {
   if (userExist) {
     res.status(400);
     throw new Error("User already exists");
+  }
+
+  // Check if course exists
+  const courseExist = await Course.findById(course);
+
+  if (!courseExist) {
+    res.status(400);
+    throw new Error("Course doesn't exist");
+  }
+
+  let subjects = [];
+
+  for (const subjectId of courseExist.subjects) {
+    subjects.push({
+      subjectId: subjectId,
+      firstTerm: null,
+      secondTerm: null,
+      conditional: null,
+      promotion: null,
+      committe: null,
+    });
   }
 
   // Hashing the password
@@ -35,6 +58,8 @@ const registerUser = asyncHandler(async (req, res) => {
     password: hashedPassword,
     album,
     role,
+    course,
+    subjects,
   });
 
   res.status(201).json({
