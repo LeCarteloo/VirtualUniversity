@@ -13,6 +13,12 @@ const courseSchema = mongoose.Schema({
     type: Number,
     required: ["Please add year!"],
   },
+  subjects: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Subject",
+    },
+  ],
 });
 
 export default mongoose.model("Course", courseSchema);

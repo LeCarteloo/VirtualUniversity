@@ -1,6 +1,14 @@
 import asyncHandler from "express-async-handler";
 import Subject from "../models/subjectModel.js";
-import Grades from "../models/gradesModel.js";
+
+// @desc Get all subjects
+// @route GET /api/subjects
+// @access Private
+const getSubjects = asyncHandler(async (req, res) => {
+  const subjects = await Subject.find();
+
+  res.status(200).json(subjects);
+});
 
 // @desc Add a new subject
 // @route POST /api/subjects
@@ -13,15 +21,11 @@ const addSubject = asyncHandler(async (req, res) => {
     throw new Error("Please add all fields");
   }
 
-  // Creating empty grades for every created subject
-  const grades = await Grades.create({});
-
   const subject = await Subject.create({
     ...req.body,
-    grades: grades,
   });
 
   res.status(200).json(subject);
 });
 
-export { addSubject };
+export { getSubjects, addSubject };
