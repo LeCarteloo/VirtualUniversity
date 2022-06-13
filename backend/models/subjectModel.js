@@ -13,11 +13,10 @@ const subjectSchema = mongoose.Schema({
     type: Number,
     required: [true, "Please add ECTS!"],
   },
-  // grades: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   required: [true, "Please initialize grades!"],
-  //   ref: "Grades",
-  // },
+  lecturer: {
+    type: String,
+    required: [true, "Please add lecturer!"]
+  }
 });
 
 export default mongoose.model("Subject", subjectSchema);

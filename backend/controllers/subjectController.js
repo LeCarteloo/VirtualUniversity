@@ -14,9 +14,9 @@ const getSubjects = asyncHandler(async (req, res) => {
 // @route POST /api/subjects
 // @access Private
 const addSubject = asyncHandler(async (req, res) => {
-  const { name, hours, ects } = req.body;
+  const { name, hours, ects, lecturer } = req.body;
 
-  if (!name || !hours || !ects) {
+  if (!name || !hours || !ects || !lecturer) {
     res.status(400);
     throw new Error("Please add all fields");
   }
@@ -28,4 +28,41 @@ const addSubject = asyncHandler(async (req, res) => {
   res.status(200).json(subject);
 });
 
-export { getSubjects, addSubject };
+// @desc Update subject
+// @route PUT /api/subjects/:id
+// @access Private
+const updateSubject = asyncHandler(async (req, res) => {
+  const subject = await Subject.findById(req.params.id);
+
+  if (!subject) {
+    res.status(400);
+    throw new Error("Subject doesn't exist!")
+  }
+
+  const updatedSubject = await Subject.findByIdAndUpdate(
+    req.params.id, 
+    req.body, 
+    {new: true}
+  )
+
+  res.status(200).json(updatedSubject);
+})
+
+// @desc Delete subject
+// @route DELETE /api/subjects/:id
+// @access Private
+const deleteSubject = asyncHandler(async (req, res) => {
+  const subject = await Subject.findById(req.params.id);
+
+  if (!subject) {
+    res.status(400);
+    throw new Error("Subject doesn't exist!")
+  }
+
+  const deletedSubject = await Subject.findByIdAndDelete(req.params.id)
+
+  res.status(200).json(deletedSubject)
+});
+
+
+export { getSubjects, addSubject, updateSubject, deleteSubject };

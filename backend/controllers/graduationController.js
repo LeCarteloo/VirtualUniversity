@@ -12,7 +12,7 @@ const addGraduation = asyncHandler(async (req, res) => {
 
     if(!userExist) {
         res.status(400);
-        throw new Error("User doesn't exist")
+        throw new Error("User doesn't exist!")
     }
 
     const graduation = await Graduation.create({
@@ -33,7 +33,7 @@ const updateGraduation = asyncHandler(async (req, res) => {
 
     if(!graduation) {
         res.status(400);
-        throw new Error("User doesn't exist")
+        throw new Error("User doesn't exist!")
     }
 
     const updatedGraduation = await Graduation.findByIdAndUpdate(

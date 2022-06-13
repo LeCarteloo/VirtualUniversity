@@ -8,6 +8,7 @@ import userRouter from "../routes/userRoutes.js";
 import subjectRouter from "../routes/subjectRoutes.js";
 import courseRouter from "../routes/courseRoutes.js";
 import graduationRouter from "../routes/graduationRoutes.js"
+import eventRouter from "../routes/eventRoutes.js"
 
 // Using the enviroment variables
 dotenv.config();
@@ -27,6 +28,8 @@ app.use("/api/users", userRouter);
 app.use("/api/subjects", subjectRouter);
 app.use("/api/courses", courseRouter);
 app.use("/api/graduation", graduationRouter);
+app.use("/api/events", eventRouter);
+
 
 
 // Overridding default error handler with custom one
