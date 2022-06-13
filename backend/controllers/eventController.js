@@ -8,14 +8,24 @@ import Course from "../models/courseModel.js"
 // @access Private 
 const getEvents = asyncHandler(async (req, res) =>{
 
-    const courseExist = Course.findById(req.params.courseId);
+    const course = await Course.findById(req.params.courseId);
 
-    if (!courseExist) {
+    if (!course) {
         res.status(400);
         throw new Error("Course doesn't exist!")
     }
 
-    // console.log(courseExist);
+    // Array keeping all events found for given course
+    let events = [];
+
+    /* Getting every subject in course subject array 
+    and searching all events for it */
+    for (const subjectId of course.subjects) {
+        const event = await Event.find({subjectId});
+        events.push(event);
+    }
+    
+    res.status(200).json(events)
 });
 
 
@@ -39,14 +49,14 @@ const addEvent = asyncHandler(async (req, res) => {
 
     /* Check if event is taking place between given dates
     $gte - greater or equal than, $lte - less or equal than */
-    const eventExist = await Event.findOne({
+    const eventInProgress = await Event.findOne({
         startDate: {
             $gte: startDate,
             $lte: endDate,
         }
     });
 
-    if (eventExist) {
+    if (eventInProgress) {
         res.status(400);
         throw new Error("Event is taking place at this time!")
     }
@@ -64,5 +74,53 @@ const addEvent = asyncHandler(async (req, res) => {
     res.status(200).json(event);
 });
 
+// @desc Update event
+// @route PUT /api/events/:id
+// @access Private 
+const updateEvent = asyncHandler(async (req, res) => {
+    const eventExist = await Event.findById(req.params.id);
 
-export { getEvents, addEvent }
+    if (!eventExist) {
+        res.status(400);
+        throw new Error("Event doesn't exist!");
+    }
+
+    const {startDate, endDate} = req.body
+
+    // If one of two dates are given, API checks if event can be changed
+    if (startDate || endDate) {
+
+        const sDate = startDate ? startDate : eventExist.startDate;
+        const eDate = endDate ? endDate : eventExist.endDate;
+
+        /* Check if event is taking place between given dates
+        $gte - greater or equal than, $lte - less or equal than */
+        const eventInProgress = await Event.findOne({
+            startDate: {
+                $gte: sDate,
+                $lte: eDate,
+            }
+        });
+
+        if (eventInProgress) {
+            res.status(400);
+            throw new Error("Event is taking place at this time!")
+        }
+
+        // End Date must be greater than start date
+        if (new Date(sDate).getTime() > new Date(eDate).getTime()) {
+            res.status(400);
+            throw new Error("Start date is greater than end date!");
+        }
+    }
+    
+    const updatedEvent = await Event.findByIdAndUpdate(
+        req.params.id, 
+        req.body, 
+        { new: true }
+    );
+
+    res.status(200).json(updatedEvent);
+});
+
+export { getEvents, addEvent, updateEvent }
