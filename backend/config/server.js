@@ -7,6 +7,7 @@ import errorHandler from "../middleware/errorMiddleware.js";
 import userRouter from "../routes/userRoutes.js";
 import subjectRouter from "../routes/subjectRoutes.js";
 import courseRouter from "../routes/courseRoutes.js";
+import graduationRouter from "../routes/graduationRoutes.js"
 
 // Using the enviroment variables
 dotenv.config();
@@ -25,6 +26,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use("/api/users", userRouter);
 app.use("/api/subjects", subjectRouter);
 app.use("/api/courses", courseRouter);
+app.use("/api/graduation", graduationRouter);
+
 
 // Overridding default error handler with custom one
 app.use(errorHandler);

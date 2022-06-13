@@ -1,4 +1,4 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose from "mongoose";
 
 const graduationSchema = mongoose.Schema({
     data: {
@@ -76,6 +76,12 @@ const graduationSchema = mongoose.Schema({
             type: mongoose.Schema.Types.Decimal128,
             default: null
         }
+    },
+    user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: [true, "Please add user"],
     }
-
 })
+
+export default mongoose.model("Graduation", graduationSchema);

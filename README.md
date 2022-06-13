@@ -125,9 +125,8 @@ In progress...
 ### Backend
 
 - [x] Connect backend with MongoDB
-- [ ] Diagram of database
-- [ ] Implement MongoDB database
-- [ ] Authentication
+- [x] Implement MongoDB database
+- [x] Authentication
 - [ ] API in Express
   - [ ] Get and update methods
   - [ ] Post and remove methods
