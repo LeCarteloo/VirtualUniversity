@@ -14,9 +14,9 @@ const getSubjects = asyncHandler(async (req, res) => {
 // @route POST /api/subjects
 // @access Private
 const addSubject = asyncHandler(async (req, res) => {
-  const { name, hours, ects, lecturer } = req.body;
+  const { name, type, hours, ects, lecturer, credit } = req.body;
 
-  if (!name || !hours || !ects || !lecturer) {
+  if (!name || !hours || !ects || !lecturer || !type || !credit) {
     res.status(400);
     throw new Error("Please add all fields");
   }

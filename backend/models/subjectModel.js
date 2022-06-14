@@ -5,6 +5,10 @@ const subjectSchema = mongoose.Schema({
     type: String,
     required: [true, "Please add name!"],
   },
+  type: {
+    type: String,
+    required: [true, "Please add type!"],
+  },
   hours: {
     type: String,
     required: [true, "Please add hours!"],
@@ -13,10 +17,15 @@ const subjectSchema = mongoose.Schema({
     type: Number,
     required: [true, "Please add ECTS!"],
   },
-  lecturer: {
+  credit: {
     type: String,
-    required: [true, "Please add lecturer!"]
+    required: [true, "Please add credit!"]
   }
+  // lecturer: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: "User",
+  //   required: [true, "Please add lecturer!"]
+  // }
 });
 
 export default mongoose.model("Subject", subjectSchema);

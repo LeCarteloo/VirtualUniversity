@@ -113,6 +113,7 @@ const getUsers = asyncHandler(async (req, res) => {
   const { role } = req.user;
 
   if (role !== "admin") {
+    res.status(401);
     throw new Error("Not authorized");
   }
 
@@ -148,4 +149,61 @@ const getUser = asyncHandler(async (req, res) => {
   });
 });
 
-export { registerUser, loginUser, getUsers, getUser };
+
+// @desc Add bank account
+// @route PUT /api/users/account
+// @access Private
+const addAccount = asyncHandler(async (req, res) => {
+  const { bankName, accountNumber, currency } = req.body;
+
+  if(!bankName || !accountNumber || !currency) {
+    res.status(400);
+    throw new Error("Please add all fields!");
+  }
+
+  const accDigits = accountNumber.toString().matches("[0-9]+");
+
+  if (accountNumber.toString().length !== 26 || !accDigits) {
+    res.status(400);
+    throw new Error("Account number must have 26 digits!");
+  }
+
+  const user = await User.findById(req.user.id);
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User doesn't exist!");
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(
+    user._id,
+    { $push: {
+        accounts: {
+          bankName,
+          accountNumber,
+          currency,
+        }
+      }
+    },
+    { new: true }
+  );
+
+  res.status(200).json(updatedUser)
+});
+
+// @desc Get average user grades
+// @route GET /api/users/grades/:id
+// @access Private 
+const getAverageGrade = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User doesn't exist!")
+  }
+
+});
+
+
+
+export { registerUser, loginUser, getUsers, getUser, addAccount };

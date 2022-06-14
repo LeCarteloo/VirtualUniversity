@@ -17,7 +17,7 @@ const userSchema = mongoose.Schema(
     },
     password: {
       type: String,
-      required: [true, "Please add password"],
+      required: [true, "Please add password!"],
     },
     album: {
       type: Number,
@@ -25,12 +25,12 @@ const userSchema = mongoose.Schema(
     },
     role: {
       type: String,
-      required: [true, "Please add role"],
+      required: [true, "Please add role!"],
     },
     course: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Course",
-      required: [true, "Please add course"],
+      required: [true, "Please add course!"],
     },
     subjects: [
       {
@@ -60,6 +60,26 @@ const userSchema = mongoose.Schema(
         },
       },
     ],
+    accounts: [
+      {
+        bankName: {
+          type: String,
+          required: [true, "Please add bank name!"]
+        },
+        accountNumber: {
+          type: String,
+          required: [true, "Please add account number!"]
+        },
+        currency: {
+          type: String,
+          required: [true, "Please choose currency!"]
+        },
+        confirmed: {
+          type: Boolean,
+          default: false,
+        }
+      }
+    ]
   },
   {
     timestamp: true,
