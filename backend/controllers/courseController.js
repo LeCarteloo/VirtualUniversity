@@ -1,7 +1,7 @@
 import asyncHandler from "express-async-handler";
 import Course from "../models/courseModel.js";
 import Subject from "../models/subjectModel.js";
-import mongoose from "mongoose";
+import User from "../models/userModel.js";
 
 // @desc Add a new course
 // @route POST /api/courses
@@ -20,7 +20,7 @@ const addCourse = asyncHandler(async (req, res) => {
     const exists = await Subject.findById(subjectId);
 
     if (!exists) {
-      throw new Error("Please provide correct subject");
+      throw new Error("Please provide correct subjects!");
     }
   }
 
@@ -32,4 +32,36 @@ const addCourse = asyncHandler(async (req, res) => {
   res.status(200).json(course);
 });
 
-export { addCourse };
+// @desc Add a charge to all students with given course
+// @route POST /api/courses/charges/:id
+// @access Private
+const addCharge = asyncHandler(async (req, res) => {
+  const { title, value, due } = req.body;
+
+  if (!title || !value || !due) {
+    res.status(400);
+    throw new Error("Please add all fields!")
+  }
+
+  const course = await Course.findById(req.params.id);
+
+    if (!course) {
+      res.status(400);
+      throw new Error("Course doesn't exist!");
+    }
+
+    const updatedUsers = await User.updateMany(
+      {course: course._id},
+      {
+        $push: {
+          payments: {
+            ...req.body
+          }
+        }
+      }
+    );
+
+  res.status(200).json(updatedUsers)
+});
+
+export { addCourse, addCharge };

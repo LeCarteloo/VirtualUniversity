@@ -38,11 +38,11 @@ const registerUser = asyncHandler(async (req, res) => {
   for (const subjectId of courseExist.subjects) {
     subjects.push({
       subjectId: subjectId,
-      firstTerm: null,
-      secondTerm: null,
-      conditional: null,
-      promotion: null,
-      committe: null,
+      // firstTerm: null,
+      // secondTerm: null,
+      // conditional: null,
+      // promotion: null,
+      // committe: null,
     });
   }
 
@@ -149,7 +149,6 @@ const getUser = asyncHandler(async (req, res) => {
   });
 });
 
-
 // @desc Add bank account
 // @route PUT /api/users/account
 // @access Private
@@ -161,9 +160,10 @@ const addAccount = asyncHandler(async (req, res) => {
     throw new Error("Please add all fields!");
   }
 
-  const accDigits = accountNumber.toString().matches("[0-9]+");
-
-  if (accountNumber.toString().length !== 26 || !accDigits) {
+  // TODO: Later add number check
+  // const accDigits = accountNumber.test("[0-9+]");
+  
+  if (accountNumber.toString().length !== 26) {
     res.status(400);
     throw new Error("Account number must have 26 digits!");
   }
@@ -175,6 +175,7 @@ const addAccount = asyncHandler(async (req, res) => {
     throw new Error("User doesn't exist!");
   }
 
+  // Getting the user and pushing account info to array
   const updatedUser = await User.findByIdAndUpdate(
     user._id,
     { $push: {

@@ -79,6 +79,27 @@ const userSchema = mongoose.Schema(
           default: false,
         }
       }
+    ],
+    payments: [
+      {
+        title: {
+          type: String,
+          required: [true, "Please add title!"]
+        },
+        // Atm. String not Decimal128
+        value: {
+          type: String,
+          required: [true, "Please add value!"]
+        },
+        due: {
+          type: Date,
+          required: [true, "Please add date!"]
+        },
+        payed: {
+          type: Boolean,
+          default: false
+        }
+      }
     ]
   },
   {
