@@ -42,7 +42,7 @@ const updateSubject = asyncHandler(async (req, res) => {
   const updatedSubject = await Subject.findByIdAndUpdate(
     req.params.id, 
     req.body, 
-    {new: true}
+    { new: true }
   )
 
   res.status(200).json(updatedSubject);

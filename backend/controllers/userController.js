@@ -118,7 +118,7 @@ const getUsers = asyncHandler(async (req, res) => {
   }
 
   // Get all users
-  const users = await User.find().select("-password");
+  const users = await User.find().select("-password -role");
 
   res.status(200).json(users);
 });
@@ -187,24 +187,98 @@ const addAccount = asyncHandler(async (req, res) => {
       }
     },
     { new: true }
-  );
+  ).select("-password -role");
 
   res.status(200).json(updatedUser)
 });
 
+// @desc Get all users with charges by CourseID
+// @route GET /api/users/charges/:courseId
+// @access Private
+const getCharges = asyncHandler(async (req, res) =>{
+  const course = await Course.findById(req.params.courseId);
+
+  if (!course) {
+    res.status(400);
+    throw new Error("Course doesn't exist!");
+  }
+
+  // Get all users with given courseId, that has at least one payment
+  const users = await User.find({
+    course: course._id,
+    "payments.0": {
+      $exists: true,
+    }
+  }).select("-password -role -course -subjects -accounts");
+
+  res.status(200).json(users)
+})
+
+
+// @desc Update charge by user id
+// @route PUT /api/users/charges/:userId
+// @access Private
+const updateCharge = asyncHandler(async (req, res) => {
+    // const {title, payed} = req.body;
+
+    // if (!title || !payed) {
+    //   res.status(400);
+    //   throw new Error("Please add all fields!");
+    // }
+
+    // const user = await User.findById(req.params.userId);
+
+    // if (!user) {
+    //   res.status(400);
+    //   throw new Error("User doesn't exist!");
+    // }
+
+    // const updatedUser = await User.findOneAndUpdate(
+    //   {
+    //     _id: user._id,
+    //     // "payments.title": title
+    //     payments: {
+    //       $elemMatch: {
+    //         title: title,
+    //       }
+    //     }
+    //   },
+    //   { $set: {
+    //       "payments.$.payed": payed
+    //     }
+    //   },
+    //   false,
+    //   true
+    // );
+
+    // res.status(200).json(updatedUser);
+});
+
 // @desc Get average user grades
-// @route GET /api/users/grades/:id
+// @route GET /api/users/grades/:userId
 // @access Private 
 const getAverageGrade = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params.id);
+  const user = await User.findById(req.params.userId);
 
   if (!user) {
     res.status(400);
     throw new Error("User doesn't exist!")
   }
 
+  console.log(user.subjects[3]);
+
+  res.status(200).json("tests");
 });
 
 
 
-export { registerUser, loginUser, getUsers, getUser, addAccount };
+export { 
+  registerUser, 
+  loginUser, 
+  getUsers, 
+  getUser, 
+  addAccount, 
+  getCharges,
+  updateCharge,
+  getAverageGrade
+ };
