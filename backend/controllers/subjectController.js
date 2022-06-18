@@ -4,7 +4,7 @@ import Subject from "../models/subjectModel.js";
 // @desc Get all subjects
 // @route GET /api/subjects
 // @access Private
-const getSubjects = asyncHandler(async (req, res) => {
+const getAllSubjects = asyncHandler(async (req, res) => {
   const subjects = await Subject.find();
 
   res.status(200).json(subjects);
@@ -65,4 +65,4 @@ const deleteSubject = asyncHandler(async (req, res) => {
 });
 
 
-export { getSubjects, addSubject, updateSubject, deleteSubject };
+export { getAllSubjects, addSubject, updateSubject, deleteSubject };

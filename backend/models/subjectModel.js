@@ -20,12 +20,12 @@ const subjectSchema = mongoose.Schema({
   credit: {
     type: String,
     required: [true, "Please add credit!"]
+  },
+  lecturer: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: [true, "Please add lecturer!"]
   }
-  // lecturer: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: "User",
-  //   required: [true, "Please add lecturer!"]
-  // }
 });
 
 export default mongoose.model("Subject", subjectSchema);

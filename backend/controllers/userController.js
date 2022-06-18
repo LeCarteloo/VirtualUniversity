@@ -219,40 +219,62 @@ const getCharges = asyncHandler(async (req, res) =>{
 // @route PUT /api/users/charges/:userId
 // @access Private
 const updateCharge = asyncHandler(async (req, res) => {
-    // const {title, payed} = req.body;
+    const {title, payed} = req.body;
 
-    // if (!title || !payed) {
-    //   res.status(400);
-    //   throw new Error("Please add all fields!");
-    // }
+    if (!title || !payed) {
+      res.status(400);
+      throw new Error("Please add all fields!");
+    }
 
-    // const user = await User.findById(req.params.userId);
+    const user = await User.findById(req.params.userId);
 
-    // if (!user) {
-    //   res.status(400);
-    //   throw new Error("User doesn't exist!");
-    // }
+    if (!user) {
+      res.status(400);
+      throw new Error("User doesn't exist!");
+    }
 
-    // const updatedUser = await User.findOneAndUpdate(
-    //   {
-    //     _id: user._id,
-    //     // "payments.title": title
-    //     payments: {
-    //       $elemMatch: {
-    //         title: title,
-    //       }
-    //     }
-    //   },
-    //   { $set: {
-    //       "payments.$.payed": payed
-    //     }
-    //   },
-    //   false,
-    //   true
-    // );
+    const updatedUser = await User.findOneAndUpdate(
+      {
+        _id: user._id,
+        "payments.title": title
+      },
+      { $set: {
+          "payments.0.payed": payed
+        }
+      },
+      {new: false}
+    );
 
-    // res.status(200).json(updatedUser);
+    res.status(200).json(updatedUser);
 });
+
+// @desc Get all users with role
+// @route GET /api/users/role/:role
+// @access Private 
+const getUsersByRole = asyncHandler(async (req, res) => {
+  const users = await User.find({role: req.params.role})
+
+  res.status(200).json(users);
+});
+
+
+// @desc Add grade to subject by userId
+// @route PUT /api/users/grades/:userId
+// @access Private 
+// const addGrade = asyncHandler(async (req, res) => {
+//   const user = await User.findById(req.params.userId);
+
+//   if (!user) {
+//     res.status(400);
+//     throw new Error("User doesn't exist!");
+//   }
+
+//   const updatedUser = await User.findOneAndUpdate({
+//     _id: user._id,
+
+//   })
+// });
+
 
 // @desc Get average user grades
 // @route GET /api/users/grades/:userId
@@ -265,7 +287,7 @@ const getAverageGrade = asyncHandler(async (req, res) => {
     throw new Error("User doesn't exist!")
   }
 
-  console.log(user.subjects[3]);
+  // console.log(user.subjects[3]);
 
   res.status(200).json("tests");
 });
@@ -277,6 +299,7 @@ export {
   loginUser, 
   getUsers, 
   getUser, 
+  getUsersByRole,
   addAccount, 
   getCharges,
   updateCharge,
