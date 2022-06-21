@@ -14,6 +14,7 @@ import Home from "./components/Home";
 
 import en_US from "./languages/en/app.json";
 import pl_PL from "./languages/pl/app.json";
+import Admin from "./components/admin/Admin";
 
 // Initializing i18n with tranlsation files
 i18n.use(initReactI18next).init({
@@ -38,7 +39,7 @@ function App() {
             <Route path="/" exact element={<Login />} />
             <Route path="remind" exact element={<Remind />} />
             <Route path="home/*" exact element={<Home />} />
-
+            <Route path="admin/*" exact element={<Admin />} />
             {/* <Route path="*" element={} /> */}
           </Routes>
         </div>

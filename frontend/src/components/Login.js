@@ -51,6 +51,9 @@ const Login = () => {
             <Link to="/home/articles">
               <Button text="Login in" />
             </Link>
+            <Link to="/admin/test">
+              <Button text="Admin shortcut" />
+            </Link>
           </form>
         </div>
         <div className="auth-remind">

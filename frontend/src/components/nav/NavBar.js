@@ -1,23 +1,7 @@
 import "../../styles/navBar.scss";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faFolder,
-  faCalendarDays,
-  faLayerGroup,
-  faFileArrowDown,
-  faGraduationCap,
-  faIdCard,
-  faListCheck,
-  faBook,
-  faTimeline,
-  faBriefcaseMedical,
-  faMoneyCheckDollar,
-  fa5,
-  faNewspaper,
-  faPowerOff,
-  faGear,
-} from "@fortawesome/free-solid-svg-icons";
+import { faPowerOff, faGear } from "@fortawesome/free-solid-svg-icons";
 
 // Images
 import Logo from "../../assets/logo.png";
@@ -32,75 +16,12 @@ import NavItem from "./NavItem";
 import Theme from "./Theme";
 import Modal from "../Modal";
 
-const NavBar = () => {
+const NavBar = ({navItems}) => {
   const [nav, setNav] = useState(false);
   const [t] = useTranslation("translation");
   const [showModal, setShowModal] = useState(false);
 
   const navState = !nav ? "hidden" : "";
-
-  // Navbar navigation items
-  const navItems = [
-    {
-      name: t("navbar.articles"),
-      nav: nav,
-      icon: faNewspaper,
-      path: "articles",
-    },
-    {
-      name: t("navbar.calendar"),
-      icon: faCalendarDays,
-      path: "calendar",
-    },
-    {
-      name: t("navbar.grades"),
-      icon: fa5,
-      path: "grades",
-    },
-    {
-      name: t("navbar.yourstudies"),
-      icon: faGraduationCap,
-      subLinks: [
-        { name: t("navbar.studentdata"), path: "student", icon: faIdCard },
-        { name: t("navbar.syllabus"), path: "syllabus", icon: faTimeline },
-        {
-          name: t("navbar.insurance"),
-          path: "insurance",
-          icon: faBriefcaseMedical,
-        },
-        {
-          name: t("navbar.choices"),
-          path: "choices",
-          icon: faListCheck,
-        },
-        {
-          name: t("navbar.graduationwork"),
-          path: "graduation_work",
-          icon: faBook,
-        },
-      ],
-    },
-    {
-      name: t("navbar.payments"),
-      icon: faMoneyCheckDollar,
-      path: "payments",
-    },
-    {
-      name: t("navbar.shareddrive"),
-      icon: faFolder,
-      path: "drive",
-    },
-    {
-      name: t("navbar.files"),
-      icon: faFileArrowDown,
-      path: "files",
-    },
-    {
-      name: t("navbar.groups"),
-      icon: faLayerGroup,
-      path: "groups",
-    },
-  ];
 
   return (
     <nav className={`nav-bar ${navState}`}>
