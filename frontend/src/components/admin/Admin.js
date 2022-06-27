@@ -1,11 +1,16 @@
 import NavBar from "../nav/NavBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBookBookmark, faCalendar, faCalendarDays, faRoad, faUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBookBookmark,
+  faCalendar,
+  faCalendarDays,
+  faRoad,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 import { Route, Routes } from "react-router-dom";
 import Users from "./Users";
 const Admin = () => {
-
-    // Navbar navigation items
+  // Navbar navigation items
   const navItems = [
     {
       name: "Subjects",
@@ -13,27 +18,27 @@ const Admin = () => {
       path: "subjects",
     },
     {
-        name: "Users",
-        icon: faUser,
-        path: "users",
+      name: "Users",
+      icon: faUser,
+      path: "users",
     },
     {
-        name: "Calendar",
-        icon: faRoad,
-        path: "events",
+      name: "Calendar",
+      icon: faRoad,
+      path: "events",
     },
   ];
 
-    return (
-        <section className="home-section">
-            <NavBar navItems={navItems}/>
-            <section className="content-section">
-                <Routes>
-                    <Route path="/users" exact element={<Users/>}/>
-                </Routes>
-            </section>
-        </section>
-    )
-}
+  return (
+    <section className="home-section">
+      <NavBar navItems={navItems} />
+      <section className="content-section">
+        <Routes>
+          <Route path="/users" exact element={<Users />} />
+        </Routes>
+      </section>
+    </section>
+  );
+};
 
 export default Admin;
