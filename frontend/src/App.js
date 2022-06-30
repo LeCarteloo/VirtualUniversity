@@ -11,10 +11,11 @@ import { Suspense } from "react";
 import Login from "./components/Login";
 import Remind from "./components/Remind";
 import Home from "./components/Home";
+import Admin from "./components/admin/Admin";
 
+// Languages
 import en_US from "./languages/en/app.json";
 import pl_PL from "./languages/pl/app.json";
-import Admin from "./components/admin/Admin";
 
 // Initializing i18n with tranlsation files
 i18n.use(initReactI18next).init({

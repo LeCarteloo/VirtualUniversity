@@ -28,6 +28,4 @@ userRouter.get("/charges/:courseId", protectUser, getCharges);
 userRouter.put("/account", protectUser, addAccount);
 userRouter.put("/charges/:userId", protectUser, updateCharge);
 
-
-
 export default userRouter;

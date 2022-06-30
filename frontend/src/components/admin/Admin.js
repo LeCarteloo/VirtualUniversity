@@ -9,6 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Route, Routes } from "react-router-dom";
 import Users from "./Users";
+import Subjects from "./Subjects";
 const Admin = () => {
   // Navbar navigation items
   const navItems = [
@@ -35,6 +36,7 @@ const Admin = () => {
       <section className="content-section">
         <Routes>
           <Route path="/users" exact element={<Users />} />
+          <Route path="/subjects" exact element={<Subjects />} />
         </Routes>
       </section>
     </section>

@@ -176,7 +176,7 @@ button {
 .action-btn {
   .action-tooltip {
     position: absolute;
-    right: 4.5em;
+    right: 4em;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.511);
     background-color: global.$secondary;
     border: 1px solid global.$primary;
@@ -201,7 +201,7 @@ button {
       min-width: 140px;
       margin: 0.3em;
       padding: 0.7em;
-      font-size: 1.1em;
+      font-size: 0.9em;
       color: global.$gray;
       display: flex;
       justify-content: space-between;
@@ -216,5 +216,15 @@ button {
     .action-tooltip {
       display: block;
     }
+  }
+}
+
+.btn-add {
+  background-color: global.$fourth;
+  padding: 0.8em;
+  border-radius: 10px;
+  margin-right: 1em;
+  &:hover {
+    background-color: global.$primary;
   }
 }

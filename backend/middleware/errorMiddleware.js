@@ -1,8 +1,7 @@
 const errorHandler = (err, req, res, next) => {
-  /* If status is not provided then 
+  /* If status is not provided then
     there is a problem with server (status - 500) */
   const statusCode = res.statusCode ? res.statusCode : 500;
-
   res.status(statusCode);
   res.json({
     message: err.message,

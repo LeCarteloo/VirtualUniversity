@@ -62,7 +62,6 @@ const registerUser = asyncHandler(async (req, res) => {
     subjects,
   });
 
-
   res.status(201).json({
     _id: user.id,
     name: user.name,
@@ -76,7 +75,7 @@ const registerUser = asyncHandler(async (req, res) => {
 // @access Public
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
-  
+
   if (!email || !password) {
     res.status(400);
     throw new Error("Please add all fields");
@@ -85,14 +84,18 @@ const loginUser = asyncHandler(async (req, res) => {
   // Check if user with provided email exists
   const user = await User.findOne({ email });
 
+  if (!user) {
+    res.status(400);
+    throw new Error("Invalid credentials!");
+  }
+
   // Check if password is correct
   const isPassCorrect = await bcrypt.compare(password, user.password);
 
-  if (!user || !isPassCorrect) {
-    res.status(401);
-    throw new Error("Invalid credentials");
+  if (!isPassCorrect) {
+    res.status(400);
+    throw new Error("Invalid credentials!");
   }
-
 
   res.status(200).json({
     _id: user.id,
@@ -157,14 +160,14 @@ const getUser = asyncHandler(async (req, res) => {
 const addAccount = asyncHandler(async (req, res) => {
   const { bankName, accountNumber, currency } = req.body;
 
-  if(!bankName || !accountNumber || !currency) {
+  if (!bankName || !accountNumber || !currency) {
     res.status(400);
     throw new Error("Please add all fields!");
   }
 
   // TODO: Later add number check
   // const accDigits = accountNumber.test("[0-9+]");
-  
+
   if (accountNumber.toString().length !== 26) {
     res.status(400);
     throw new Error("Account number must have 26 digits!");
@@ -180,24 +183,25 @@ const addAccount = asyncHandler(async (req, res) => {
   // Getting the user and pushing account info to array
   const updatedUser = await User.findByIdAndUpdate(
     user._id,
-    { $push: {
+    {
+      $push: {
         accounts: {
           bankName,
           accountNumber,
           currency,
-        }
-      }
+        },
+      },
     },
     { new: true }
   ).select("-password -role");
 
-  res.status(200).json(updatedUser)
+  res.status(200).json(updatedUser);
 });
 
 // @desc Get all users with charges by CourseID
 // @route GET /api/users/charges/:courseId
 // @access Private
-const getCharges = asyncHandler(async (req, res) =>{
+const getCharges = asyncHandler(async (req, res) => {
   const course = await Course.findById(req.params.courseId);
 
   if (!course) {
@@ -210,59 +214,58 @@ const getCharges = asyncHandler(async (req, res) =>{
     course: course._id,
     "payments.0": {
       $exists: true,
-    }
+    },
   }).select("-password -role -course -subjects -accounts");
 
-  res.status(200).json(users)
-})
-
+  res.status(200).json(users);
+});
 
 // @desc Update charge by user id
 // @route PUT /api/users/charges/:userId
 // @access Private
 const updateCharge = asyncHandler(async (req, res) => {
-    const {title, payed} = req.body;
+  const { title, payed } = req.body;
 
-    if (!title || !payed) {
-      res.status(400);
-      throw new Error("Please add all fields!");
-    }
+  if (!title || !payed) {
+    res.status(400);
+    throw new Error("Please add all fields!");
+  }
 
-    const user = await User.findById(req.params.userId);
+  const user = await User.findById(req.params.userId);
 
-    if (!user) {
-      res.status(400);
-      throw new Error("User doesn't exist!");
-    }
+  if (!user) {
+    res.status(400);
+    throw new Error("User doesn't exist!");
+  }
 
-    const updatedUser = await User.findOneAndUpdate(
-      {
-        _id: user._id,
-        "payments.title": title
+  const updatedUser = await User.findOneAndUpdate(
+    {
+      _id: user._id,
+      "payments.title": title,
+    },
+    {
+      $set: {
+        "payments.0.payed": payed,
       },
-      { $set: {
-          "payments.0.payed": payed
-        }
-      },
-      {new: false}
-    );
+    },
+    { new: false }
+  );
 
-    res.status(200).json(updatedUser);
+  res.status(200).json(updatedUser);
 });
 
 // @desc Get all users with role
 // @route GET /api/users/role/:role
-// @access Private 
+// @access Private
 const getUsersByRole = asyncHandler(async (req, res) => {
-  const users = await User.find({role: req.params.role})
+  const users = await User.find({ role: req.params.role });
 
   res.status(200).json(users);
 });
 
-
 // @desc Add grade to subject by userId
 // @route PUT /api/users/grades/:userId
-// @access Private 
+// @access Private
 // const addGrade = asyncHandler(async (req, res) => {
 //   const user = await User.findById(req.params.userId);
 
@@ -277,16 +280,15 @@ const getUsersByRole = asyncHandler(async (req, res) => {
 //   })
 // });
 
-
 // @desc Get average user grades
 // @route GET /api/users/grades/:userId
-// @access Private 
+// @access Private
 const getAverageGrade = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.userId);
 
   if (!user) {
     res.status(400);
-    throw new Error("User doesn't exist!")
+    throw new Error("User doesn't exist!");
   }
 
   // console.log(user.subjects[3]);
@@ -294,16 +296,14 @@ const getAverageGrade = asyncHandler(async (req, res) => {
   res.status(200).json("tests");
 });
 
-
-
-export { 
-  registerUser, 
-  loginUser, 
-  getUsers, 
-  getUser, 
+export {
+  registerUser,
+  loginUser,
+  getUsers,
+  getUser,
   getUsersByRole,
-  addAccount, 
+  addAccount,
   getCharges,
   updateCharge,
-  getAverageGrade
- };
+  getAverageGrade,
+};
