@@ -1,7 +1,7 @@
-import { useState, useContext } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "../styles/auth.scss";
-import AuthContext from "../context/AuthProvider";
+import useAuth from "../hooks/useAuth";
 
 // Svgs
 import LoginPeople from "../assets/login_people.svg";
@@ -14,7 +14,9 @@ import axios from "../api/axios";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { setAuth } = useContext(AuthContext);
+  const location = useLocation();
+  const { auth, setAuth } = useAuth();
+  const from = location.state?.from?.pathname || "/home";
 
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
@@ -45,8 +47,13 @@ const Login = () => {
         }
       );
 
-      setAuth(response.data.token);
-      navigate("/home/articles");
+      console.log(response.data);
+
+      setAuth({
+        role: response.data.role,
+        token: response.data.token,
+      });
+      navigate(from, { replace: true });
     } catch (error) {
       if (!error?.response) {
         console.log("No server response");

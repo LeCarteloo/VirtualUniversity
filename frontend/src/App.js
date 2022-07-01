@@ -12,6 +12,7 @@ import Login from "./components/Login";
 import Remind from "./components/Remind";
 import Home from "./components/Home";
 import Admin from "./components/admin/Admin";
+import RequireAuth from "./context/RequireAuth";
 
 // Languages
 import en_US from "./languages/en/app.json";
@@ -39,8 +40,25 @@ function App() {
           <Routes>
             <Route path="/" exact element={<Login />} />
             <Route path="remind" exact element={<Remind />} />
-            <Route path="home/*" exact element={<Home />} />
-            <Route path="admin/*" exact element={<Admin />} />
+            {/* Protected routes */}
+            <Route
+              path="home/*"
+              exact
+              element={
+                <RequireAuth allowedRole={"student"}>
+                  <Home />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="admin/*"
+              exact
+              element={
+                <RequireAuth>
+                  <Admin allowedRole={"admin"} />
+                </RequireAuth>
+              }
+            />
             {/* <Route path="*" element={} /> */}
           </Routes>
         </div>
