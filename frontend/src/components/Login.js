@@ -16,7 +16,6 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { auth, setAuth } = useAuth();
-  const from = location.state?.from?.pathname || "/home";
 
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
@@ -48,6 +47,8 @@ const Login = () => {
       );
 
       console.log(response.data);
+
+      const from = location.state?.from?.pathname || "/home";
 
       setAuth({
         role: response.data.role,
