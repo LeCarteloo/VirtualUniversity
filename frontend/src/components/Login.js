@@ -15,7 +15,7 @@ import axios from "../api/axios";
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { auth, setAuth } = useAuth();
+  const { setAuth } = useAuth();
 
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
@@ -46,14 +46,11 @@ const Login = () => {
         }
       );
 
-      console.log(response.data);
+      const { role, token } = response.data;
+      const from =
+        location.state?.from?.pathname || role === "admin" ? "/admin" : "/home";
 
-      const from = location.state?.from?.pathname || "/home";
-
-      setAuth({
-        role: response.data.role,
-        token: response.data.token,
-      });
+      setAuth({ role, token });
       navigate(from, { replace: true });
     } catch (error) {
       if (!error?.response) {

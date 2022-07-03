@@ -35,7 +35,7 @@ const Subjects = () => {
       className="users-section"
       style={{ width: "100%", height: "100%" }}
     >
-      <AdminTable title={"Users"} />
+      <AdminTable title={"Subjects"} />
     </section>
   );
 };

@@ -9,7 +9,15 @@ import {
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
-const AdminTable = ({ title, filter, onAdd, onEdit, onRemove, onSee }) => {
+const AdminTable = ({
+  title,
+  data,
+  filter,
+  onAdd,
+  onEdit,
+  onRemove,
+  onSee,
+}) => {
   return (
     <div className="table-wrapper">
       <div className="wrapper-header">

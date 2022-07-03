@@ -26,25 +26,25 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   // Check if course exists
-  const courseExist = await Course.findById(course);
+  // const courseExist = await Course.findById(course);
 
-  if (!courseExist) {
-    res.status(400);
-    throw new Error("Course doesn't exist");
-  }
+  // if (!courseExist) {
+  //   res.status(400);
+  //   throw new Error("Course doesn't exist");
+  // }
 
   let subjects = [];
 
-  for (const subjectId of courseExist.subjects) {
-    subjects.push({
-      subjectId: subjectId,
-      // firstTerm: null,
-      // secondTerm: null,
-      // conditional: null,
-      // promotion: null,
-      // committe: null,
-    });
-  }
+  // for (const subjectId of courseExist.subjects) {
+  //   subjects.push({
+  //     subjectId: subjectId,
+  //     // firstTerm: null,
+  //     // secondTerm: null,
+  //     // conditional: null,
+  //     // promotion: null,
+  //     // committe: null,
+  //   });
+  // }
 
   // Hashing the password
   const salt = await bcrypt.genSalt(10);
@@ -66,7 +66,12 @@ const registerUser = asyncHandler(async (req, res) => {
     _id: user.id,
     name: user.name,
     surname: user.surname,
-    token: generateToken(user._id, user.role),
+    token: generateToken(
+      user._id,
+      user.role,
+      process.env.JWT_SECRET,
+      process.env.JWT_LIFE
+    ),
   });
 });
 
@@ -102,13 +107,18 @@ const loginUser = asyncHandler(async (req, res) => {
     name: user.name,
     surname: user.surname,
     role: user.role,
-    token: generateToken(user._id, user.role),
+    token: generateToken(
+      user._id,
+      user.role,
+      process.env.JWT_SECRET,
+      process.env.JWT_LIFE
+    ),
   });
 });
 
 // Generate JWT from secret key
-const generateToken = (id, role) => {
-  return jwt.sign({ id, role }, process.env.JWT_SECRET, { expiresIn: "3d" });
+const generateToken = (id, role, secret, life) => {
+  return jwt.sign({ id, role }, secret, { expiresIn: life });
 };
 
 // @desc Get all users

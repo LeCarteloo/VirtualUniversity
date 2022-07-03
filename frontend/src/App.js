@@ -42,8 +42,24 @@ function App() {
             <Route path="/" exact element={<Login />} />
             <Route path="remind" exact element={<Remind />} />
             {/* Protected routes */}
-            <Route path="home/*" exact element={<Home />} />
-            <Route path="admin/*" exact element={<Admin />} />
+            <Route
+              path="home/*"
+              exact
+              element={
+                <RequireAuth allowedRole={"student"}>
+                  <Home />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="admin/*"
+              exact
+              element={
+                <RequireAuth allowedRole={"admin"}>
+                  <Admin />
+                </RequireAuth>
+              }
+            />
             <Route path="/unauthorized" element={<Unauthorized />} />
             {/* <Route path="*" element={} /> */}
           </Routes>
