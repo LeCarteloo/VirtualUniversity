@@ -66,12 +66,12 @@ const registerUser = asyncHandler(async (req, res) => {
     _id: user.id,
     name: user.name,
     surname: user.surname,
-    token: generateToken(
-      user._id,
-      user.role,
-      process.env.JWT_SECRET,
-      process.env.JWT_LIFE
-    ),
+    // token: generateToken(
+    //   user._id,
+    //   user.role,
+    //   process.env.JWT_SECRET,
+    //   process.env.JWT_LIFE
+    // ),
   });
 });
 
@@ -102,24 +102,71 @@ const loginUser = asyncHandler(async (req, res) => {
     throw new Error("Invalid credentials!");
   }
 
+  const token = generateToken(
+    user._id,
+    user.role,
+    process.env.JWT_SECRET,
+    process.env.JWT_LIFE
+  );
+
+  const refreshToken = generateToken(
+    user._id,
+    user.role,
+    process.env.JWT_REF_SECRET,
+    process.env.JWT_REF_LIFE
+  );
+
+  // Updating the refresh token inside logging user
+  await User.findOneAndUpdate({ email }, { refreshToken: refreshToken });
+
+  // Sending HTTP only cookie
+  res.cookie("token", refreshToken, { httpOnly: true, maxAge: 86400000 });
+
+  // Sending user with token
   res.status(200).json({
     _id: user.id,
     name: user.name,
     surname: user.surname,
     role: user.role,
-    token: generateToken(
-      user._id,
-      user.role,
-      process.env.JWT_SECRET,
-      process.env.JWT_LIFE
-    ),
+    token: token,
   });
 });
 
-// Generate JWT from secret key
-const generateToken = (id, role, secret, life) => {
-  return jwt.sign({ id, role }, secret, { expiresIn: life });
-};
+// @desc Authenticate user
+// @route POST /api/users/refresh
+// @access Public
+const refreshToken = asyncHandler(async (req, res) => {
+  const cookies = req.cookies;
+
+  if (!cookies || !cookies.token) {
+    res.status(401);
+    throw new Error("Missing token");
+  }
+
+  console.log(cookies.token);
+  const refreshToken = cookies.token;
+
+  const user = await User.findOne({ token: cookies.token });
+
+  if (!user) {
+    res.status(403);
+    throw new Error("Wrong token");
+  }
+
+  // Decoding token
+  const decoded = jwt.verify(refreshToken, process.env.JWT_REF_SECRET);
+
+  console.log(decoded.id);
+  // TODO: Check decoded._id === user._id
+
+  const token = generateToken(
+    decoded._id,
+    decoded.role,
+    process.env.JWT_SECRET,
+    process.env.JWT_LIFE
+  );
+  res.status(200).json({ refreshToken });
+});
 
 // @desc Get all users
 // @route GET /api/users
@@ -307,9 +354,15 @@ const getAverageGrade = asyncHandler(async (req, res) => {
   res.status(200).json("tests");
 });
 
+// Generate JWT from secret key
+const generateToken = (id, role, secret, life) => {
+  return jwt.sign({ id, role }, secret, { expiresIn: life });
+};
+
 export {
   registerUser,
   loginUser,
+  refreshToken,
   getUsers,
   getUser,
   getUsersByRole,

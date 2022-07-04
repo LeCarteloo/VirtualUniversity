@@ -7,6 +7,7 @@ import {
   getUsers,
   getUsersByRole,
   loginUser,
+  refreshToken,
   registerUser,
   updateCharge,
 } from "../controllers/userController.js";
@@ -20,6 +21,7 @@ const userRouter = express.Router();
 // Adding routes with functions from controller
 userRouter.post("/register", registerUser);
 userRouter.post("/login", loginUser);
+userRouter.get("/refresh", refreshToken);
 userRouter.get("/", protectUser, getUsers);
 userRouter.get("/:email", protectUser, getUser);
 userRouter.get("/role/:role", protectUser, getUsersByRole);

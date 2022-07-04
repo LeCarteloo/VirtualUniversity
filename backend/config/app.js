@@ -23,6 +23,7 @@ const allowCrossDomain = (req, res, next) => {
 // Parsing bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+// app.use(express.cookieParser());
 app.use(allowCrossDomain);
 
 // Overridding default error handler with custom one

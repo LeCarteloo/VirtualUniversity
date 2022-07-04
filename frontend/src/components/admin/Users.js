@@ -23,8 +23,7 @@ const Users = () => {
       className="users-section"
       style={{ width: "100%", height: "100%" }}
     >
-      <p>{users.toString()}</p>
-      <AdminTable title={"Users"} />
+      <AdminTable title={"Users"} users={users} />
     </section>
   );
 };

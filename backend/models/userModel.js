@@ -64,43 +64,46 @@ const userSchema = mongoose.Schema(
       {
         bankName: {
           type: String,
-          required: [true, "Please add bank name!"]
+          required: [true, "Please add bank name!"],
         },
         accountNumber: {
           type: String,
-          required: [true, "Please add account number!"]
+          required: [true, "Please add account number!"],
         },
         currency: {
           type: String,
-          required: [true, "Please choose currency!"]
+          required: [true, "Please choose currency!"],
         },
         confirmed: {
           type: Boolean,
           default: false,
-        }
-      }
+        },
+      },
     ],
     payments: [
       {
         title: {
           type: String,
-          required: [true, "Please add title!"]
+          required: [true, "Please add title!"],
         },
         // Atm. String not Decimal128
         value: {
           type: String,
-          required: [true, "Please add value!"]
+          required: [true, "Please add value!"],
         },
         due: {
           type: Date,
-          required: [true, "Please add date!"]
+          required: [true, "Please add date!"],
         },
         payed: {
           type: Boolean,
-          default: false
-        }
-      }
-    ]
+          default: false,
+        },
+      },
+    ],
+    refreshToken: {
+      type: String,
+    },
   },
   {
     timestamp: true,
