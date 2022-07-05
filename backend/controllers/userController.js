@@ -144,7 +144,6 @@ const logoutUser = asyncHandler(async (req, res) => {
   }
 
   const refreshToken = cookies.token;
-
   // Check if token exists in database
   const user = await User.findOne({ refreshToken });
 
@@ -155,9 +154,12 @@ const logoutUser = asyncHandler(async (req, res) => {
   }
 
   // Removing refresh token from found user
-  await User.findOneAndUpdate(refreshToken, {
-    $unset: { refreshToken },
-  });
+  await User.findOneAndUpdate(
+    { refreshToken },
+    {
+      $unset: { refreshToken: "" },
+    }
+  );
 
   // TODO: On production add secure: true (for https only)
   res.clearCookie("token", { httpOnly: true, maxAge: 86400000 });
@@ -170,14 +172,13 @@ const logoutUser = asyncHandler(async (req, res) => {
 const refreshToken = asyncHandler(async (req, res) => {
   // HTTP only cookie
   const cookies = req.cookies;
-
+  console.log(cookies);
   if (!cookies || !cookies.token) {
     res.status(401);
     throw new Error("Missing token");
   }
 
   const refreshToken = cookies.token;
-
   const user = await User.findOne({ refreshToken });
 
   if (!user) {
@@ -200,7 +201,7 @@ const refreshToken = asyncHandler(async (req, res) => {
     process.env.JWT_LIFE
   );
 
-  res.status(200).json({ newToken });
+  res.status(200).json({ token: newToken });
 });
 
 // @desc Get all users
