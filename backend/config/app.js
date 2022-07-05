@@ -1,5 +1,6 @@
 import express from "express";
 import errorHandler from "../middleware/errorMiddleware.js";
+import cookieParser from "cookie-parser";
 
 // Routes
 import userRouter from "../routes/userRoutes.js";
@@ -23,7 +24,7 @@ const allowCrossDomain = (req, res, next) => {
 // Parsing bodies
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-// app.use(express.cookieParser());
+app.use(cookieParser());
 app.use(allowCrossDomain);
 
 // Overridding default error handler with custom one

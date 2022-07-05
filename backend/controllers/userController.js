@@ -119,6 +119,7 @@ const loginUser = asyncHandler(async (req, res) => {
   // Updating the refresh token inside logging user
   await User.findOneAndUpdate({ email }, { refreshToken: refreshToken });
 
+  // TODO: On production add secure: true (for https only)
   // Sending HTTP only cookie
   res.cookie("token", refreshToken, { httpOnly: true, maxAge: 86400000 });
 
@@ -132,10 +133,42 @@ const loginUser = asyncHandler(async (req, res) => {
   });
 });
 
-// @desc Authenticate user
+// @desc Logout user
+// @route POST /api/users/logout
+// @access Public
+const logoutUser = asyncHandler(async (req, res) => {
+  const cookies = req.cookies;
+
+  if (!cookies || !cookies.token) {
+    res.sendStatus(204);
+  }
+
+  const refreshToken = cookies.token;
+
+  // Check if token exists in database
+  const user = await User.findOne({ refreshToken });
+
+  if (!user) {
+    // Clearing cookie from client memory
+    res.clearCookie("token", { httpOnly: true, maxAge: 86400000 });
+    res.sendStatus(204);
+  }
+
+  // Removing refresh token from found user
+  await User.findOneAndUpdate(refreshToken, {
+    $unset: { refreshToken },
+  });
+
+  // TODO: On production add secure: true (for https only)
+  res.clearCookie("token", { httpOnly: true, maxAge: 86400000 });
+  res.sendStatus(204);
+});
+
+// @desc Refresh the JWT token
 // @route POST /api/users/refresh
 // @access Public
 const refreshToken = asyncHandler(async (req, res) => {
+  // HTTP only cookie
   const cookies = req.cookies;
 
   if (!cookies || !cookies.token) {
@@ -143,29 +176,31 @@ const refreshToken = asyncHandler(async (req, res) => {
     throw new Error("Missing token");
   }
 
-  console.log(cookies.token);
   const refreshToken = cookies.token;
 
-  const user = await User.findOne({ token: cookies.token });
+  const user = await User.findOne({ refreshToken });
 
   if (!user) {
     res.status(403);
-    throw new Error("Wrong token");
+    throw new Error("Not authorized");
   }
 
   // Decoding token
   const decoded = jwt.verify(refreshToken, process.env.JWT_REF_SECRET);
 
-  console.log(decoded.id);
-  // TODO: Check decoded._id === user._id
+  if (decoded.id !== user.id) {
+    res.status(403);
+    throw new Error("Not authorized");
+  }
 
-  const token = generateToken(
+  const newToken = generateToken(
     decoded._id,
     decoded.role,
     process.env.JWT_SECRET,
     process.env.JWT_LIFE
   );
-  res.status(200).json({ refreshToken });
+
+  res.status(200).json({ newToken });
 });
 
 // @desc Get all users
@@ -362,6 +397,7 @@ const generateToken = (id, role, secret, life) => {
 export {
   registerUser,
   loginUser,
+  logoutUser,
   refreshToken,
   getUsers,
   getUser,
