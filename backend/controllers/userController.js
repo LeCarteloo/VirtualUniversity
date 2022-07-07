@@ -120,11 +120,16 @@ const loginUser = asyncHandler(async (req, res) => {
   await User.findOneAndUpdate({ email }, { refreshToken: refreshToken });
 
   // TODO: On production add secure: true (for https only)
-  // Sending HTTP only cookie
-  res.cookie("token", refreshToken, { httpOnly: true, maxAge: 86400000 });
+  // Sending HTTP only cookie and user object with token
+  res.cookie("token", refreshToken, {
+    secure: true,
+    httpOnly: true,
+    sameSite: "none",
+    // expires: new Date(Date.now() + 3600 * 1000 * 24 * 180 * 1),
+    maxAge: 86400000,
+  });
 
-  // Sending user with token
-  res.status(200).json({
+  res.json({
     _id: user.id,
     name: user.name,
     surname: user.surname,
@@ -170,10 +175,13 @@ const logoutUser = asyncHandler(async (req, res) => {
 // @route POST /api/users/refresh
 // @access Public
 const refreshToken = asyncHandler(async (req, res) => {
+  console.log("YO");
   // HTTP only cookie
   const cookies = req.cookies;
-  console.log(cookies);
+
+  console.log("cookies", cookies);
   if (!cookies || !cookies.token) {
+    console.log("YO");
     res.status(401);
     throw new Error("Missing token");
   }

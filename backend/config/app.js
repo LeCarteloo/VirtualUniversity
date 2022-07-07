@@ -12,20 +12,23 @@ import eventRouter from "../routes/eventRoutes.js";
 const app = express();
 
 // Allowing cross origin (for testing on localhost)
-const allowCrossDomain = (req, res, next) => {
+const corsOptions = (req, res, next) => {
   res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.header("Access-Control-Allow-Credentials", true);
   res.header("Access-Control-Allow-Methods", "*");
-  res.header("Access-Control-Allow-Headers", "*, authorization");
-  res.header("Access-Control-Allow-Credentials", "true");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "*, Origin, X-Requested-With, Content-Type, Accept, authorization, withCredentials"
+  );
 
   next();
 };
 
 // Parsing bodies
+app.use(corsOptions);
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(allowCrossDomain);
 
 // Overridding default error handler with custom one
 app.use(errorHandler);
