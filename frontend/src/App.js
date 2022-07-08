@@ -18,6 +18,7 @@ import RequireAuth from "./context/RequireAuth";
 import en_US from "./languages/en/app.json";
 import pl_PL from "./languages/pl/app.json";
 import Unauthorized from "./components/Unauthorized";
+import Session from "./components/Session";
 
 // Initializing i18n with tranlsation files
 i18n.use(initReactI18next).init({
@@ -36,35 +37,23 @@ function App() {
 
   return (
     <Suspense fallback="Loading...">
-      <Router>
-        <div className="container">
-          <Routes>
-            <Route path="/" exact element={<Login />} />
-            <Route path="remind" exact element={<Remind />} />
-            {/* Protected routes */}
-            <Route
-              path="home/*"
-              exact
-              element={
-                <RequireAuth allowedRole={"student"}>
-                  <Home />
-                </RequireAuth>
-              }
-            />
-            <Route
-              path="admin/*"
-              exact
-              element={
-                <RequireAuth allowedRole={"admin"}>
-                  <Admin />
-                </RequireAuth>
-              }
-            />
-            <Route path="/unauthorized" element={<Unauthorized />} />
-            {/* <Route path="*" element={} /> */}
-          </Routes>
-        </div>
-      </Router>
+      <div className="container">
+        <Routes>
+          <Route path="/" exact default element={<Login />} />
+          <Route path="remind" exact element={<Remind />} />
+          {/* Protected routes */}
+          <Route element={<Session />}>
+            <Route element={<RequireAuth allowedRole={"student"} />}>
+              <Route path="student/*" exact element={<Home />} />
+            </Route>
+            <Route element={<RequireAuth allowedRole={"admin"} />}>
+              <Route path="admin/*" exact element={<Admin />} />
+            </Route>
+          </Route>
+          <Route path="/unauthorized" element={<Unauthorized />} />
+          {/* <Route path="*" element={} /> */}
+        </Routes>
+      </div>
     </Suspense>
   );
 }

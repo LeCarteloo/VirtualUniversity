@@ -2,6 +2,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
 // Auth
 import { AuthProvider } from "./context/AuthProvider";
@@ -9,7 +10,11 @@ import { AuthProvider } from "./context/AuthProvider";
 ReactDOM.render(
   <React.StrictMode>
     <AuthProvider>
-      <App />
+      <Router>
+        <Routes>
+          <Route path="/*" element={<App />} />
+        </Routes>
+      </Router>
     </AuthProvider>
   </React.StrictMode>,
   document.getElementById("root")

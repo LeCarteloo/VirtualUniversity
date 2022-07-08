@@ -1,9 +1,11 @@
 import useAuth from "../hooks/useAuth";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
 
-const RequireAuth = ({ allowedRole, children }) => {
+const RequireAuth = ({ allowedRole }) => {
   const { auth } = useAuth();
   const location = useLocation();
+
+  console.log("RequireAuth", auth);
 
   // Replacing navigation history
   if (!auth.role || !auth.token) {
@@ -11,7 +13,7 @@ const RequireAuth = ({ allowedRole, children }) => {
   }
 
   return auth.role === allowedRole ? (
-    children
+    <Outlet />
   ) : (
     <Navigate to="/unauthorized" state={{ from: location }} replace />
   );

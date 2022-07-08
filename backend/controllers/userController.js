@@ -125,7 +125,6 @@ const loginUser = asyncHandler(async (req, res) => {
     secure: true,
     httpOnly: true,
     sameSite: "none",
-    // expires: new Date(Date.now() + 3600 * 1000 * 24 * 180 * 1),
     maxAge: 86400000,
   });
 
@@ -175,13 +174,10 @@ const logoutUser = asyncHandler(async (req, res) => {
 // @route POST /api/users/refresh
 // @access Public
 const refreshToken = asyncHandler(async (req, res) => {
-  console.log("YO");
   // HTTP only cookie
   const cookies = req.cookies;
 
-  console.log("cookies", cookies);
   if (!cookies || !cookies.token) {
-    console.log("YO");
     res.status(401);
     throw new Error("Missing token");
   }
@@ -209,7 +205,7 @@ const refreshToken = asyncHandler(async (req, res) => {
     process.env.JWT_LIFE
   );
 
-  res.status(200).json({ token: newToken });
+  res.status(200).json({ role: decoded.role, token: newToken });
 });
 
 // @desc Get all users

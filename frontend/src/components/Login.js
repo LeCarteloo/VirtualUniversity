@@ -33,22 +33,23 @@ const Login = () => {
     if (!password) {
       setPasswordError(`Password cannot be empty!`);
     }
-
     try {
       const response = await axios.post(
         "/users/login",
         JSON.stringify({ email: login, password }),
         {
+          withCredentials: true,
           headers: {
             "Content-Type": "application/json",
-            withCredentials: true,
           },
         }
       );
 
       const { role, token } = response.data;
       const from =
-        location.state?.from?.pathname || role === "admin" ? "/admin" : "/home";
+        location.state?.from?.pathname || role === "admin"
+          ? "/admin/users"
+          : "/student/articles";
 
       setAuth({ role, token });
       navigate(from, { replace: true });
