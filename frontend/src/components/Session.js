@@ -9,15 +9,11 @@ const Session = () => {
   const refresh = useRefreshToken();
   const { auth } = useAuth();
 
-  console.log("Session", auth);
-
   // Only run when component loads
   useEffect(() => {
-    console.log("Session - useEffect");
     const verifyToken = async () => {
       try {
-        const test = await refresh();
-        console.log(test);
+        await refresh();
       } catch (error) {
         console.error(error);
       } finally {

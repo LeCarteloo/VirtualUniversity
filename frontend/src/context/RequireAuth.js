@@ -5,8 +5,6 @@ const RequireAuth = ({ allowedRole }) => {
   const { auth } = useAuth();
   const location = useLocation();
 
-  console.log("RequireAuth", auth);
-
   // Replacing navigation history
   if (!auth.role || !auth.token) {
     return <Navigate to="/" state={{ from: location }} replace />;

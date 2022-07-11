@@ -37,7 +37,7 @@ const AdminTable = ({
         </div>
       </div>
       <div className="table-slider">
-        {users.length === 0 ? (
+        {!users ? (
           <Loading />
         ) : (
           <table className="table-normal">

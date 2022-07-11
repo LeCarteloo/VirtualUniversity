@@ -119,12 +119,12 @@ const loginUser = asyncHandler(async (req, res) => {
   // Updating the refresh token inside logging user
   await User.findOneAndUpdate({ email }, { refreshToken: refreshToken });
 
-  // TODO: On production add secure: true (for https only)
+  // TODO: On production uncomment options below
   // Sending HTTP only cookie and user object with token
   res.cookie("token", refreshToken, {
-    secure: true,
-    httpOnly: true,
-    sameSite: "none",
+    // secure: true,
+    // httpOnly: true,
+    // sameSite: "none",
     maxAge: 86400000,
   });
 
@@ -199,7 +199,7 @@ const refreshToken = asyncHandler(async (req, res) => {
   }
 
   const newToken = generateToken(
-    decoded._id,
+    decoded.id,
     decoded.role,
     process.env.JWT_SECRET,
     process.env.JWT_LIFE
