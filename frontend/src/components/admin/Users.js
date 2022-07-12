@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import AdminTable from "./AdminTable";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useNavigate, useLocation } from "react-router-dom";
-import Loading from "../Loading";
 
 const Users = () => {
   const [users, setUsers] = useState();
@@ -24,12 +23,14 @@ const Users = () => {
     getUsers();
   }, []);
 
+  const headers = ["Name", "Surname", "Email", "Album"];
+
   return (
     <section
       className="users-section"
       style={{ width: "100%", height: "100%" }}
     >
-      <AdminTable title={"Users"} data={users} />
+      <AdminTable title={"Users"} data={users} headers={headers} />
     </section>
   );
 };

@@ -154,25 +154,6 @@ button {
   }
 }
 
-.search-input {
-  border-radius: 10px;
-  margin-right: 1em;
-  padding: 0.4em;
-  height: 1.6em;
-  background-color: global.$fourth;
-  display: flex;
-  align-items: center;
-  input {
-    width: 100%;
-    font-size: 0.9em;
-    margin-left: 0.2em;
-    background-color: transparent;
-    border: none;
-    outline: none;
-    color: global.$font;
-  }
-}
-
 .action-btn {
   .action-tooltip {
     position: absolute;

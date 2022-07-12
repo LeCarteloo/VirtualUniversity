@@ -9,16 +9,50 @@ import {
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import Loading from "../Loading";
+import { useEffect, useState } from "react";
 
 const AdminTable = ({
   title,
   data,
-  filter,
+  headers,
   onAdd,
   onEdit,
   onRemove,
   onSee,
 }) => {
+  // Hooks for keeping the order state and the filtered data
+  const [order, setOrder] = useState(1);
+  const [items, setItems] = useState();
+
+  // Refreshing component after data changes
+  useEffect(() => {
+    setItems(data);
+  }, [data]);
+
+  // Function for sorting columns (ASC / DESC)
+  const sortColumn = (column) => {
+    const sortedItems = items.sort((a, b) =>
+      a[column] > b[column] ? order : -order
+    );
+    setItems(sortedItems);
+    setOrder(-order);
+  };
+
+  // Searching function for search input
+  const onSearch = (value) => {
+    if (value !== "") {
+      const searchData = data.filter((item) => {
+        return Object.values(item)
+          .join("")
+          .toLowerCase()
+          .includes(value.toLowerCase());
+      });
+      setItems(searchData);
+    } else {
+      setItems(data);
+    }
+  };
+
   return (
     <div className="table-wrapper">
       <div className="wrapper-header">
@@ -27,28 +61,30 @@ const AdminTable = ({
           <button className="btn-add">
             <FontAwesomeIcon icon={faPlus} size={"lg"} />
           </button>
-          <SearchInput placeholder={`Search for ${title.toLowerCase()}...`} />
-          <p className="text-filter">Filter by:</p>
-          <select className="table-filter" name="users" id="users">
-            <option value="name">Name</option>
-            <option value="name">Surname</option>
-            <option value="name">Album</option>
-          </select>
+          <SearchInput
+            placeholder={`Search for ${title.toLowerCase()}...`}
+            onChange={(e) => onSearch(e.target.value)}
+          />
         </div>
       </div>
       <div className="table-slider">
         <table className="table-normal">
           <tbody>
             <tr>
-              <th>Name</th>
-              <th>Surname</th>
-              <th>Email</th>
-              <th>Album</th>
+              {headers &&
+                headers.map((header, key) => (
+                  <th
+                    key={key}
+                    onClick={() => sortColumn(header.toLowerCase())}
+                  >
+                    {header}
+                  </th>
+                ))}
               <th>Action</th>
             </tr>
-            {data &&
-              data.map((user, i) => (
-                <tr key={i}>
+            {items &&
+              items.map((user, key) => (
+                <tr key={key}>
                   <td>{user.name}</td>
                   <td>{user.surname}</td>
                   <td>{user.email}</td>
@@ -76,10 +112,10 @@ const AdminTable = ({
               ))}
           </tbody>
         </table>
-        {!data ? (
+        {!items ? (
           <Loading />
         ) : (
-          data.length === 0 && (
+          items.length === 0 && (
             <p style={{ textAlign: "center" }}>No data to display...</p>
           )
         )}
