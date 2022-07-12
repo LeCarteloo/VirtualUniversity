@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import AdminTable from "./AdminTable";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useNavigate, useLocation } from "react-router-dom";
+import Loading from "../Loading";
 
 const Users = () => {
   const [users, setUsers] = useState();
@@ -28,7 +29,7 @@ const Users = () => {
       className="users-section"
       style={{ width: "100%", height: "100%" }}
     >
-      <AdminTable title={"Users"} users={users} />
+      <AdminTable title={"Users"} data={users} />
     </section>
   );
 };

@@ -28,7 +28,7 @@ const Session = () => {
     }
   }, []);
 
-  return <>{isLoading ? <Loading /> : <Outlet />}</>;
+  return <>{isLoading ? <Loading size="lg" /> : <Outlet />}</>;
 };
 
 export default Session;

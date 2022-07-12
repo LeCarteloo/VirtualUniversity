@@ -1,13 +1,15 @@
 import "../styles/loading.scss";
 
-const Loading = () => {
+const Loading = ({ size }) => {
   return (
-    <div className="loadingio-spinner-rolling-6mm2zxa2ccl">
-      <div className="ldio-mfnav3lxr7">
-        <div></div>
-      </div>
+    <div className="spinner-container">
+      <div className={`${size}`}></div>
     </div>
   );
+};
+
+Loading.defaultProps = {
+  size: "sm",
 };
 
 export default Loading;

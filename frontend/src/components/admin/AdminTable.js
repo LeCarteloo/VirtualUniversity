@@ -12,7 +12,7 @@ import Loading from "../Loading";
 
 const AdminTable = ({
   title,
-  users,
+  data,
   filter,
   onAdd,
   onEdit,
@@ -37,48 +37,51 @@ const AdminTable = ({
         </div>
       </div>
       <div className="table-slider">
-        {!users ? (
+        <table className="table-normal">
+          <tbody>
+            <tr>
+              <th>Name</th>
+              <th>Surname</th>
+              <th>Email</th>
+              <th>Album</th>
+              <th>Action</th>
+            </tr>
+            {data &&
+              data.map((user, i) => (
+                <tr key={i}>
+                  <td>{user.name}</td>
+                  <td>{user.surname}</td>
+                  <td>{user.email}</td>
+                  <td>{user.album}</td>
+                  <td>
+                    <div className="action-btn">
+                      <FontAwesomeIcon icon={faEllipsis} size="xl" />
+                      <div className="action-tooltip">
+                        <button className="action-row">
+                          <span>See more</span>
+                          <FontAwesomeIcon icon={faEye} size="lg" />
+                        </button>
+                        <button className="action-row">
+                          <span>Edit User</span>
+                          <FontAwesomeIcon icon={faGear} size="lg" />
+                        </button>
+                        <button className="action-row">
+                          <span>Remove User</span>
+                          <FontAwesomeIcon icon={faTrash} size="lg" />
+                        </button>
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
+        {!data ? (
           <Loading />
         ) : (
-          <table className="table-normal">
-            <tbody>
-              <tr>
-                <th>Name</th>
-                <th>Surname</th>
-                <th>Email</th>
-                <th>Album</th>
-                <th>Action</th>
-              </tr>
-              {users &&
-                users.map((user, i) => (
-                  <tr key={i}>
-                    <td>{user.name}</td>
-                    <td>{user.surname}</td>
-                    <td>{user.email}</td>
-                    <td>{user.album}</td>
-                    <td>
-                      <div className="action-btn">
-                        <FontAwesomeIcon icon={faEllipsis} size="xl" />
-                        <div className="action-tooltip">
-                          <button className="action-row">
-                            <span>See more</span>
-                            <FontAwesomeIcon icon={faEye} size="lg" />
-                          </button>
-                          <button className="action-row">
-                            <span>Edit User</span>
-                            <FontAwesomeIcon icon={faGear} size="lg" />
-                          </button>
-                          <button className="action-row">
-                            <span>Remove User</span>
-                            <FontAwesomeIcon icon={faTrash} size="lg" />
-                          </button>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
+          data.length === 0 && (
+            <p style={{ textAlign: "center" }}>No data to display...</p>
+          )
         )}
       </div>
     </div>
