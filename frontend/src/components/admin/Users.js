@@ -13,7 +13,6 @@ const Users = () => {
     const getUsers = async () => {
       try {
         const response = await axiosPrivate.get("/users");
-        console.log(response.data);
         setUsers(response.data);
       } catch (error) {
         console.error(error);

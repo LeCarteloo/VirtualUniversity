@@ -2,7 +2,7 @@ import "../../styles/graduationWork.scss";
 import GroupTable from "../GroupTable";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
-import TextInput from "../TextInput";
+import Input from "../Input";
 import Button from "../Button";
 import Modal from "../Modal";
 
@@ -59,15 +59,15 @@ const GraduationWork = () => {
         onClose={() => setShowModal(!showModal)}
       >
         <form>
-          <TextInput label={"Title"} />
-          <TextInput label={"Language"} />
+          <Input label={"Title"} />
+          <Input label={"Language"} />
           <div className="input-container">
             <div className="input">
               <textarea placeholder=" " cols="30" rows="10"></textarea>
               <label>Synopsis</label>
             </div>
           </div>
-          <TextInput label={"Keywords"} />
+          <Input label={"Keywords"} />
           <Button text={"Add information"} />
         </form>
       </Modal>

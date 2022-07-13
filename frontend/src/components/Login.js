@@ -9,8 +9,9 @@ import BgAuth from "../assets/bg-auth.svg";
 
 // Components
 import Button from "./Button";
-import TextInput from "./TextInput";
+import Input from "./Input";
 import axios from "../api/axios";
+import { faSackDollar } from "@fortawesome/free-solid-svg-icons";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -71,16 +72,19 @@ const Login = () => {
         <div className="auth-inputs">
           <h2>Remind password</h2>
           <form className="auth-form" onSubmit={onSubmit}>
-            <TextInput
+            <Input
               label="Login"
+              labelBg={"#1c1c2c"}
+              leadIcon={faSackDollar}
               error={loginError}
               onChange={(e) => {
                 setLogin(e.target.value);
               }}
             />
-            <TextInput
+            <Input
               type="password"
               label="Password"
+              labelBg={"#1c1c2c"}
               error={passwordError}
               onChange={(e) => {
                 setPassword(e.target.value);

@@ -1,36 +1,49 @@
 @use "./global" as global;
 
 .input-container {
-  .input {
+  margin: 1.5em 0 1em 0;
+
+  .input-wrapper {
     position: relative;
-    margin: 1.5em 0 1em 0;
+
     input,
     textarea {
       outline: none;
       border: none;
-      width: 100%;
+      width: calc(100% - 1.4em);
       height: 1.5em;
       font-size: 1em;
       padding: 0.7em;
-      background-color: global.$fourth;
+      background-color: transparent;
       color: global.$font;
 
-      border-top-left-radius: 10px;
-      border-top-right-radius: 10px;
-      border-bottom: 1.5px solid global.$font;
+      border-radius: 5px;
+      border: 1.5px solid global.$font;
     }
+
     textarea {
       height: 9em;
-      // font-size: 1.2em;
       font-family: "Roboto", sans-serif;
     }
+
     label {
       position: absolute;
-      top: 25%;
-      left: 5%;
+      top: 0.7em;
+      left: 0.7em;
       font-size: 1.2em;
-      transition: ease-in-out 0.3s;
+      transition: ease-in-out 0.2s;
       pointer-events: none;
+      &.hasLeadIcn {
+        left: 2.6em;
+      }
+    }
+
+    input {
+      // &:-webkit-autofill {
+      //   -webkit-box-shadow: 200px 200px 100px black inset;
+      //   box-shadow: 200px 200px 100px global.$bg inset;
+      //   color: #fff;
+      // }
     }
 
     input:focus,
@@ -43,6 +56,7 @@
       color: global.$primary;
       top: -20%;
       left: 1%;
+      padding: 0 0.75em 0 0.4em;
       transform: scale(0.85);
     }
 
@@ -51,20 +65,41 @@
       color: global.$primary;
       top: -6%;
       left: 1%;
+      padding: 0 0.75em 0 0.4em;
       transform: scale(0.85);
     }
 
     input.error {
       border-color: global.$error;
+      ~ label {
+        color: global.$error;
+        &::after {
+          content: "*";
+          position: absolute;
+        }
+      }
     }
-    input.error ~ label {
-      color: global.$error;
+
+    input.hasLeadIcn {
+      width: calc(100% - 3.5em - 3px);
+      padding-left: 2.8em;
     }
   }
-  .display-error {
+  .error-msg {
     color: global.$error;
     margin-top: 0.25em;
     transition: 0.5s;
+  }
+  .error-icon {
+    position: absolute;
+    top: 25%;
+    right: 5%;
+    color: global.$error;
+  }
+  .leading-icon {
+    position: absolute;
+    top: 25%;
+    left: 5%;
   }
 }
 

@@ -37,6 +37,7 @@ const Admin = () => {
         <Routes>
           <Route path="/users" exact element={<Users />} />
           <Route path="/subjects" exact element={<Subjects />} />
+          <Route path="*" element={<Subjects />} />
         </Routes>
       </section>
     </section>

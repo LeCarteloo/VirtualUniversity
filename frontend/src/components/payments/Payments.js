@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 
 // Components
 import GroupTable from "../GroupTable";
-import TextInput from "../TextInput";
+import Input from "../Input";
 import Button from "../Button";
 import Modal from "../Modal";
 
@@ -52,9 +52,9 @@ const Payments = () => {
         footer={"*Bank account will be checked in two working days"}
       >
         <form>
-          <TextInput label={"Account number"} />
-          <TextInput label={"Bank name"} />
-          <TextInput label={"Currency"} />
+          <Input label={"Account number"} />
+          <Input label={"Bank name"} />
+          <Input label={"Currency"} />
           <Button text={"Add bank"} />
         </form>
       </Modal>

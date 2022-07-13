@@ -19,6 +19,7 @@ import en_US from "./languages/en/app.json";
 import pl_PL from "./languages/pl/app.json";
 import Unauthorized from "./components/Unauthorized";
 import Session from "./components/Session";
+import NotFound from "./components/NotFound";
 
 // Initializing i18n with tranlsation files
 i18n.use(initReactI18next).init({
@@ -51,7 +52,7 @@ function App() {
             </Route>
           </Route>
           <Route path="/unauthorized" element={<Unauthorized />} />
-          {/* <Route path="*" element={} /> */}
+          {/* <Route path="*" element={<NotFound />} /> */}
         </Routes>
       </div>
     </Suspense>

@@ -7,7 +7,7 @@ import LoginPeople from "../assets/login_people.svg";
 import BgAuth from "../assets/bg-auth.svg";
 
 import Button from "./Button";
-import TextInput from "./TextInput";
+import Input from "./Input";
 
 const Remind = () => {
   const [login, setLogin] = useState("");
@@ -34,14 +34,14 @@ const Remind = () => {
         <div className="auth-inputs remind">
           <h2>Remind password</h2>
           <form className="auth-form" onSubmit={onSubmit}>
-            <TextInput
+            <Input
               label="Login"
               error={loginError}
               onChange={(e) => {
                 setLogin(e.target.value);
               }}
             />
-            <TextInput
+            <Input
               label="Email"
               error={emailError}
               onChange={(e) => {

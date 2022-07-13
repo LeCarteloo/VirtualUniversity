@@ -8,7 +8,7 @@ import { useTranslation } from "react-i18next";
 // Components
 import Modal from "../Modal";
 import Button from "../Button";
-import TextInput from "../TextInput";
+import Input from "../Input";
 import GroupTable from "../GroupTable";
 
 const Student = () => {
@@ -56,8 +56,8 @@ const Student = () => {
       >
         <form>
           {/* onClick={(e) => e.preventDefault()} */}
-          <TextInput label={"Email"} />
-          <TextInput label={"Telephone number"} />
+          <Input label={"Email"} />
+          <Input label={"Telephone number"} />
           <Button text={"Change data"} />
         </form>
       </Modal>
