@@ -7,7 +7,7 @@
   bottom: 0;
   z-index: 10;
   background-color: rgba(black, 0.5);
-
+  overflow: hidden;
   .modal-content {
     position: absolute;
     top: 50%;
@@ -29,9 +29,14 @@
       }
     }
 
-    .modal-body {
+    .modal-wrapper {
+      max-height: 515px;
+      overflow: auto;
       border-top: 2px solid rgba(global.$primary, 1);
-      padding-bottom: 1em;
+      .modal-body {
+        overflow: hidden;
+        padding-bottom: 1em;
+      }
     }
 
     .modal-footer {

@@ -18,7 +18,9 @@ const Modal = ({ title, footer, show, children, onClose }) => {
             <FontAwesomeIcon icon={faTimes} size="2xl" />
           </button>
         </div>
-        <div className="modal-body">{children}</div>
+        <div className="modal-wrapper">
+          <div className="modal-body">{children}</div>
+        </div>
         {footer && <div className="modal-footer">{footer}</div>}
       </div>
     </div>,

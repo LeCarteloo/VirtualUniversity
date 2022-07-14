@@ -5,6 +5,9 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 const Users = () => {
   const [users, setUsers] = useState();
+  // INFO: When showing modal component is refreshed
+  // Should be somehow channged
+  const [showModal, setShowModal] = useState(false);
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const location = useLocation();
@@ -13,6 +16,7 @@ const Users = () => {
     const getUsers = async () => {
       try {
         const response = await axiosPrivate.get("/users");
+        console.log(response.data);
         setUsers(response.data);
       } catch (error) {
         console.error(error);

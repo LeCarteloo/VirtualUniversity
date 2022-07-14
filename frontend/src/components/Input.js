@@ -4,7 +4,16 @@ import PropTypes from "prop-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 
-const Input = ({ type, label, labelBg, value, leadIcon, error, onChange }) => {
+const Input = ({
+  type,
+  label,
+  labelBg,
+  value,
+  leadIcon,
+  error,
+  onChange,
+  isReadOnly,
+}) => {
   return (
     <div className="input-container">
       <div className="input-wrapper">
@@ -18,6 +27,7 @@ const Input = ({ type, label, labelBg, value, leadIcon, error, onChange }) => {
           className={`${error && "error"} ${leadIcon && "hasLeadIcn"}`}
           placeholder=" "
           autoComplete="off"
+          readOnly={isReadOnly}
         />
         <label
           className={leadIcon && "hasLeadIcn"}
@@ -41,6 +51,7 @@ const Input = ({ type, label, labelBg, value, leadIcon, error, onChange }) => {
 Input.defaultProps = {
   type: "text",
   labelBg: "#242434",
+  isReadOnly: false,
 };
 
 Input.propTypes = {
