@@ -49,31 +49,46 @@ const AdminTable = ({ title, data, headers, onAdd, onEdit, onRemove }) => {
   };
 
   // Display modal
-  const displayModal = (dispData) => {
-    console.log(dispData);
-    console.log(modal);
+  const displayModal = (items) => {
+    if (!items) {
+      return;
+    }
+
     return (
       <Modal
         title={"More details"}
         show={modal.show}
         onClose={() => setModal({ show: false, data: {} })}
       >
-        <div
-          style={{
-            display: "flex",
-            width: "100%",
-            justifyContent: "space-between",
-          }}
-        >
-          <Input label="Name" value={dispData?.name} isReadOnly={true} />
-          <Input label="Surname" value={dispData?.surname} isReadOnly={true} />
-          <Input label="Email" value={dispData?.email} isReadOnly={true} />
-        </div>
-        <Input
-          label="Album"
-          value={dispData?.album?.toString()}
-          isReadOnly={true}
-        />
+        {Object.keys(items).map((itemKey, i) =>
+          Array.isArray(items[itemKey]) ? (
+            <details key={`array-details-${i}`}>
+              <summary>{itemKey.toString()}</summary>
+              <div>
+                {items[itemKey].map((obj, j) => (
+                  <div key={`array-div-${j}`} className="array-display">
+                    {Object.keys(obj).map((objKey, k) => (
+                      <Input
+                        key={`array-input-${k}`}
+                        label={objKey.toString()}
+                        labelBg="#2f3142"
+                        value={obj[objKey].toString()}
+                        isReadOnly={true}
+                      />
+                    ))}
+                  </div>
+                ))}
+              </div>
+            </details>
+          ) : (
+            <Input
+              key={`modal-input-${i}`}
+              label={itemKey.toString()}
+              value={items[itemKey].toString()}
+              isReadOnly={true}
+            />
+          )
+        )}
       </Modal>
     );
   };

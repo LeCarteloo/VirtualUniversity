@@ -2,7 +2,7 @@
 
 .input-container {
   margin: 1.5em 0 1em 0;
-
+  width: 100%;
   .input-wrapper {
     position: relative;
 
@@ -10,10 +10,9 @@
     textarea {
       outline: none;
       border: none;
-      width: calc(100% - 1.4em - 3px);
-      height: 1.5em;
+      width: calc(100% - 1.6em - 3px);
       font-size: 1em;
-      padding: 0.7em;
+      padding: 0.8em;
       background-color: transparent;
       color: global.$font;
 
@@ -33,6 +32,9 @@
       font-size: 1.2em;
       transition: ease-in-out 0.2s;
       pointer-events: none;
+      &::first-letter {
+        text-transform: capitalize;
+      }
       &.hasLeadIcn {
         left: 2.6em;
       }

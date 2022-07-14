@@ -29,7 +29,7 @@ userRouter.get("/:email", protectUser, getUser);
 userRouter.get("/role/:role", protectUser, getUsersByRole);
 userRouter.get("/grades/:userId", protectUser, getAverageGrade);
 userRouter.get("/charges/:courseId", protectUser, getCharges);
-userRouter.put("/account", protectUser, addAccount);
+userRouter.post("/account", protectUser, addAccount);
 userRouter.put("/charges/:userId", protectUser, updateCharge);
 
 export default userRouter;

@@ -221,7 +221,7 @@ const getUsers = asyncHandler(async (req, res) => {
   }
 
   // Get all users
-  const users = await User.find().select("-password -role");
+  const users = await User.find().select("-password -role -__v -refreshToken");
 
   res.status(200).json(users);
 });
@@ -253,7 +253,7 @@ const getUser = asyncHandler(async (req, res) => {
 });
 
 // @desc Add bank account
-// @route PUT /api/users/account
+// @route POST /api/users/account
 // @access Private
 const addAccount = asyncHandler(async (req, res) => {
   const { bankName, accountNumber, currency } = req.body;

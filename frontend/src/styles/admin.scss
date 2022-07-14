@@ -1,5 +1,6 @@
 @use "./global";
 @use "./animation";
+
 .table-wrapper {
   border-radius: 10px;
   background-color: global.$secondary;
@@ -42,5 +43,25 @@
         color: global.$primary;
       }
     }
+  }
+}
+
+details {
+  padding: 0.8em;
+  border: 1.5px solid #fff;
+  border-radius: 5px;
+  margin: 1.5em 0 1em 0;
+  summary::first-letter {
+    text-transform: capitalize;
+  }
+  .array-display {
+    background-color: global.$fourth;
+    border-radius: 5px;
+    padding: 0.5em;
+    margin-top: 0.8em;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    justify-content: space-between;
+    gap: 0em 0.5em;
   }
 }
