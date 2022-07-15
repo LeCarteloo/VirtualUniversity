@@ -1,6 +1,7 @@
 import "../../styles/admin.scss";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Empty from "../../assets/test.svg";
 import {
   faEye,
   faEllipsis,
@@ -13,11 +14,20 @@ import Loading from "../Loading";
 import Modal from "../Modal";
 import Input from "../Input";
 
-const AdminTable = ({ title, data, headers, onAdd, onEdit, onRemove }) => {
+const AdminTable = ({
+  title,
+  data,
+  headers,
+  dispAddModal,
+  onEdit,
+  onRemove,
+}) => {
   // Hooks for keeping the order state and the filtered data
   const [order, setOrder] = useState(1);
   const [items, setItems] = useState();
   const [modal, setModal] = useState({ show: false, data: {} });
+
+  const [addModal, setAddModal] = useState(false);
 
   // Refreshing component after data changes
   useEffect(() => {
@@ -105,7 +115,13 @@ const AdminTable = ({ title, data, headers, onAdd, onEdit, onRemove }) => {
         <div className="wrapper-header">
           <h2 className="table-title"> {title} </h2>
           <div style={{ display: "flex", alignItems: "center" }}>
-            <button className="btn-add">
+            <button
+              className="btn-add"
+              onClick={(e) => {
+                e.stopPropagation();
+                setAddModal(!addModal);
+              }}
+            >
               <FontAwesomeIcon icon={faPlus} size={"lg"} />
             </button>
             <SearchInput
@@ -168,12 +184,23 @@ const AdminTable = ({ title, data, headers, onAdd, onEdit, onRemove }) => {
             <Loading />
           ) : (
             items.length === 0 && (
-              <p style={{ textAlign: "center" }}>No data to display...</p>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  opacity: "0.6",
+                }}
+              >
+                <img src={Empty} width={"100px"} height={"100px"} />
+                <p style={{ margin: "0.5em 0 0.5em 0" }}>No data to display</p>
+              </div>
             )
           )}
         </div>
       </div>
-      {displayModal(modal.data)}
+      {modal.show && displayModal(modal.data)}
+      {addModal && dispAddModal(addModal, () => setAddModal(false))}
     </>
   );
 };
