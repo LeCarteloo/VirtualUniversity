@@ -11,7 +11,6 @@ import BgAuth from "../assets/bg-auth.svg";
 import Button from "./Button";
 import Input from "./Input";
 import axios from "../api/axios";
-import { faSackDollar } from "@fortawesome/free-solid-svg-icons";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -75,11 +74,11 @@ const Login = () => {
             <Input
               label="Login"
               labelBg={"#1c1c2c"}
-              leadIcon={faSackDollar}
               error={loginError}
               onChange={(e) => {
                 setLogin(e.target.value);
               }}
+              value={login}
             />
             <Input
               type="password"
@@ -89,6 +88,7 @@ const Login = () => {
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
+              value={password}
             />
             <Button text="Login in" />
             {/* Admin shorcut for development */}

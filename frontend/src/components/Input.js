@@ -9,18 +9,18 @@ const Input = ({
   label,
   labelBg,
   value,
+  name,
   leadIcon,
   error,
   onChange,
   isReadOnly,
+  pattern,
 }) => {
   return (
     <div className="input-container">
       <div className="input-wrapper">
-        {leadIcon && (
-          <FontAwesomeIcon icon={faUser} size="xl" className="leading-icon" />
-        )}
         <input
+          name={name}
           type={type}
           value={value}
           onChange={onChange}
@@ -28,6 +28,7 @@ const Input = ({
           placeholder=" "
           autoComplete="off"
           readOnly={isReadOnly}
+          pattern={pattern}
         />
         <label
           className={leadIcon && "hasLeadIcn"}
@@ -35,15 +36,16 @@ const Input = ({
         >
           {label}
         </label>
-        {error && (
-          <FontAwesomeIcon
-            icon={faCircleExclamation}
-            size="xl"
-            className="error-icon"
-          />
+        {leadIcon && (
+          <FontAwesomeIcon icon={faUser} size="xl" className="leading-icon" />
         )}
+        <FontAwesomeIcon
+          icon={faCircleExclamation}
+          size="xl"
+          className="error-icon"
+        />
+        <p className="error-msg">{error}</p>
       </div>
-      {error && <p className="error-msg">{error}</p>}
     </div>
   );
 };

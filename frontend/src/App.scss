@@ -12,6 +12,20 @@ body {
   color: #fff;
 }
 
+::-webkit-scrollbar {
+  border-radius: 10px;
+  background-color: rgba($color: global.$bg, $alpha: 0.8);
+}
+::-webkit-scrollbar-button {
+  height: 0;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: global.$primary;
+  border-radius: 10px;
+}
+
 html,
 body {
   height: 100%;

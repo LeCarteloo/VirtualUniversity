@@ -3,105 +3,113 @@
 .input-container {
   margin: 1.5em 0 0em 0;
   width: 100%;
-  .input-wrapper {
-    position: relative;
+  position: relative;
 
-    input,
-    textarea {
-      outline: none;
-      border: none;
-      width: calc(100% - 1.6em - 3px);
-      font-size: 1em;
-      padding: 0.8em;
-      background-color: transparent;
-      color: global.$font;
+  input,
+  textarea {
+    outline: none;
+    width: calc(100% - 1.6em - 3px);
+    font-size: 1em;
+    padding: 0.8em;
+    transition: ease-in-out 0.2s;
+    background-color: transparent;
+    color: global.$font;
 
-      border-radius: 5px;
-      border: 1.5px solid global.$font;
+    border-radius: 5px;
+    border: 1.5px solid global.$font;
+  }
+
+  textarea {
+    height: 9em;
+    font-family: "Roboto", sans-serif;
+  }
+
+  label {
+    position: absolute;
+    top: 0.7em;
+    left: 0.7em;
+    font-size: 1.2em;
+    transition: ease-in-out 0.2s;
+    pointer-events: none;
+    &::first-letter {
+      text-transform: capitalize;
     }
-
-    textarea {
-      height: 9em;
-      font-family: "Roboto", sans-serif;
-    }
-
-    label {
-      position: absolute;
-      top: 0.7em;
-      left: 0.7em;
-      font-size: 1.2em;
-      transition: ease-in-out 0.2s;
-      pointer-events: none;
-      &::first-letter {
-        text-transform: capitalize;
-      }
-      &.hasLeadIcn {
-        left: 2.6em;
-      }
-    }
-
-    input {
-      // &:-webkit-autofill {
-      //   -webkit-box-shadow: 200px 200px 100px black inset;
-      //   box-shadow: 200px 200px 100px global.$bg inset;
-      //   color: #fff;
-      // }
-    }
-
-    input:focus,
-    textarea:focus {
-      border-color: global.$primary;
-    }
-
-    input:focus ~ label,
-    input:not(:placeholder-shown) ~ label {
-      color: global.$primary;
-      top: -20%;
-      left: 1%;
-      padding: 0 0.75em 0 0.4em;
-      transform: scale(0.85);
-    }
-
-    textarea:focus ~ label,
-    textarea:not(:placeholder-shown) ~ label {
-      color: global.$primary;
-      top: -6%;
-      left: 1%;
-      padding: 0 0.75em 0 0.4em;
-      transform: scale(0.85);
-    }
-
-    input.error {
-      border-color: global.$error;
-      ~ label {
-        color: global.$error;
-        &::after {
-          content: "*";
-          position: absolute;
-        }
-      }
-    }
-
-    input.hasLeadIcn {
-      width: calc(100% - 3.5em - 3px);
-      padding-left: 2.8em;
+    &.hasLeadIcn {
+      left: 2.6em;
     }
   }
+
+  input:focus,
+  textarea:focus {
+    border-color: global.$primary;
+  }
+
+  input:focus ~ label,
+  input:not(:placeholder-shown) ~ label {
+    color: global.$primary;
+    top: -0.6em;
+    left: 0.2em;
+    padding: 0 0.75em 0 0.4em;
+    transform: scale(0.85);
+    ~ .leading-icon {
+      color: global.$primary;
+    }
+  }
+
+  textarea:focus ~ label,
+  textarea:not(:placeholder-shown) ~ label {
+    color: global.$primary;
+    top: -1em;
+    left: 0.1em;
+    padding: 0 0.75em 0 0.4em;
+    transform: scale(0.85);
+  }
+
+  input.hasLeadIcn {
+    width: calc(100% - 3.5em - 3px);
+    padding-left: 2.8em;
+  }
+
   .error-msg {
     color: global.$error;
     margin-top: 0.25em;
-    transition: 0.5s;
+    display: none;
   }
   .error-icon {
     position: absolute;
-    top: 25%;
-    right: 5%;
+    top: 0.5em;
+    right: 0.8em;
+    opacity: 0;
+    transition: ease-in-out 0.2s;
     color: global.$error;
   }
   .leading-icon {
     position: absolute;
-    top: 25%;
-    left: 5%;
+    top: 0.5em;
+    left: 0.8em;
+    transition: ease-in-out 0.2s;
+  }
+
+  input:invalid {
+    color: global.$error;
+    border-color: global.$error;
+    ~ label {
+      color: global.$error;
+      &::after {
+        content: "*";
+        position: absolute;
+      }
+      ~ .error-icon {
+        opacity: 1;
+      }
+      ~ .error-msg {
+        transition: 0.5s;
+        display: block;
+      }
+      ~ .leading-icon {
+        color: global.$error;
+      }
+    }
   }
 }
 

@@ -5,7 +5,7 @@ import Subject from "../models/subjectModel.js";
 // @route GET /api/subjects
 // @access Private
 const getAllSubjects = asyncHandler(async (req, res) => {
-  const subjects = await Subject.find();
+  const subjects = await Subject.find().select("-__v");
 
   res.status(200).json(subjects);
 });
@@ -36,17 +36,17 @@ const updateSubject = asyncHandler(async (req, res) => {
 
   if (!subject) {
     res.status(400);
-    throw new Error("Subject doesn't exist!")
+    throw new Error("Subject doesn't exist!");
   }
 
   const updatedSubject = await Subject.findByIdAndUpdate(
-    req.params.id, 
-    req.body, 
+    req.params.id,
+    req.body,
     { new: true }
-  )
+  );
 
   res.status(200).json(updatedSubject);
-})
+});
 
 // @desc Delete subject
 // @route DELETE /api/subjects/:id
@@ -56,13 +56,12 @@ const deleteSubject = asyncHandler(async (req, res) => {
 
   if (!subject) {
     res.status(400);
-    throw new Error("Subject doesn't exist!")
+    throw new Error("Subject doesn't exist!");
   }
 
-  const deletedSubject = await Subject.findByIdAndDelete(req.params.id)
+  const deletedSubject = await Subject.findByIdAndDelete(req.params.id);
 
-  res.status(200).json(deletedSubject)
+  res.status(200).json(deletedSubject);
 });
-
 
 export { getAllSubjects, addSubject, updateSubject, deleteSubject };

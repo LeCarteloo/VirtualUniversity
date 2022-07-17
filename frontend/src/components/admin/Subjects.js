@@ -1,41 +1,36 @@
 import AdminTable from "./AdminTable";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Subjects = () => {
-  const [subjects, setSubjects] = useState(null);
+  const [subjects, setSubjects] = useState();
+  const axiosPrivate = useAxiosPrivate();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const url = "http://localhost:5000/api/subjects";
-  axios.get(url);
   useEffect(() => {
     const getSubjects = async () => {
       try {
-        const token =
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyN2Q1MGRiNzIzODU4NWFmYTBjMWZiMiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTY1NjU5NDA4MSwiZXhwIjoxNjU2ODUzMjgxfQ.36fDWD4hdH12wLZqCT8fKph9-IPNkvR9hZcLFGPdMWw";
-        axios.defaults.headers.common = { Authorization: `bearer ${token}` };
-        const url = "http://localhost:5000/api/subjects";
-        const response = axios.get(url);
-        if (response && response.data) {
-          setSubjects(response.data);
-        }
+        const response = await axiosPrivate.get("/subjects");
+        setSubjects(response.data);
       } catch (error) {
-        if (error.response) {
-          // If not in the 200 response range
-          //   console.log(error.response.data, error.response.status);
-        } else {
-          // Zero response from the server
-          //   console.log(error.message);
-        }
+        console.error(error);
+        // navigate("/", { state: { from: location }, replace: true });
       }
     };
+    getSubjects();
   }, []);
+
+  const headers = ["Name", "Type", "Credit"];
 
   return (
     <section
       className="users-section"
       style={{ width: "100%", height: "100%" }}
     >
-      <AdminTable title={"Subjects"} />
+      <AdminTable title={"Subjects"} data={subjects} headers={headers} />
     </section>
   );
 };

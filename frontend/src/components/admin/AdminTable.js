@@ -1,7 +1,7 @@
 import "../../styles/admin.scss";
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Empty from "../../assets/test.svg";
+import Empty from "../../assets/empty.svg";
 import {
   faEye,
   faEllipsis,
@@ -14,14 +14,8 @@ import Loading from "../Loading";
 import Modal from "../Modal";
 import Input from "../Input";
 
-const AdminTable = ({
-  title,
-  data,
-  headers,
-  dispAddModal,
-  onEdit,
-  onRemove,
-}) => {
+const AdminTable = ({ title, data, headers, onEdit, onRemove, onAdd }) => {
+  console.log("refresh log");
   // Hooks for keeping the order state and the filtered data
   const [order, setOrder] = useState(1);
   const [items, setItems] = useState();
@@ -59,7 +53,7 @@ const AdminTable = ({
   };
 
   // Display modal
-  const displayModal = (items) => {
+  const displaySeeModal = (items) => {
     if (!items) {
       return;
     }
@@ -199,8 +193,7 @@ const AdminTable = ({
           )}
         </div>
       </div>
-      {modal.show && displayModal(modal.data)}
-      {addModal && dispAddModal(addModal, () => setAddModal(false))}
+      {modal.show && displaySeeModal(modal.data)}
     </>
   );
 };
