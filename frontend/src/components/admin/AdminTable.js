@@ -77,7 +77,7 @@ const AdminTable = ({ title, data, headers, onEdit, onRemove, onAdd }) => {
                         label={objKey.toString()}
                         labelBg="#2f3142"
                         value={obj[objKey].toString()}
-                        isReadOnly={true}
+                        readOnly={true}
                       />
                     ))}
                   </div>
@@ -89,7 +89,7 @@ const AdminTable = ({ title, data, headers, onEdit, onRemove, onAdd }) => {
               key={`modal-input-${i}`}
               label={itemKey.toString()}
               value={items[itemKey].toString()}
-              isReadOnly={true}
+              readOnly={true}
             />
           )
         )}

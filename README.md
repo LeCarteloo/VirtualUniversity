@@ -121,15 +121,17 @@ In progress...
 - [ ] Multi-language support
   - [x] English
   - [ ] Polish
+- [ ] Screen readers suppot (ARIA)
 
 ### Backend
 
 - [x] Connect backend with MongoDB
 - [x] Implement MongoDB database
 - [x] Authentication
-- [ ] API in Express
-  - [ ] Get and update methods
-  - [ ] Post and remove methods
+- [x] API in Express
+  - [x] Get and update methods
+  - [x] Post and remove methods
+  - [ ] Unit tests for API
 
 See the [open issues](https://github.com/LeCarteloo/VirtualUniversity/issues) for a full list of known issues.
 
