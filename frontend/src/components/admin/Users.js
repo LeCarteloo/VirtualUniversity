@@ -9,6 +9,7 @@ import Dropdown from "../Dropdown";
 
 const Users = () => {
   const [users, setUsers] = useState();
+  const [courses, setCourses] = useState();
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const location = useLocation();
@@ -20,10 +21,9 @@ const Users = () => {
     email: "",
     password: "",
     album: "",
+    role: "",
+    course: "",
   });
-
-  const [role, setRole] = useState();
-  const [course, setCourse] = useState();
 
   const headers = ["Name", "Surname", "Email", "Album"];
 
@@ -42,7 +42,7 @@ const Users = () => {
       label: "Email",
       type: "email",
       error: "Email should be a valid email adress",
-      pattern: "/\\S+@\\S+\\.\\S+/", // Not working
+      // pattern: "/\\S+@\\S+\\.\\S+/", // Not working
     },
     {
       label: "Password",
@@ -53,19 +53,9 @@ const Users = () => {
         "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$",
     },
     { label: "Album", error: "It will be auto-generated later" },
-    { label: "Role", error: "Pick a role" },
-    { label: "Course", error: "Pick a course" },
   ];
 
-  const roleOptions = ["Student", "Teacher", "Admin"];
-
-  const courseOptions = [
-    "Placeholder1",
-    "Placeholder2",
-    "Placeholder3",
-    "Placeholder4",
-    "Placeholder5",
-  ];
+  const roles = ["Student", "Teacher", "Admin"];
 
   useEffect(() => {
     const getUsers = async () => {
@@ -78,11 +68,30 @@ const Users = () => {
         navigate("/", { state: { from: location }, replace: true });
       }
     };
+
+    const getCourses = async () => {
+      try {
+        const response = await axiosPrivate.get("/courses");
+        let nameArray = [];
+        response.data.forEach((element) => {
+          nameArray.push(element.name);
+        });
+        setCourses(nameArray);
+      } catch (error) {
+        console.error(error);
+      }
+    };
     getUsers();
+    getCourses();
   }, []);
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const response = await axiosPrivate.post("/register", {});
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const onChange = (e) => {
@@ -97,12 +106,6 @@ const Users = () => {
       <AdminTable title={"Users"} data={users} headers={headers} />
       <Modal title={"Add user"} show={true}>
         <form onSubmit={onSubmit}>
-          <Dropdown state={role} setState={setRole} options={roleOptions} />
-          <Dropdown
-            state={course}
-            setState={setCourse}
-            options={courseOptions}
-          />
           {inputs.map((input, i) => (
             <Input
               key={`users-input-${i}`}
@@ -112,6 +115,16 @@ const Users = () => {
               onChange={onChange}
             />
           ))}
+          <Dropdown
+            state={user.role}
+            setState={(role) => setUser({ ...user, role: role })}
+            options={roles}
+          />
+          <Dropdown
+            state={user.course}
+            setState={(course) => setUser({ ...user, course: course })}
+            options={courses}
+          />
           <Button text="Add user"></Button>
         </form>
       </Modal>

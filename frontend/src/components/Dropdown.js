@@ -7,6 +7,7 @@ const Dropdown = ({ state, setState, options }) => {
 
   return (
     <button
+      type="button"
       className="dropdown-btn"
       onClick={(e) => {
         e.stopPropagation();
@@ -18,16 +19,17 @@ const Dropdown = ({ state, setState, options }) => {
         <FontAwesomeIcon icon={faAngleUp} size="xl" />
       </div>
       <div className={`options ${isOpen && "open"}`}>
-        {options.map((option, i) => (
-          <div
-            key={`dropdown-option-${i}`}
-            className={`option ${option === state && "selected"}`}
-            onClick={() => setState(option)}
-            tabIndex={0}
-          >
-            {option}
-          </div>
-        ))}
+        {options &&
+          options.map((option, i) => (
+            <div
+              key={`dropdown-option-${i}`}
+              className={`option ${option === state && "selected"}`}
+              onClick={() => setState(option)}
+              tabIndex={0}
+            >
+              {option}
+            </div>
+          ))}
       </div>
     </button>
   );

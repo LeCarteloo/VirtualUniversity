@@ -1,11 +1,16 @@
 import express from "express";
 import { protectUser } from "../middleware/authMiddleware.js";
-import { addCharge, addCourse } from "../controllers/courseController.js";
+import {
+  addCharge,
+  addCourse,
+  getCourses,
+} from "../controllers/courseController.js";
 
 const courseRouter = express.Router();
-courseRouter.use(protectUser);
+// courseRouter.use(protectUser);
 
-courseRouter.post("/", addCourse);
-courseRouter.post("/charges/:id", addCharge);
+courseRouter.get("/", protectUser, getCourses);
+courseRouter.post("/", protectUser, addCourse);
+courseRouter.post("/charges/:id", protectUser, addCharge);
 
 export default courseRouter;

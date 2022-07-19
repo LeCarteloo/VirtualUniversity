@@ -32,7 +32,7 @@
 
     .modal-wrapper {
       max-height: 515px;
-      overflow: auto;
+      overflow-y: scroll;
       border-top: 2px solid rgba(global.$primary, 1);
       .modal-body {
         overflow: hidden;
