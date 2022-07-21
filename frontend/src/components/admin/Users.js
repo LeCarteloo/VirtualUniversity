@@ -10,11 +10,15 @@ import Dropdown from "../Dropdown";
 const Users = () => {
   const [users, setUsers] = useState();
   const [courses, setCourses] = useState();
+  const [addModal, setAddModal] = useState();
+
+  const [roleError, setRoleError] = useState();
+  const [courseError, setCourseError] = useState();
+
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const location = useLocation();
 
-  // const [selected, setSelected] = useState("Choose value");
   const [user, setUser] = useState({
     name: "",
     surname: "",
@@ -43,6 +47,7 @@ const Users = () => {
       type: "email",
       error: "Email should be a valid email adress",
       // pattern: "/\\S+@\\S+\\.\\S+/", // Not working
+      autoComplete: "new-password",
     },
     {
       label: "Password",
@@ -51,17 +56,21 @@ const Users = () => {
         "Password should be 8-20 characters and include at least 1 letter, 1 number and 1 special character",
       pattern:
         "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$",
+      autoComplete: "new-password",
     },
     { label: "Album", error: "It will be auto-generated later" },
   ];
 
-  const roles = ["Student", "Teacher", "Admin"];
+  const roles = [
+    { _id: "1", name: "Student" },
+    { _id: "2", name: "Teacher" },
+    { _id: "3", name: "Admin" },
+  ];
 
   useEffect(() => {
     const getUsers = async () => {
       try {
         const response = await axiosPrivate.get("/users");
-        // console.log(response.data);
         setUsers(response.data);
       } catch (error) {
         console.error(error);
@@ -72,11 +81,7 @@ const Users = () => {
     const getCourses = async () => {
       try {
         const response = await axiosPrivate.get("/courses");
-        let nameArray = [];
-        response.data.forEach((element) => {
-          nameArray.push(element.name);
-        });
-        setCourses(nameArray);
+        setCourses(response.data);
       } catch (error) {
         console.error(error);
       }
@@ -86,9 +91,24 @@ const Users = () => {
   }, []);
 
   const onSubmit = async (e) => {
+    console.log("submit");
     e.preventDefault();
+
+    if (user.course === "") {
+      setCourseError("Please choose one of the courses");
+      return;
+    }
+
+    if (user.role === "") {
+      setRoleError("Please choose one of the roles");
+      return;
+    }
+
     try {
-      const response = await axiosPrivate.post("/register", {});
+      const response = await axiosPrivate.post(
+        "users/register",
+        JSON.stringify({ ...user, course: user.course._id })
+      );
     } catch (error) {
       console.error(error);
     }
@@ -103,8 +123,17 @@ const Users = () => {
       className="users-section"
       style={{ width: "100%", height: "100%" }}
     >
-      <AdminTable title={"Users"} data={users} headers={headers} />
-      <Modal title={"Add user"} show={true}>
+      <AdminTable
+        title={"Users"}
+        data={users}
+        headers={headers}
+        onAdd={() => setAddModal(true)}
+      />
+      <Modal
+        title={"Add user"}
+        show={addModal}
+        onClose={() => setAddModal(!addModal)}
+      >
         <form onSubmit={onSubmit}>
           {inputs.map((input, i) => (
             <Input
@@ -117,13 +146,15 @@ const Users = () => {
           ))}
           <Dropdown
             state={user.role}
-            setState={(role) => setUser({ ...user, role: role })}
+            setState={(role) => setUser({ ...user, role: role.name })}
             options={roles}
+            error={roleError}
           />
           <Dropdown
-            state={user.course}
+            state={user.course.name}
             setState={(course) => setUser({ ...user, course: course })}
             options={courses}
+            error={courseError}
           />
           <Button text="Add user"></Button>
         </form>

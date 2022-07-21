@@ -109,13 +109,7 @@ const AdminTable = ({ title, data, headers, onEdit, onRemove, onAdd }) => {
         <div className="wrapper-header">
           <h2 className="table-title"> {title} </h2>
           <div style={{ display: "flex", alignItems: "center" }}>
-            <button
-              className="btn-add"
-              onClick={(e) => {
-                e.stopPropagation();
-                setAddModal(!addModal);
-              }}
-            >
+            <button className="btn-add" onClick={onAdd}>
               <FontAwesomeIcon icon={faPlus} size={"lg"} />
             </button>
             <SearchInput
