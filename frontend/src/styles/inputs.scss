@@ -73,7 +73,6 @@
   .error-msg {
     color: global.$error;
     margin-top: 0.25em;
-    display: none;
   }
   .error-icon {
     position: absolute;
@@ -90,7 +89,7 @@
     transition: ease-in-out 0.2s;
   }
 
-  input:invalid {
+  input.error {
     color: global.$error;
     border-color: global.$error;
     ~ label {

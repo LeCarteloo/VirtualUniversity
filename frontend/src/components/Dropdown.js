@@ -10,7 +10,7 @@ const Dropdown = ({ state, setState, options, error }) => {
     <>
       <button
         type="button"
-        className="dropdown-btn"
+        className={`dropdown-btn ${error && "error"}`}
         onClick={(e) => {
           e.stopPropagation();
           setIsOpen(!isOpen);
@@ -34,7 +34,7 @@ const Dropdown = ({ state, setState, options, error }) => {
             ))}
         </div>
       </button>
-      <p className="error-msg">{error}</p>
+      {error && <p className="error-msg">{error}</p>}
     </>
   );
 };

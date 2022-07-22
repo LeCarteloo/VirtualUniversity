@@ -261,6 +261,11 @@ button {
       }
     }
   }
+
+  &.error {
+    color: global.$error;
+    border-color: global.$error;
+  }
 }
 
 .error-msg {
