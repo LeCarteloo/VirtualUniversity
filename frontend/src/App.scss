@@ -26,6 +26,11 @@ body {
   border-radius: 10px;
 }
 
+.error-toast {
+  background: global.$fourth !important;
+  color: global.$font !important;
+}
+
 html,
 body {
   height: 100%;

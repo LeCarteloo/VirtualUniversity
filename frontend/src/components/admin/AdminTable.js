@@ -15,13 +15,10 @@ import Modal from "../Modal";
 import Input from "../Input";
 
 const AdminTable = ({ title, data, headers, onEdit, onRemove, onAdd }) => {
-  console.log("refresh log");
   // Hooks for keeping the order state and the filtered data
   const [order, setOrder] = useState(1);
   const [items, setItems] = useState();
   const [modal, setModal] = useState({ show: false, data: {} });
-
-  const [addModal, setAddModal] = useState(false);
 
   // Refreshing component after data changes
   useEffect(() => {
@@ -76,7 +73,7 @@ const AdminTable = ({ title, data, headers, onEdit, onRemove, onAdd }) => {
                         key={`array-input-${k}`}
                         label={objKey.toString()}
                         labelBg="#2f3142"
-                        value={obj[objKey].toString()}
+                        value={obj[objKey] !== null ? obj[objKey] : "-"}
                         readOnly={true}
                       />
                     ))}

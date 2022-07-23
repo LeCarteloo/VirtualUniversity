@@ -1,11 +1,12 @@
 // Stylesheet
 import "./App.scss";
 
-// React stuff
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+// React imports
+import { Route, Routes } from "react-router-dom";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import { Suspense } from "react";
+import { ToastContainer } from "react-toastify";
 
 // Importing Components
 import Login from "./components/Login";
@@ -13,13 +14,13 @@ import Remind from "./components/Remind";
 import Home from "./components/Home";
 import Admin from "./components/admin/Admin";
 import RequireAuth from "./context/RequireAuth";
+import Unauthorized from "./components/Unauthorized";
+import Session from "./components/Session";
+import NotFound from "./components/NotFound";
 
 // Languages
 import en_US from "./languages/en/app.json";
 import pl_PL from "./languages/pl/app.json";
-import Unauthorized from "./components/Unauthorized";
-import Session from "./components/Session";
-import NotFound from "./components/NotFound";
 
 // Initializing i18n with tranlsation files
 i18n.use(initReactI18next).init({
@@ -39,6 +40,7 @@ function App() {
   return (
     <Suspense fallback="Loading...">
       <div className="container">
+        <ToastContainer />
         <Routes>
           <Route path="/" exact default element={<Login />} />
           <Route path="remind" exact element={<Remind />} />

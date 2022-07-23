@@ -119,7 +119,7 @@ const Users = () => {
 
     setErrors({ ...errors, ...validateErrors });
 
-    for (const error of Object.values(errors)) {
+    for (const error of Object.values(validateErrors)) {
       if (error !== "") {
         return;
       }
@@ -130,14 +130,25 @@ const Users = () => {
         "users/register",
         JSON.stringify({ ...user, course: user.course._id })
       );
+      setUsers([...users, response.data]);
+      setUser({
+        name: "",
+        surname: "",
+        email: "",
+        password: "",
+        album: "",
+        role: "",
+        course: "",
+      });
     } catch (error) {
-      toast.error(error.response.data.message, {
+      toast.error(error?.response.data.message, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
-        className: "toast",
+        theme: "dark",
+        className: "error-toast",
       });
     }
   };
@@ -168,7 +179,6 @@ const Users = () => {
       className="users-section"
       style={{ width: "100%", height: "100%" }}
     >
-      <ToastContainer />
       <AdminTable
         title={"Users"}
         data={users}

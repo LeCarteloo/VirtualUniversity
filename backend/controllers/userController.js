@@ -9,10 +9,10 @@ import jwt from "jsonwebtoken";
 // @access Public
 const registerUser = asyncHandler(async (req, res) => {
   // TODO: In future album should be auto generated
-  const { name, surname, email, password, album, role, course } = req.body;
+  const { name, surname, email, password, role, course } = req.body;
 
   // Checking if all fields are provided
-  if (!name || !surname || !email || !password || !album || !role || !course) {
+  if (!name || !surname || !email || !password || !role || !course) {
     res.status(400);
     throw new Error("Please add all fields");
   }
@@ -26,25 +26,23 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 
   // Check if course exists
-  // const courseExist = await Course.findById(course);
+  const courseExist = await Course.findById(course);
 
-  // if (!courseExist) {
-  //   res.status(400);
-  //   throw new Error("Course doesn't exist");
-  // }
+  if (!courseExist) {
+    res.status(400);
+    throw new Error("Course doesn't exist");
+  }
+
+  // For tests only
+  const album = courseExist.year + Math.floor(Math.random() * 100);
 
   let subjects = [];
 
-  // for (const subjectId of courseExist.subjects) {
-  //   subjects.push({
-  //     subjectId: subjectId,
-  //     // firstTerm: null,
-  //     // secondTerm: null,
-  //     // conditional: null,
-  //     // promotion: null,
-  //     // committe: null,
-  //   });
-  // }
+  for (const subjectId of courseExist.subjects) {
+    subjects.push({
+      subjectId: subjectId,
+    });
+  }
 
   // Hashing the password
   const salt = await bcrypt.genSalt(10);
@@ -66,12 +64,11 @@ const registerUser = asyncHandler(async (req, res) => {
     _id: user.id,
     name: user.name,
     surname: user.surname,
-    // token: generateToken(
-    //   user._id,
-    //   user.role,
-    //   process.env.JWT_SECRET,
-    //   process.env.JWT_LIFE
-    // ),
+    email: user.email,
+    album: user.album,
+    role: user.role,
+    course: user.course,
+    subjects: user.subjects,
   });
 });
 
