@@ -1,6 +1,7 @@
 import express from "express";
 import {
   addAccount,
+  deleteUser,
   getAverageGrade,
   getCharges,
   getUser,
@@ -11,6 +12,7 @@ import {
   refreshToken,
   registerUser,
   updateCharge,
+  updateUser,
 } from "../controllers/userController.js";
 import { protectUser } from "../middleware/authMiddleware.js";
 
@@ -24,6 +26,8 @@ userRouter.post("/register", registerUser);
 userRouter.post("/login", loginUser);
 userRouter.get("/logout", logoutUser);
 userRouter.get("/refresh", refreshToken);
+userRouter.delete("/:id", protectUser, deleteUser);
+userRouter.put("/:id", protectUser, updateUser);
 userRouter.get("/", protectUser, getUsers);
 userRouter.get("/:email", protectUser, getUser);
 userRouter.get("/role/:role", protectUser, getUsersByRole);

@@ -140,13 +140,12 @@ const Users = () => {
         role: "",
         course: "",
       });
+      toast.success("Successfully added user", {
+        theme: "dark",
+        className: "error-toast",
+      });
     } catch (error) {
-      toast.error(error?.response.data.message, {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
+      toast.error(error?.response?.data?.message, {
         theme: "dark",
         className: "error-toast",
       });
@@ -174,6 +173,22 @@ const Users = () => {
     };
   };
 
+  const onRemove = async (id) => {
+    try {
+      const response = await axiosPrivate.delete(`/users/${id.toString()}`);
+      toast.success("Successfully removed user", {
+        theme: "dark",
+        className: "error-toast",
+      });
+      setUsers(users.filter((user) => user._id !== response.data._id));
+    } catch (error) {
+      toast.error(error?.response?.data?.message, {
+        theme: "dark",
+        className: "error-toast",
+      });
+    }
+  };
+
   return (
     <section
       className="users-section"
@@ -184,6 +199,7 @@ const Users = () => {
         data={users}
         headers={headers}
         onAdd={() => setAddModal(true)}
+        onRemove={onRemove}
       />
       <Modal
         title={"Add user"}

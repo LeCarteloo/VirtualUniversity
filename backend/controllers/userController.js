@@ -55,7 +55,7 @@ const registerUser = asyncHandler(async (req, res) => {
     email,
     password: hashedPassword,
     album,
-    role,
+    role: role.toLowerCase(),
     course,
     subjects,
   });
@@ -165,6 +165,38 @@ const logoutUser = asyncHandler(async (req, res) => {
   // TODO: On production add secure: true (for https only)
   res.clearCookie("token", { httpOnly: true, maxAge: 86400000 });
   res.sendStatus(204);
+});
+
+// @desc Update user
+// @route PUT /api/users/:id
+// @access Private
+const updateUser = asyncHandler(async (req, res) => {
+  const user = User.findById(req.params.id);
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User doesn't exist!");
+  }
+
+  const updatedUser = User.findByIdAndUpdate(req.params.id, req.body);
+
+  res.status(200).json(updatedUser);
+});
+
+// @desc Delete user
+// @route DELETE /api/users/:id
+// @access Private
+const deleteUser = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id);
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User doesn't exist!");
+  }
+
+  const deletedUser = await User.findByIdAndDelete(req.params.id);
+
+  res.status(200).json({ _id: deletedUser.id });
 });
 
 // @desc Refresh the JWT token
@@ -400,6 +432,8 @@ export {
   registerUser,
   loginUser,
   logoutUser,
+  updateUser,
+  deleteUser,
   refreshToken,
   getUsers,
   getUser,

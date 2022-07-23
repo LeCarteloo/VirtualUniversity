@@ -142,10 +142,7 @@ const AdminTable = ({ title, data, headers, onEdit, onRemove, onAdd }) => {
                         <div className="action-tooltip">
                           <button
                             className="action-row"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              onSee(item._id);
-                            }}
+                            onClick={() => onSee(item._id)}
                           >
                             <span>See more</span>
                             <FontAwesomeIcon icon={faEye} size="lg" />
@@ -154,7 +151,10 @@ const AdminTable = ({ title, data, headers, onEdit, onRemove, onAdd }) => {
                             <span>Edit User</span>
                             <FontAwesomeIcon icon={faGear} size="lg" />
                           </button>
-                          <button className="action-row">
+                          <button
+                            className="action-row"
+                            onClick={() => onRemove(item._id)}
+                          >
                             <span>Remove User</span>
                             <FontAwesomeIcon icon={faTrash} size="lg" />
                           </button>
