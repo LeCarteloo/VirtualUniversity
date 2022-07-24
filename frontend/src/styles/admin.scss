@@ -32,6 +32,9 @@
         background-color: global.$fourth;
       }
     }
+    td:last-child {
+      width: 150px;
+    }
     th,
     td {
       padding: 0.8em;

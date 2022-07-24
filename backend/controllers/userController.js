@@ -3,6 +3,8 @@ import User from "../models/userModel.js";
 import Course from "../models/courseModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import Subject from "../models/subjectModel.js";
+import mongoose from "mongoose";
 
 // @desc Register a new user
 // @route POST /api/users/register
@@ -171,14 +173,29 @@ const logoutUser = asyncHandler(async (req, res) => {
 // @route PUT /api/users/:id
 // @access Private
 const updateUser = asyncHandler(async (req, res) => {
-  const user = User.findById(req.params.id);
+  const { name, surname, album, role, course } = req.body;
+  const user = await User.findById(req.params.id);
 
   if (!user) {
     res.status(400);
     throw new Error("User doesn't exist!");
   }
 
-  const updatedUser = User.findByIdAndUpdate(req.params.id, req.body);
+  const updatedUser = await User.findByIdAndUpdate(
+    req.params.id,
+    {
+      name,
+      surname,
+      album,
+      role,
+      course,
+    },
+    {
+      new: true,
+    }
+  );
+
+  console.log(updatedUser);
 
   res.status(200).json(updatedUser);
 });
@@ -390,6 +407,65 @@ const getUsersByRole = asyncHandler(async (req, res) => {
   res.status(200).json(users);
 });
 
+// @desc Get user
+// @route GET /api/users/grades/me
+// @access Private
+const getMyGrades = asyncHandler(async (req, res) => {
+  const { id } = req.user;
+
+  const user = await User.findById(id);
+
+  if (!user) {
+    res.status(400);
+    throw new Error("User doesn't exist!");
+  }
+
+  const test = await User.aggregate([
+    { $match: { _id: mongoose.Types.ObjectId(id) } },
+    {
+      $unwind: "$subjects",
+    },
+    {
+      $lookup: {
+        from: "subjects",
+        localField: "subjects.subjectId",
+        foreignField: "_id",
+        as: "ref",
+      },
+    },
+    {
+      $project: {
+        _id: 1,
+        name: 1,
+        subjects: {
+          id: "$subjects.subjectId",
+          name: {
+            $first: "$ref.name",
+          },
+          type: {
+            $first: "$ref.type",
+          },
+          firstTerm: "$subjects.firstTerm",
+          secondTerm: "$subjects.secondTerm",
+          conditional: "$subjects.conditional",
+          promotion: "$subjects.promotion",
+          committe: "$subjects.committe",
+        },
+      },
+    },
+    {
+      $group: {
+        _id: "$_id",
+        subjects: {
+          $push: "$subjects",
+        },
+      },
+    },
+  ]);
+
+  res.status(200).json(test);
+});
+
 // @desc Add grade to subject by userId
 // @route PUT /api/users/grades/:userId
 // @access Private
@@ -441,5 +517,6 @@ export {
   addAccount,
   getCharges,
   updateCharge,
+  getMyGrades,
   getAverageGrade,
 };

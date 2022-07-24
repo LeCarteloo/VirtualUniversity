@@ -147,7 +147,10 @@ const AdminTable = ({ title, data, headers, onEdit, onRemove, onAdd }) => {
                             <span>See more</span>
                             <FontAwesomeIcon icon={faEye} size="lg" />
                           </button>
-                          <button className="action-row">
+                          <button
+                            className="action-row"
+                            onClick={() => onEdit(item._id)}
+                          >
                             <span>Edit User</span>
                             <FontAwesomeIcon icon={faGear} size="lg" />
                           </button>

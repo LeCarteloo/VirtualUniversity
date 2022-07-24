@@ -13,7 +13,8 @@ import "../../styles/modal.scss";
 const Users = () => {
   const [users, setUsers] = useState();
   const [courses, setCourses] = useState();
-  const [addModal, setAddModal] = useState();
+  const [addModal, setAddModal] = useState(false);
+  const [editModal, setEditModal] = useState(false);
   const [user, setUser] = useState({
     name: "",
     surname: "",
@@ -98,7 +99,7 @@ const Users = () => {
     getCourses();
   }, []);
 
-  const onSubmit = async (e) => {
+  const onAddSubmit = async (e) => {
     e.preventDefault();
 
     let validateErrors = {};
@@ -152,6 +153,10 @@ const Users = () => {
     }
   };
 
+  const onEditSubmit = async (e) => {
+    e.preventDefault();
+  };
+
   const validate = (inputName, value, regex, error) => {
     if (value === "") {
       return {
@@ -171,6 +176,13 @@ const Users = () => {
       name: inputName,
       msg: "",
     };
+  };
+
+  const onEdit = (id) => {
+    const foundUser = users.find((obj) => obj._id === id);
+    console.log(foundUser);
+    setUser({ ...user, ...foundUser });
+    setEditModal(!editModal);
   };
 
   const onRemove = async (id) => {
@@ -199,14 +211,35 @@ const Users = () => {
         data={users}
         headers={headers}
         onAdd={() => setAddModal(true)}
+        onEdit={onEdit}
         onRemove={onRemove}
       />
       <Modal
         title={"Add user"}
         show={addModal}
-        onClose={() => setAddModal(!addModal)}
+        onClose={() => {
+          setAddModal(!addModal);
+          setUser({
+            name: "",
+            surname: "",
+            email: "",
+            password: "",
+            album: "",
+            role: "",
+            course: "",
+          });
+          setErrors({
+            name: "",
+            surname: "",
+            email: "",
+            password: "",
+            album: "",
+            role: "",
+            course: "",
+          });
+        }}
       >
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onAddSubmit}>
           {inputs.map((input, i) => (
             <Input
               key={`users-input-${i}`}
@@ -245,6 +278,54 @@ const Users = () => {
             error={errors.course}
           />
           <Button text="Add user"></Button>
+        </form>
+      </Modal>
+      <Modal
+        title={"Edit user"}
+        show={editModal}
+        onClose={() => {
+          setEditModal(!editModal);
+          setUser({
+            name: "",
+            surname: "",
+            email: "",
+            password: "",
+            album: "",
+            role: "",
+            course: "",
+          });
+          setErrors({
+            name: "",
+            surname: "",
+            email: "",
+            password: "",
+            album: "",
+            role: "",
+            course: "",
+          });
+        }}
+      >
+        <form onSubmit={onEditSubmit}>
+          {inputs.map((input, i) => (
+            <Input
+              key={`users-input-${i}`}
+              {...input}
+              name={input.label.toLowerCase()}
+              value={user[input.label.toLowerCase()]}
+              onChange={(e) => {
+                const error = validate(
+                  e.target.name,
+                  e.target.value,
+                  input.regex,
+                  input.error
+                );
+                setErrors({ ...errors, [error.name]: error.msg });
+                setUser({ ...user, [e.target.name]: e.target.value });
+              }}
+              error={errors[input.label.toLowerCase()]}
+            />
+          ))}
+          <Button text="Edit user"></Button>
         </form>
       </Modal>
     </section>

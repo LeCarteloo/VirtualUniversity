@@ -4,6 +4,7 @@ import {
   deleteUser,
   getAverageGrade,
   getCharges,
+  getMyGrades,
   getUser,
   getUsers,
   getUsersByRole,
@@ -31,6 +32,7 @@ userRouter.put("/:id", protectUser, updateUser);
 userRouter.get("/", protectUser, getUsers);
 userRouter.get("/:email", protectUser, getUser);
 userRouter.get("/role/:role", protectUser, getUsersByRole);
+userRouter.get("/grades/me", protectUser, getMyGrades);
 userRouter.get("/grades/:userId", protectUser, getAverageGrade);
 userRouter.get("/charges/:courseId", protectUser, getCharges);
 userRouter.post("/account", protectUser, addAccount);

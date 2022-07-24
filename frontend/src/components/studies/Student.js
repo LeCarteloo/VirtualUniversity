@@ -55,7 +55,6 @@ const Student = () => {
         onClose={() => setShowModal(!showModal)}
       >
         <form>
-          {/* onClick={(e) => e.preventDefault()} */}
           <Input label={"Email"} />
           <Input label={"Telephone number"} />
           <Button text={"Change data"} />
