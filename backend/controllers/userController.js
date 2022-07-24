@@ -420,7 +420,11 @@ const getMyGrades = asyncHandler(async (req, res) => {
     throw new Error("User doesn't exist!");
   }
 
-  const test = await User.aggregate([
+  /*
+    Joining two documents, getting names and types from Subject 
+    model by subjectIds found in Subject array inside User model 
+  */
+  const aggregation = await User.aggregate([
     { $match: { _id: mongoose.Types.ObjectId(id) } },
     {
       $unwind: "$subjects",
@@ -435,8 +439,6 @@ const getMyGrades = asyncHandler(async (req, res) => {
     },
     {
       $project: {
-        _id: 1,
-        name: 1,
         subjects: {
           id: "$subjects.subjectId",
           name: {
@@ -463,7 +465,8 @@ const getMyGrades = asyncHandler(async (req, res) => {
     },
   ]);
 
-  res.status(200).json(test);
+  // Temp. solution with [0]
+  res.status(200).json(aggregation[0].subjects);
 });
 
 // @desc Add grade to subject by userId

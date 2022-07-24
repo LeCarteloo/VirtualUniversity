@@ -9,7 +9,16 @@ import { useState } from "react";
 // Components
 import Table from "./Table";
 
-const Subject = ({ icon, title, type, grades }) => {
+const Subject = ({
+  icon,
+  name,
+  type,
+  firstTerm,
+  secondTerm,
+  conditional,
+  promotion,
+  committe,
+}) => {
   const [subjectItem, setSubjectItem] = useState(false);
   const [t] = useTranslation("translation");
 
@@ -24,7 +33,7 @@ const Subject = ({ icon, title, type, grades }) => {
       <div className="subject-text">
         <div className="subject-header">
           <div className="subject-info">
-            <span className="subject-name"> {title} </span>
+            <span className="subject-name"> {name} </span>
             <span className="subject-type"> {type} </span>
           </div>
           <FontAwesomeIcon
@@ -42,13 +51,7 @@ const Subject = ({ icon, title, type, grades }) => {
               t("grades.promotion"),
               t("grades.committe"),
             ]}
-            rows={[
-              grades.first,
-              grades.second,
-              grades.cond,
-              grades.promo,
-              grades.comit,
-            ]}
+            rows={[firstTerm, secondTerm, conditional, promotion, committe]}
             bg="transparent"
             padd={"0.3em 0.3em 0.3em 0"}
           />
@@ -60,13 +63,11 @@ const Subject = ({ icon, title, type, grades }) => {
 
 Subject.defaultProps = {
   icon: faBookBookmark,
-  grades: {
-    first: "-",
-    second: "-",
-    cond: "-",
-    promo: "-",
-    comit: "-",
-  },
+  firstTerm: "-",
+  secondTerm: "-",
+  conditional: "-",
+  promotion: "-",
+  committe: "-",
 };
 
 export default Subject;

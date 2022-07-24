@@ -1,13 +1,14 @@
-import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { useNavigate, useLocation } from "react-router-dom";
+import { validate } from "../../utility/validate";
+import { clear } from "../../utility/clear";
+import { useState, useEffect } from "react";
+import { toast } from "react-toastify";
 import AdminTable from "./AdminTable";
 import Dropdown from "../Dropdown";
 import Button from "../Button";
 import Modal from "../Modal";
 import Input from "../Input";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import "../../styles/modal.scss";
 
 const Users = () => {
@@ -132,15 +133,7 @@ const Users = () => {
         JSON.stringify({ ...user, course: user.course._id })
       );
       setUsers([...users, response.data]);
-      setUser({
-        name: "",
-        surname: "",
-        email: "",
-        password: "",
-        album: "",
-        role: "",
-        course: "",
-      });
+      setUser(clear(user));
       toast.success("Successfully added user", {
         theme: "dark",
         className: "error-toast",
@@ -155,27 +148,6 @@ const Users = () => {
 
   const onEditSubmit = async (e) => {
     e.preventDefault();
-  };
-
-  const validate = (inputName, value, regex, error) => {
-    if (value === "") {
-      return {
-        name: inputName,
-        msg: `${inputName[0].toUpperCase() + inputName.slice(1)} is required`,
-      };
-    }
-
-    if (!regex.test(value)) {
-      return {
-        name: inputName,
-        msg: error,
-      };
-    }
-
-    return {
-      name: inputName,
-      msg: "",
-    };
   };
 
   const onEdit = (id) => {
@@ -219,24 +191,8 @@ const Users = () => {
         show={addModal}
         onClose={() => {
           setAddModal(!addModal);
-          setUser({
-            name: "",
-            surname: "",
-            email: "",
-            password: "",
-            album: "",
-            role: "",
-            course: "",
-          });
-          setErrors({
-            name: "",
-            surname: "",
-            email: "",
-            password: "",
-            album: "",
-            role: "",
-            course: "",
-          });
+          setUser(clear(user));
+          setErrors(clear(errors));
         }}
       >
         <form onSubmit={onAddSubmit}>
@@ -285,24 +241,8 @@ const Users = () => {
         show={editModal}
         onClose={() => {
           setEditModal(!editModal);
-          setUser({
-            name: "",
-            surname: "",
-            email: "",
-            password: "",
-            album: "",
-            role: "",
-            course: "",
-          });
-          setErrors({
-            name: "",
-            surname: "",
-            email: "",
-            password: "",
-            album: "",
-            role: "",
-            course: "",
-          });
+          setUser(clear(user));
+          setErrors(clear(errors));
         }}
       >
         <form onSubmit={onEditSubmit}>
