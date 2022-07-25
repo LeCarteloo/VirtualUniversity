@@ -10,7 +10,7 @@ const subjectSchema = mongoose.Schema({
     required: [true, "Please add type!"],
   },
   hours: {
-    type: String,
+    type: Number,
     required: [true, "Please add hours!"],
   },
   ects: {
@@ -19,13 +19,13 @@ const subjectSchema = mongoose.Schema({
   },
   credit: {
     type: String,
-    required: [true, "Please add credit!"]
+    required: [true, "Please add credit!"],
   },
   lecturer: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
-    required: [true, "Please add lecturer!"]
-  }
+    required: [true, "Please add lecturer!"],
+  },
 });
 
 export default mongoose.model("Subject", subjectSchema);

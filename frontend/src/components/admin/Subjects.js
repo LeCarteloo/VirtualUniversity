@@ -1,13 +1,19 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
+import { validate } from "../../utility/validate";
+import { clear } from "../../utility/clear";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import AdminTable from "./AdminTable";
 import Modal from "../Modal";
 import Input from "../Input";
-import { validate } from "../../utility/validate";
+import Dropdown from "../Dropdown";
+import Button from "../Button";
+import "react-toastify/dist/ReactToastify.css";
 
 const Subjects = () => {
   const [subjects, setSubjects] = useState([]);
+  const [lecturers, setLecturers] = useState([]);
   const [addModal, setAddModal] = useState(false);
   const [subject, setSubject] = useState({
     name: "",
@@ -30,6 +36,87 @@ const Subjects = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  //  Graded credit/ non-graded credit / exam
+
+  const headers = ["Name", "Type", "Credit", "ECTS"];
+
+  const credits = [
+    { _id: "1", name: "Non-graded credit" },
+    { _id: "2", name: "Graded credit" },
+    { _id: "3", name: "Exam" },
+  ];
+
+  const inputs = [
+    {
+      label: "Name",
+      regex: /^[a-zA-Z\s]+$/,
+      error: "Name should contain only letters",
+    },
+    {
+      label: "Type",
+      regex: /^[a-zA-Z]+$/,
+      error: "Type should contain only letters",
+    },
+    {
+      label: "Hours",
+      regex: /^[0-9]+$/,
+      error: "Hours should be numeric",
+    },
+    {
+      label: "ECTS",
+      regex: /^[0-9]+$/,
+      error: "ECTS should be numeric",
+    },
+  ];
+
+  const onAddSubmit = async (e) => {
+    e.preventDefault();
+
+    let validateErrors = {};
+
+    // Validating all inputs and dropdowns
+    inputs.forEach((input) => {
+      const name = input.label.toLowerCase();
+      const error = validate(name, subject[name], input.regex, input.error);
+      validateErrors[error.name] = error.msg;
+    });
+
+    if (subject.credit === "") {
+      validateErrors["credit"] = "Please choose one of the credits";
+    }
+
+    if (subject.lecturer === "") {
+      validateErrors["lecturer"] = "Please choose one of the lecturers";
+    }
+
+    setErrors({ ...errors, ...validateErrors });
+
+    // Check if there is any error
+    for (const error of Object.values(validateErrors)) {
+      if (error !== "") {
+        return;
+      }
+    }
+
+    try {
+      const response = await axiosPrivate.post(
+        "/subjects",
+        JSON.stringify({ ...subject, lecturer: subject.lecturer._id })
+      );
+      setSubjects([...subjects, response.data]);
+      setSubject(clear(subject));
+      toast.success("Successfully added subject", {
+        theme: "dark",
+        className: "error-toast",
+      });
+    } catch (error) {
+      toast.error(error?.response?.data?.message, {
+        theme: "dark",
+        className: "error-toast",
+      });
+    }
+  };
+
   useEffect(() => {
     const getSubjects = async () => {
       try {
@@ -40,18 +127,17 @@ const Subjects = () => {
         // navigate("/", { state: { from: location }, replace: true });
       }
     };
+    const getLecturers = async () => {
+      try {
+        const response = await axiosPrivate.get("/users/role/lecturer");
+        setLecturers(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
     getSubjects();
+    getLecturers();
   }, []);
-
-  const headers = ["Name", "Type", "Credit", "ECTS"];
-
-  const inputs = [
-    {
-      label: "Name",
-      regex: /^[a-zA-Z]+$/,
-      error: "Name should contain only letters",
-    },
-  ];
 
   return (
     <section
@@ -69,25 +155,46 @@ const Subjects = () => {
         title={"Add subject"}
         onClose={() => setAddModal(!addModal)}
       >
-        {inputs.map((input, i) => (
-          <Input
-            key={`subjects-input-${i}`}
-            {...input}
-            name={input.label.toLowerCase()}
-            value={subject[input.label.toLowerCase()]}
-            onChange={(e) => {
-              const error = validate(
-                e.target.name,
-                e.target.value,
-                input.regex,
-                input.error
-              );
-              setErrors({ ...errors, [error.name]: error.msg });
-              setSubject({ ...subject, [e.target.name]: e.target.value });
+        <form onSubmit={onAddSubmit}>
+          {inputs.map((input, i) => (
+            <Input
+              key={`subjects-input-${i}`}
+              {...input}
+              name={input.label.toLowerCase()}
+              value={subject[input.label.toLowerCase()]}
+              onChange={(e) => {
+                const error = validate(
+                  e.target.name,
+                  e.target.value,
+                  input.regex,
+                  input.error
+                );
+                setErrors({ ...errors, [error.name]: error.msg });
+                setSubject({ ...subject, [e.target.name]: e.target.value });
+              }}
+              error={errors[input.label.toLowerCase()]}
+            />
+          ))}
+          <Dropdown
+            state={subject.lecturer.name}
+            setState={(lecturer) => {
+              setErrors({ ...errors, lecturer: "" });
+              setSubject({ ...subject, lecturer });
             }}
-            error={errors[input.label.toLowerCase()]}
+            options={lecturers}
+            error={errors.lecturer}
           />
-        ))}
+          <Dropdown
+            state={subject.credit}
+            setState={(credit) => {
+              setErrors({ ...errors, credit: "" });
+              setSubject({ ...subject, credit: credit.name });
+            }}
+            options={credits}
+            error={errors.credit}
+          />
+          <Button text={"Add subject"} />
+        </form>
       </Modal>
     </section>
   );

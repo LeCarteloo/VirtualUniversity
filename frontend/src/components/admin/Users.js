@@ -73,7 +73,7 @@ const Users = () => {
 
   const roles = [
     { _id: "1", name: "Student" },
-    { _id: "2", name: "Teacher" },
+    { _id: "2", name: "Lecturer" },
     { _id: "3", name: "Admin" },
   ];
 
@@ -105,6 +105,7 @@ const Users = () => {
 
     let validateErrors = {};
 
+    // Validating all inputs and dropdowns
     inputs.forEach((input) => {
       const name = input.label.toLowerCase();
       const error = validate(name, user[name], input.regex, input.error);
@@ -121,6 +122,7 @@ const Users = () => {
 
     setErrors({ ...errors, ...validateErrors });
 
+    // Check if there is any error
     for (const error of Object.values(validateErrors)) {
       if (error !== "") {
         return;
