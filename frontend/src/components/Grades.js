@@ -11,7 +11,6 @@ const Grades = () => {
       try {
         const response = await axiosPrivate.get("/users/grades/me");
         setGrades(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error(error);
       }

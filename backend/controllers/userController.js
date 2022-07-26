@@ -466,7 +466,7 @@ const getMyGrades = asyncHandler(async (req, res) => {
   ]);
 
   // Temp. solution with [0]
-  res.status(200).json(aggregation[0].subjects);
+  res.status(200).json(aggregation[0]?.subjects);
 });
 
 // @desc Add grade to subject by userId

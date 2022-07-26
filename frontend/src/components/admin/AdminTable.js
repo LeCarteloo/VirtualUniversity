@@ -48,7 +48,6 @@ const AdminTable = ({ title, data, headers, onEdit, onRemove, onAdd }) => {
       setItems(data);
     }
   };
-
   // Display modal
   const displaySeeModal = (items) => {
     if (!items) {
@@ -96,7 +95,8 @@ const AdminTable = ({ title, data, headers, onEdit, onRemove, onAdd }) => {
 
   // Open modal and display provided data
   const onSee = (id) => {
-    const foundData = data.find((obj) => obj._id === id);
+    // Searching for data with given id and removing _id from data
+    const { _id, ...foundData } = data.find((obj) => obj._id === id);
     setModal({ show: !modal.show, data: foundData });
   };
 
