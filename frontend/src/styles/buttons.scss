@@ -162,7 +162,7 @@ button {
     background-color: global.$secondary;
     border: 1px solid global.$primary;
     border-radius: 5px;
-    right: 6.15em;
+    // right: 6.15em;
     transition: 0.2s;
     display: none;
 
@@ -265,6 +265,31 @@ button {
   &.error {
     color: global.$error;
     border-color: global.$error;
+  }
+}
+
+.pagination-nav {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 3em;
+
+  > * {
+    margin-left: 1em;
+  }
+
+  .pagination-btn {
+    border-radius: 5px;
+    padding: 0.35em;
+    width: 30px;
+    // background-color: global.$fourth;
+    &:hover:not(:disabled) {
+    }
+    &:disabled {
+      cursor: default;
+      pointer-events: none;
+      opacity: 0.4;
+    }
   }
 }
 

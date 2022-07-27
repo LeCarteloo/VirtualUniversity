@@ -69,10 +69,6 @@ details {
   }
 }
 
-.option-test {
-  padding-top: 0.7em;
-}
-
 .table-wrapper-test {
   overflow: auto;
   .table-test {
@@ -88,10 +84,16 @@ details {
       border-bottom: 2px global.$primary solid;
     }
     tr {
+      cursor: pointer;
       text-align: center;
-    }
-    tr.selected {
-      background-color: global.$primary;
+      &:not(:first-child) {
+        &:hover {
+          background-color: rgba($color: global.$primary, $alpha: 0.1);
+        }
+        &.selected {
+          background-color: global.$primary;
+        }
+      }
     }
   }
 }

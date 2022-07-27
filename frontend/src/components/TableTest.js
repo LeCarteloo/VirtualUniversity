@@ -10,7 +10,7 @@ const TableTest = ({ rows, bg, padd, orient, mOrient }) => {
 
   // orientation = "vertical-rl";
 
-  const headers = ["-", "Name", "Type", "Hours"];
+  const headers = ["Name", "Type", "Hours"];
 
   const subjects = [
     { _id: "1", name: "Name1", type: "Type1", hours: 3 },
@@ -25,9 +25,7 @@ const TableTest = ({ rows, bg, padd, orient, mOrient }) => {
   const indexOfFirst = indexOfLast - rowsPerPage;
   const current = subjects.slice(indexOfFirst, indexOfLast);
 
-  console.log(current);
-
-  const onClick = (id) => {
+  const onSelect = (id) => {
     if (!selection.includes(id)) {
       setSelection([...selection, id]);
       return;
@@ -40,6 +38,15 @@ const TableTest = ({ rows, bg, padd, orient, mOrient }) => {
     );
   };
 
+  const selectAll = (e) => {
+    if (!e.target.checked) {
+      setSelection([]);
+      return;
+    }
+
+    setSelection(subjects.map((subject) => subject._id));
+  };
+
   const paginate = (number) => {
     setCurrentPage(number);
   };
@@ -49,6 +56,9 @@ const TableTest = ({ rows, bg, padd, orient, mOrient }) => {
       <table className="table-test">
         <tbody>
           <tr>
+            <th>
+              <input type="checkbox" onClick={selectAll} />
+            </th>
             {headers.map((header, i) => (
               <th key={i}>{header}</th>
             ))}
@@ -60,7 +70,7 @@ const TableTest = ({ rows, bg, padd, orient, mOrient }) => {
                 key={subject._id}
                 className={isIncluded ? "selected" : ""}
                 name={subject.name}
-                onClick={() => onClick(subject._id)}
+                onClick={() => onSelect(subject._id)}
               >
                 <td>
                   <input type={"checkbox"} checked={isIncluded} readOnly />
@@ -76,7 +86,10 @@ const TableTest = ({ rows, bg, padd, orient, mOrient }) => {
       <Pagination
         total={subjects.length}
         perPage={rowsPerPage}
+        current={currentPage}
+        setCurrent={setCurrentPage}
         paginate={paginate}
+        setRows={setRowsPerPage}
       />
     </div>
   );
