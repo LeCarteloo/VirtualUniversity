@@ -11,7 +11,7 @@ import Modal from "../Modal";
 import Input from "../Input";
 import "../../styles/modal.scss";
 import SearchInput from "../SearchInput";
-import TableTest from "../TableTest";
+import SelectionTable from "../SelectionTable";
 
 const Users = () => {
   const [users, setUsers] = useState();
@@ -186,10 +186,7 @@ const Users = () => {
         <summary>Pick subjects...</summary>
         <SearchInput placeholder={"Search..."} />
         <div className="option-test">
-          <TableTest
-            headers={[".", "Name", "Surname"]}
-            rows={[<input type="checkbox" />, "Name", "Surname"]}
-          />
+          <SelectionTable />
         </div>
       </details>
       <AdminTable

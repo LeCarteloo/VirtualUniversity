@@ -68,32 +68,3 @@ details {
     gap: 0em 0.5em;
   }
 }
-
-.table-wrapper-test {
-  overflow: auto;
-  .table-test {
-    border-collapse: separate;
-    border-spacing: 0 0.4em;
-    width: 100%;
-    td {
-      min-width: 100px;
-      height: 2.5em;
-    }
-    th {
-      height: 2em;
-      border-bottom: 2px global.$primary solid;
-    }
-    tr {
-      cursor: pointer;
-      text-align: center;
-      &:not(:first-child) {
-        &:hover {
-          background-color: rgba($color: global.$primary, $alpha: 0.1);
-        }
-        &.selected {
-          background-color: global.$primary;
-        }
-      }
-    }
-  }
-}

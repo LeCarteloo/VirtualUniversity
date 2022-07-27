@@ -2,7 +2,7 @@ import { useState } from "react";
 import "../styles/table.scss";
 import Pagination from "./Pagination";
 
-const TableTest = ({ rows, bg, padd, orient, mOrient }) => {
+const SelectionTable = () => {
   const [selection, setSelection] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
@@ -52,8 +52,8 @@ const TableTest = ({ rows, bg, padd, orient, mOrient }) => {
   };
 
   return (
-    <div className="table-wrapper-test">
-      <table className="table-test">
+    <div className="selection-table-wrapper">
+      <table className="selection-table">
         <tbody>
           <tr>
             <th>
@@ -95,8 +95,4 @@ const TableTest = ({ rows, bg, padd, orient, mOrient }) => {
   );
 };
 
-TableTest.defaultProps = {
-  orient: "horizontal",
-};
-
-export default TableTest;
+export default SelectionTable;
