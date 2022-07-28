@@ -10,8 +10,6 @@ import Button from "../Button";
 import Modal from "../Modal";
 import Input from "../Input";
 import "../../styles/modal.scss";
-import SearchInput from "../SearchInput";
-import SelectionTable from "../SelectionTable";
 
 const Users = () => {
   const [users, setUsers] = useState();
@@ -182,13 +180,6 @@ const Users = () => {
       className="users-section"
       style={{ width: "100%", height: "100%" }}
     >
-      <details>
-        <summary>Pick subjects...</summary>
-        <SearchInput placeholder={"Search..."} />
-        <div className="option-test">
-          <SelectionTable />
-        </div>
-      </details>
       <AdminTable
         title={"Users"}
         data={users}

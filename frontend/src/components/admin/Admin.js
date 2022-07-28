@@ -5,11 +5,13 @@ import {
   faCalendar,
   faCalendarDays,
   faRoad,
+  faTimeline,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { Route, Routes } from "react-router-dom";
 import Users from "./Users";
 import Subjects from "./Subjects";
+import Courses from "./Courses";
 const Admin = () => {
   // Navbar navigation items
   const navItems = [
@@ -28,6 +30,11 @@ const Admin = () => {
       icon: faRoad,
       path: "events",
     },
+    {
+      name: "Courses",
+      icon: faTimeline,
+      path: "courses",
+    },
   ];
 
   return (
@@ -37,6 +44,7 @@ const Admin = () => {
         <Routes>
           <Route path="/users" exact element={<Users />} />
           <Route path="/subjects" exact element={<Subjects />} />
+          <Route path="/courses" exact element={<Courses />} />
           <Route path="*" element={<Subjects />} />
         </Routes>
       </section>

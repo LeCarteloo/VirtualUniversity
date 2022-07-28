@@ -205,7 +205,8 @@ button {
   padding: 0.8em;
   border-radius: 10px;
   margin-right: 1em;
-  &:hover {
+  &:hover,
+  &:focus-within {
     background-color: global.$primary;
   }
 }
@@ -235,8 +236,8 @@ button {
 
   .options {
     color: global.$font;
-    width: 100%;
-    z-index: 30;
+    width: calc(100% - 0.3em);
+    padding-right: 0.3em;
     transition: ease-in-out 0.2s;
     height: 0;
     max-height: 192px;
@@ -251,7 +252,6 @@ button {
     .option {
       font-size: 1.4em;
       padding: 0.69em 0 0.69em 0.69em;
-      margin-right: 0.2em;
       &:hover,
       &:focus-within {
         background-color: global.$primary;

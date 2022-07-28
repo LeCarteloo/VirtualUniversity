@@ -1,5 +1,12 @@
 @use "./global" as global;
 
+input {
+  font-family: "Roboto", sans-serif;
+  &[type="checkbox"] {
+    cursor: pointer;
+  }
+}
+
 .input-container {
   margin: 1.5em 0 0em 0;
   width: 100%;

@@ -5,7 +5,6 @@ import { clear } from "../../utility/clear";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import AdminTable from "./AdminTable";
-import Table from "../Table";
 import Modal from "../Modal";
 import Input from "../Input";
 import Dropdown from "../Dropdown";

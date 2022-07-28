@@ -25,9 +25,9 @@ const Pagination = ({
       setDisabled("left");
       return;
     }
-  };
 
-  console.log(current, perPage, total);
+    setDisabled();
+  };
 
   return (
     <nav className="pagination-nav">

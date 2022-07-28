@@ -114,9 +114,9 @@
       border-bottom: 2px global.$primary solid;
     }
     tr {
-      cursor: pointer;
       text-align: center;
       &:not(:first-child) {
+        cursor: pointer;
         &:hover {
           background-color: rgba($color: global.$primary, $alpha: 0.1);
         }
