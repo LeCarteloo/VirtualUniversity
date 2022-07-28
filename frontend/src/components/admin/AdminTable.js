@@ -13,12 +13,21 @@ import SearchInput from "../SearchInput";
 import Loading from "../Loading";
 import Modal from "../Modal";
 import Input from "../Input";
+import Pagination from "../Pagination";
 
 const AdminTable = ({ title, data, headers, onEdit, onRemove, onAdd }) => {
-  // Hooks for keeping the order state and the filtered data
+  // States for pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(3);
+
+  // States for keeping the order state and the filtered data
   const [order, setOrder] = useState(1);
   const [items, setItems] = useState();
   const [modal, setModal] = useState({ show: false, data: {} });
+
+  const indexOfLast = currentPage * rowsPerPage;
+  const indexOfFirst = indexOfLast - rowsPerPage;
+  const current = items && items.slice(indexOfFirst, indexOfLast);
 
   // Refreshing component after data changes
   useEffect(() => {
@@ -48,6 +57,12 @@ const AdminTable = ({ title, data, headers, onEdit, onRemove, onAdd }) => {
       setItems(data);
     }
   };
+
+  // Changing state of currentPage
+  const paginate = (number) => {
+    setCurrentPage(number);
+  };
+
   // Display modal
   const displaySeeModal = (items) => {
     if (!items) {
@@ -130,8 +145,8 @@ const AdminTable = ({ title, data, headers, onEdit, onRemove, onAdd }) => {
                   ))}
                 <th>Action</th>
               </tr>
-              {items &&
-                items.map((item, i) => (
+              {current &&
+                current.map((item, i) => (
                   <tr key={`row-${i}`}>
                     {headers.map((header, j) => (
                       <td key={`cell-${j}`}>{item[header.toLowerCase()]}</td>
@@ -168,6 +183,16 @@ const AdminTable = ({ title, data, headers, onEdit, onRemove, onAdd }) => {
                 ))}
             </tbody>
           </table>
+          {items && (
+            <Pagination
+              total={data.length}
+              perPage={rowsPerPage}
+              current={currentPage}
+              setCurrent={setCurrentPage}
+              paginate={paginate}
+              setRows={setRowsPerPage}
+            />
+          )}
           {!items ? (
             <Loading />
           ) : (

@@ -158,6 +158,7 @@ button {
 .action-btn {
   .action-tooltip {
     position: absolute;
+    z-index: 1;
     box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.511);
     background-color: global.$secondary;
     border: 1px solid global.$primary;

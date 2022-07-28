@@ -94,6 +94,7 @@ const Users = () => {
         setCourses(response.data);
       } catch (error) {
         console.error(error);
+        navigate("/", { state: { from: location }, replace: true });
       }
     };
     getUsers();

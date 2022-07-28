@@ -5,6 +5,8 @@ import Loading from "./Loading";
 
 const SelectionTable = ({ data, headers }) => {
   const [selection, setSelection] = useState([]);
+
+  // States for pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(3);
 

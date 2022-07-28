@@ -3,13 +3,12 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { validate } from "../../utility/validate";
 import { clear } from "../../utility/clear";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
 import AdminTable from "./AdminTable";
 import Modal from "../Modal";
 import Input from "../Input";
 import Dropdown from "../Dropdown";
 import Button from "../Button";
-import "react-toastify/dist/ReactToastify.css";
+import { errorToast, successToast } from "../../utility/toast";
 
 const Subjects = () => {
   const [subjects, setSubjects] = useState([]);
@@ -35,8 +34,6 @@ const Subjects = () => {
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const location = useLocation();
-
-  //  Graded credit/ non-graded credit / exam
 
   const headers = ["Name", "Type", "Credit", "ECTS"];
 
@@ -69,7 +66,7 @@ const Subjects = () => {
     },
   ];
 
-  const onAddSubmit = async (e) => {
+  const onAddSubject = async (e) => {
     e.preventDefault();
 
     let validateErrors = {};
@@ -105,15 +102,21 @@ const Subjects = () => {
       );
       setSubjects([...subjects, response.data]);
       setSubject(clear(subject));
-      toast.success("Successfully added subject", {
-        theme: "dark",
-        className: "error-toast",
-      });
+      successToast("Successfully added subject");
     } catch (error) {
-      toast.error(error?.response?.data?.message, {
-        theme: "dark",
-        className: "error-toast",
-      });
+      errorToast(error?.response?.data?.message);
+    }
+  };
+
+  const onRemoveSubject = async (id) => {
+    try {
+      const response = await axiosPrivate.delete(`/subjects/${id}`);
+      successToast("Successfully removed subject");
+      setSubjects(
+        subjects.filter((subject) => subject._id !== response.data._id)
+      );
+    } catch (error) {
+      errorToast(error?.response?.data?.message);
     }
   };
 
@@ -124,7 +127,7 @@ const Subjects = () => {
         setSubjects(response.data);
       } catch (error) {
         console.error(error);
-        // navigate("/", { state: { from: location }, replace: true });
+        navigate("/", { state: { from: location }, replace: true });
       }
     };
     const getLecturers = async () => {
@@ -133,6 +136,7 @@ const Subjects = () => {
         setLecturers(response.data);
       } catch (error) {
         console.error(error);
+        navigate("/", { state: { from: location }, replace: true });
       }
     };
     getSubjects();
@@ -149,13 +153,14 @@ const Subjects = () => {
         data={subjects}
         headers={headers}
         onAdd={() => setAddModal(!addModal)}
+        onRemove={onRemoveSubject}
       />
       <Modal
         show={addModal}
         title={"Add subject"}
         onClose={() => setAddModal(!addModal)}
       >
-        <form onSubmit={onAddSubmit}>
+        <form onSubmit={onAddSubject}>
           {inputs.map((input, i) => (
             <Input
               key={`subjects-input-${i}`}
