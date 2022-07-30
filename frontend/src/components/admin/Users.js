@@ -3,13 +3,13 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { validate } from "../../utility/validate";
 import { clear } from "../../utility/clear";
 import { useState, useEffect } from "react";
-import { toast } from "react-toastify";
 import AdminTable from "./AdminTable";
 import Dropdown from "../Dropdown";
 import Button from "../Button";
 import Modal from "../Modal";
 import Input from "../Input";
 import "../../styles/modal.scss";
+import { errorToast, successToast } from "../../utility/toast";
 
 const Users = () => {
   const [users, setUsers] = useState();
@@ -83,7 +83,7 @@ const Users = () => {
         const response = await axiosPrivate.get("/users");
         setUsers(response.data);
       } catch (error) {
-        console.error(error);
+        errorToast(error?.response?.data?.message);
         navigate("/", { state: { from: location }, replace: true });
       }
     };
@@ -93,7 +93,7 @@ const Users = () => {
         const response = await axiosPrivate.get("/courses");
         setCourses(response.data);
       } catch (error) {
-        console.error(error);
+        errorToast(error?.response?.data?.message);
         navigate("/", { state: { from: location }, replace: true });
       }
     };
@@ -101,7 +101,7 @@ const Users = () => {
     getCourses();
   }, []);
 
-  const onAddSubmit = async (e) => {
+  const submitAddForm = async (e) => {
     e.preventDefault();
 
     let validateErrors = {};
@@ -137,42 +137,30 @@ const Users = () => {
       );
       setUsers([...users, response.data]);
       setUser(clear(user));
-      toast.success("Successfully added user", {
-        theme: "dark",
-        className: "error-toast",
-      });
+      successToast("Successfully added user");
     } catch (error) {
-      toast.error(error?.response?.data?.message, {
-        theme: "dark",
-        className: "error-toast",
-      });
+      errorToast(error?.response?.data?.message);
     }
   };
 
-  const onEditSubmit = async (e) => {
+  const submitEditForm = async (e) => {
     e.preventDefault();
   };
 
-  const onEdit = (id) => {
+  const editUserModal = (id) => {
     const foundUser = users.find((obj) => obj._id === id);
-    console.log(foundUser);
+    // console.log(foundUser);
     setUser({ ...user, ...foundUser });
     setEditModal(!editModal);
   };
 
-  const onRemove = async (id) => {
+  const removeUser = async (id) => {
     try {
       const response = await axiosPrivate.delete(`/users/${id.toString()}`);
-      toast.success("Successfully removed user", {
-        theme: "dark",
-        className: "error-toast",
-      });
+      successToast("Successfully removed user");
       setUsers(users.filter((user) => user._id !== response.data._id));
     } catch (error) {
-      toast.error(error?.response?.data?.message, {
-        theme: "dark",
-        className: "error-toast",
-      });
+      errorToast(error?.response?.data?.message);
     }
   };
 
@@ -186,9 +174,10 @@ const Users = () => {
         data={users}
         headers={headers}
         onAdd={() => setAddModal(true)}
-        onEdit={onEdit}
-        onRemove={onRemove}
+        onEdit={editUserModal}
+        onRemove={removeUser}
       />
+      {/* Add user modal */}
       <Modal
         title={"Add user"}
         show={addModal}
@@ -198,7 +187,7 @@ const Users = () => {
           setErrors(clear(errors));
         }}
       >
-        <form onSubmit={onAddSubmit}>
+        <form onSubmit={submitAddForm}>
           {inputs.map((input, i) => (
             <Input
               key={`users-input-${i}`}
@@ -239,6 +228,7 @@ const Users = () => {
           <Button text="Add user"></Button>
         </form>
       </Modal>
+      {/* Edit user modal */}
       <Modal
         title={"Edit user"}
         show={editModal}
@@ -248,7 +238,7 @@ const Users = () => {
           setErrors(clear(errors));
         }}
       >
-        <form onSubmit={onEditSubmit}>
+        <form onSubmit={submitEditForm}>
           {inputs.map((input, i) => (
             <Input
               key={`users-input-${i}`}

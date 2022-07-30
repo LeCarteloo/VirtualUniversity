@@ -82,15 +82,18 @@ const AdminTable = ({ title, data, headers, onEdit, onRemove, onAdd }) => {
               <div>
                 {items[itemKey].map((obj, j) => (
                   <div key={`array-div-${j}`} className="array-display">
-                    {Object.keys(obj).map((objKey, k) => (
-                      <Input
-                        key={`array-input-${k}`}
-                        label={objKey.toString()}
-                        labelBg="#2f3142"
-                        value={obj[objKey] !== null ? obj[objKey] : "-"}
-                        readOnly={true}
-                      />
-                    ))}
+                    {Object.keys(obj).map(
+                      (objKey, k) =>
+                        objKey !== "_id" && (
+                          <Input
+                            key={`array-input-${k}`}
+                            label={objKey.toString()}
+                            labelBg="#2f3142"
+                            value={obj[objKey] !== null ? obj[objKey] : "-"}
+                            readOnly={true}
+                          />
+                        )
+                    )}
                   </div>
                 ))}
               </div>

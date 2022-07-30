@@ -144,11 +144,14 @@ select {
   border: 1.5px solid global.$font;
   border-radius: 5px;
   width: 50px;
+  transition: ease-in-out 0.1s;
+
   &:hover,
   &:focus-within {
     border-color: global.$primary;
     color: global.$primary;
   }
+
   option {
     color: global.$font;
     background-color: global.$fourth;

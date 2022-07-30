@@ -3,7 +3,6 @@ import User from "../models/userModel.js";
 import Course from "../models/courseModel.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import Subject from "../models/subjectModel.js";
 import mongoose from "mongoose";
 
 // @desc Register a new user
@@ -12,6 +11,7 @@ import mongoose from "mongoose";
 const registerUser = asyncHandler(async (req, res) => {
   // TODO: In future album should be auto generated
   const { name, surname, email, password, role, course } = req.body;
+  role = role.toLowerCase();
 
   // Checking if all fields are provided
   if (!name || !surname || !email || !password || !role || !course) {
@@ -57,7 +57,7 @@ const registerUser = asyncHandler(async (req, res) => {
     email,
     password: hashedPassword,
     album,
-    role: role.toLowerCase(),
+    role,
     course,
     subjects,
   });
@@ -267,9 +267,53 @@ const getUsers = asyncHandler(async (req, res) => {
   }
 
   // Get all users
-  const users = await User.find().select("-password -role -__v -refreshToken");
+  // const users = await User.find().select("-password -role -__v -refreshToken");
 
-  res.status(200).json(users);
+  const aggregate = await User.aggregate([
+    { $unwind: "$subjects" },
+    {
+      $lookup: {
+        from: "subjects",
+        localField: "subjects.subjectId",
+        foreignField: "_id",
+        as: "ref",
+      },
+    },
+    {
+      $lookup: {
+        from: "courses",
+        localField: "course",
+        foreignField: "_id",
+        as: "refC",
+      },
+    },
+    {
+      $project: {
+        name: 1,
+        course: "$refC.name",
+        subjects: {
+          id: "$subjects.subjectId",
+          name: { $first: "$ref.name" },
+          type: { $first: "$ref.type" },
+          firstTerm: "$subjects.firstTerm",
+          secondTerm: "$subjects.secondTerm",
+          conditional: "$subjects.conditional",
+          promotion: "$subjects.promotion",
+          committe: "$subjects.committe",
+        },
+      },
+    },
+    {
+      $group: {
+        _id: "$_id",
+        name: { $first: "$name" },
+        course: { $first: "$course" },
+        subjects: { $push: "$subjects" },
+      },
+    },
+  ]);
+
+  res.status(200).json(aggregate);
 });
 
 // @desc Get user by email
@@ -426,9 +470,7 @@ const getMyGrades = asyncHandler(async (req, res) => {
   */
   const aggregation = await User.aggregate([
     { $match: { _id: mongoose.Types.ObjectId(id) } },
-    {
-      $unwind: "$subjects",
-    },
+    { $unwind: "$subjects" },
     {
       $lookup: {
         from: "subjects",
@@ -441,12 +483,8 @@ const getMyGrades = asyncHandler(async (req, res) => {
       $project: {
         subjects: {
           id: "$subjects.subjectId",
-          name: {
-            $first: "$ref.name",
-          },
-          type: {
-            $first: "$ref.type",
-          },
+          name: { $first: "$ref.name" },
+          type: { $first: "$ref.type" },
           firstTerm: "$subjects.firstTerm",
           secondTerm: "$subjects.secondTerm",
           conditional: "$subjects.conditional",
@@ -458,9 +496,7 @@ const getMyGrades = asyncHandler(async (req, res) => {
     {
       $group: {
         _id: "$_id",
-        subjects: {
-          $push: "$subjects",
-        },
+        subjects: { $push: "$subjects" },
       },
     },
   ]);

@@ -1,6 +1,6 @@
 import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Pagination = ({
   perPage,
@@ -10,24 +10,35 @@ const Pagination = ({
   setRows,
   setCurrent,
 }) => {
-  const [disabled, setDisabled] = useState("left");
+  const [disabled, setDisabled] = useState(["left"]);
+
+  const numberOfPages = Math.ceil(total / perPage);
 
   const onPagination = (nextPage) => {
-    const numberOfPages = Math.ceil(total / perPage);
-    if (nextPage >= 0 || nextPage < numberOfPages) {
+    console.log(nextPage, numberOfPages);
+
+    if (nextPage > 0 && nextPage <= numberOfPages) {
       paginate(nextPage);
     }
 
     if (nextPage + 1 > numberOfPages) {
-      setDisabled("right");
+      setDisabled(["right"]);
       return;
     } else if (nextPage - 1 <= 0) {
-      setDisabled("left");
+      setDisabled(["left"]);
       return;
     }
 
-    setDisabled();
+    setDisabled([]);
   };
+
+  /* Watching the number of pages and disabling buttons if
+  1 page show all the results */
+  useEffect(() => {
+    if (numberOfPages === 1) {
+      setDisabled(["left", "right"]);
+    }
+  }, [numberOfPages]);
 
   return (
     <nav className="pagination-nav">
@@ -52,14 +63,14 @@ const Pagination = ({
       <button
         className="pagination-btn"
         onClick={() => onPagination(current - 1)}
-        disabled={disabled === "left"}
+        disabled={disabled.includes("left")}
       >
         <FontAwesomeIcon icon={faAngleLeft} size="xl" />
       </button>
       <button
         className="pagination-btn"
         onClick={() => onPagination(current + 1)}
-        disabled={disabled === "right"}
+        disabled={disabled.includes("right")}
       >
         <FontAwesomeIcon icon={faAngleRight} size="xl" />
       </button>

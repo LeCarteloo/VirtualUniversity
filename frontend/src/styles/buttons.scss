@@ -283,8 +283,10 @@ button {
     border-radius: 5px;
     padding: 0.35em;
     width: 30px;
-    // background-color: global.$fourth;
-    &:hover:not(:disabled) {
+    transition: ease-in-out 0.1s;
+    &:hover:not(:disabled),
+    &:focus-within:not(:disabled) {
+      background-color: global.$primary;
     }
     &:disabled {
       cursor: default;
