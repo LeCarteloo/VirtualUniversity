@@ -498,11 +498,13 @@ const getMyGrades = asyncHandler(async (req, res) => {
   */
   const aggregation = await User.aggregate([
     { $match: { _id: mongoose.Types.ObjectId(id) } },
-    { $unwind: "$subjects" },
+    { $match: { "courses.status": "active" } },
+    { $unwind: "$courses" },
+    { $unwind: "$courses.subjects" },
     {
       $lookup: {
         from: "subjects",
-        localField: "subjects.subjectId",
+        localField: "courses.subjects.subjectId",
         foreignField: "_id",
         as: "ref",
       },
@@ -510,14 +512,14 @@ const getMyGrades = asyncHandler(async (req, res) => {
     {
       $project: {
         subjects: {
-          id: "$subjects.subjectId",
+          id: { $first: "$ref._id" },
           name: { $first: "$ref.name" },
           type: { $first: "$ref.type" },
-          firstTerm: "$subjects.firstTerm",
-          secondTerm: "$subjects.secondTerm",
-          conditional: "$subjects.conditional",
-          promotion: "$subjects.promotion",
-          committe: "$subjects.committe",
+          firstTerm: "$courses.subjects.firstTerm",
+          secondTerm: "$courses.subjects.secondTerm",
+          conditional: "$courses.subjects.conditional",
+          promotion: "$courses.subjects.promotion",
+          committe: "$courses.subjects.committe",
         },
       },
     },

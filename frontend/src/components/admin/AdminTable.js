@@ -186,7 +186,7 @@ const AdminTable = ({ title, data, headers, onEdit, onRemove, onAdd }) => {
                 ))}
             </tbody>
           </table>
-          {items && (
+          {items && items.length !== 0 && (
             <Pagination
               total={data.length}
               perPage={rowsPerPage}
