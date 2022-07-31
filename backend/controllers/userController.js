@@ -11,10 +11,11 @@ import mongoose from "mongoose";
 const registerUser = asyncHandler(async (req, res) => {
   // TODO: In future album should be auto generated
   const { name, surname, email, password, role, course } = req.body;
-  role = role.toLowerCase();
+  // let { role } = req.body;
+  // role = role.toLowerCase();
 
   // Checking if all fields are provided
-  if (!name || !surname || !email || !password || !role || !course) {
+  if (!name || !surname || !email || !password || !role) {
     res.status(400);
     throw new Error("Please add all fields");
   }
@@ -22,29 +23,44 @@ const registerUser = asyncHandler(async (req, res) => {
   // Check if user exists
   const userExist = await User.findOne({ email });
 
+  let courseToAdd = [];
+
   if (userExist) {
     res.status(400);
     throw new Error("User already exists");
   }
 
-  // Check if course exists
-  const courseExist = await Course.findById(course);
+  // Adding course and subjects only for students
+  if (role === "student") {
+    if (!course) {
+      res.status(400);
+      throw new Error("Please add all fields");
+    }
 
-  if (!courseExist) {
-    res.status(400);
-    throw new Error("Course doesn't exist");
+    // Check if course exists
+    const courseExist = await Course.findById(course);
+
+    if (!courseExist) {
+      res.status(400);
+      throw new Error("Course doesn't exist");
+    }
+
+    let subjects = [];
+
+    for (const subjectId of courseExist.subjects) {
+      subjects.push({
+        subjectId: subjectId,
+      });
+    }
+
+    courseToAdd = {
+      courseId: courseExist._id,
+      subjects,
+    };
   }
 
   // For tests only
-  const album = courseExist.year + Math.floor(Math.random() * 100);
-
-  let subjects = [];
-
-  for (const subjectId of courseExist.subjects) {
-    subjects.push({
-      subjectId: subjectId,
-    });
-  }
+  const album = 2022 + Math.floor(Math.random() * 100);
 
   // Hashing the password
   const salt = await bcrypt.genSalt(10);
@@ -58,8 +74,7 @@ const registerUser = asyncHandler(async (req, res) => {
     password: hashedPassword,
     album,
     role,
-    course,
-    subjects,
+    ...(role === "student" && { courses: courseToAdd }),
   });
 
   res.status(201).json({
@@ -69,8 +84,7 @@ const registerUser = asyncHandler(async (req, res) => {
     email: user.email,
     album: user.album,
     role: user.role,
-    course: user.course,
-    subjects: user.subjects,
+    ...(user.role === "student" && { courses: user.courses }),
   });
 });
 

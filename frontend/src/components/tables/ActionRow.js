@@ -3,7 +3,7 @@ import "../../styles/table.scss";
 
 const ActionRow = ({ inputs, onEdit, onRemove }) => {
   return (
-    <div className="deletable-row">
+    <div className="row-action">
       <div className="inputs-wrapper">
         <div className="inputs-container">
           <Input label={"Hey1"} labelBg={"#2f3142"} />

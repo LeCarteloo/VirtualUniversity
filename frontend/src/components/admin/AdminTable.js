@@ -18,7 +18,7 @@ import Pagination from "../Pagination";
 const AdminTable = ({ title, data, headers, onEdit, onRemove, onAdd }) => {
   // States for pagination
   const [currentPage, setCurrentPage] = useState(1);
-  const [rowsPerPage, setRowsPerPage] = useState(3);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   // States for keeping the order state and the filtered data
   const [order, setOrder] = useState(1);

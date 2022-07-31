@@ -27,38 +27,49 @@ const userSchema = mongoose.Schema(
     },
     role: {
       type: String,
+      enum: ["student", "lecturer", "admin"],
       required: [true, "Please add role!"],
     },
-    course: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Course",
-      required: [true, "Please add course!"],
-    },
-    subjects: [
+    courses: [
       {
-        subjectId: {
+        courseId: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: "Subject",
+          ref: "Course",
+          required: [true, "Please add course!"],
         },
-        firstTerm: {
-          type: mongoose.Schema.Types.Decimal128,
-          default: null,
-        },
-        secondTerm: {
-          type: mongoose.Schema.Types.Decimal128,
-          default: null,
-        },
-        conditional: {
-          type: mongoose.Schema.Types.Decimal128,
-          default: null,
-        },
-        promotion: {
-          type: mongoose.Schema.Types.Decimal128,
-          default: null,
-        },
-        committe: {
-          type: mongoose.Schema.Types.Decimal128,
-          default: null,
+        subjects: [
+          {
+            subjectId: {
+              type: mongoose.Schema.Types.ObjectId,
+              ref: "Subject",
+            },
+            firstTerm: {
+              type: mongoose.Schema.Types.Decimal128,
+              default: null,
+            },
+            secondTerm: {
+              type: mongoose.Schema.Types.Decimal128,
+              default: null,
+            },
+            conditional: {
+              type: mongoose.Schema.Types.Decimal128,
+              default: null,
+            },
+            promotion: {
+              type: mongoose.Schema.Types.Decimal128,
+              default: null,
+            },
+            committe: {
+              type: mongoose.Schema.Types.Decimal128,
+              default: null,
+            },
+          },
+        ],
+        status: {
+          type: String,
+          enum: ["active", "unactive", "history"],
+          default: "active",
+          required: [true, "Please add status!"],
         },
       },
     ],
