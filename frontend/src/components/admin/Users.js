@@ -10,6 +10,7 @@ import Modal from "../Modal";
 import Input from "../Input";
 import "../../styles/modal.scss";
 import { errorToast, successToast } from "../../utility/toast";
+import ActionRow from "../tables/ActionRow";
 
 const Users = () => {
   const [users, setUsers] = useState();

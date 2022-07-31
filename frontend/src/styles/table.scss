@@ -127,3 +127,31 @@
     }
   }
 }
+
+.deletable-row {
+  display: flex;
+  background-color: global.$fourth;
+  border-radius: 5px;
+  .inputs-wrapper {
+    overflow: auto;
+    padding: 0em 1em 1em 1em;
+    width: 100%;
+    .inputs-container {
+      display: flex;
+      gap: 1em;
+      min-width: 600px;
+    }
+  }
+  .action-container {
+    display: flex;
+    flex-direction: column;
+    width: 100px;
+    border-left: 2px solid global.$primary;
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 50%;
+    }
+  }
+}

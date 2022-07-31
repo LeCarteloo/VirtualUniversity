@@ -267,7 +267,9 @@ const getUsers = asyncHandler(async (req, res) => {
   }
 
   // Get all users
-  // const users = await User.find().select("-password -role -__v -refreshToken");
+  const users = await User.find({ subjects: [] }).select(
+    "-password -__v -refreshToken"
+  );
 
   const aggregate = await User.aggregate([
     { $unwind: "$subjects" },
@@ -290,6 +292,11 @@ const getUsers = asyncHandler(async (req, res) => {
     {
       $project: {
         name: 1,
+        surname: 1,
+        email: 1,
+        role: 1,
+        album: 1,
+        courseId: "$course",
         course: "$refC.name",
         subjects: {
           id: "$subjects.subjectId",
@@ -307,13 +314,20 @@ const getUsers = asyncHandler(async (req, res) => {
       $group: {
         _id: "$_id",
         name: { $first: "$name" },
+        surname: { $first: "$surname" },
+        email: { $first: "$email" },
+        role: { $first: "$role" },
+        album: { $first: "$album" },
         course: { $first: "$course" },
+        courseId: { $first: "$courseId" },
         subjects: { $push: "$subjects" },
       },
     },
   ]);
 
-  res.status(200).json(aggregate);
+  const combine = [...users, ...aggregate];
+
+  res.status(200).json(combine);
 });
 
 // @desc Get user by email
