@@ -72,6 +72,27 @@ const Users = () => {
     },
   ];
 
+  const editInputs = [
+    {
+      label: "Name",
+      regex: /^[a-zA-Z]+$/,
+      error: "Name should contain only letters",
+    },
+    {
+      label: "Surname",
+      regex: /^[a-zA-Z]+$/,
+      error: "Surname should contain only letters",
+    },
+    {
+      label: "Email",
+      type: "email",
+      autoComplete: "new-password",
+      regex:
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+      error: "Email should be a valid email adress",
+    },
+  ];
+
   const roles = [
     { _id: "1", name: "Student" },
     { _id: "2", name: "Lecturer" },
@@ -118,7 +139,7 @@ const Users = () => {
       validateErrors["role"] = "Please choose one of the roles";
     }
 
-    if (user.course === "") {
+    if (user.role === "Student" && user.course === "") {
       validateErrors["course"] = "Please choose one of the courses";
     }
 
@@ -217,15 +238,17 @@ const Users = () => {
             options={roles}
             error={errors.role}
           />
-          <Dropdown
-            state={user.course.name}
-            setState={(course) => {
-              setErrors({ ...errors, course: "" });
-              setUser({ ...user, course: course });
-            }}
-            options={courses}
-            error={errors.course}
-          />
+          {user.role === "Student" && (
+            <Dropdown
+              state={user.course.name}
+              setState={(course) => {
+                setErrors({ ...errors, course: "" });
+                setUser({ ...user, course: course });
+              }}
+              options={courses}
+              error={errors.course}
+            />
+          )}
           <Button text="Add user"></Button>
         </form>
       </Modal>
@@ -240,7 +263,7 @@ const Users = () => {
         }}
       >
         <form onSubmit={submitEditForm}>
-          {inputs.map((input, i) => (
+          {editInputs.map((input, i) => (
             <Input
               key={`users-input-${i}`}
               {...input}

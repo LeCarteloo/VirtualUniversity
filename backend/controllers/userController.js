@@ -280,48 +280,36 @@ const getUsers = asyncHandler(async (req, res) => {
     throw new Error("Not authorized");
   }
 
-  // Get all users
-  const users = await User.find({ subjects: [] }).select(
+  const users = await User.find({ courses: [] }).select(
     "-password -__v -refreshToken"
   );
 
+  // Get all users
   const aggregate = await User.aggregate([
-    { $unwind: "$subjects" },
-    {
-      $lookup: {
-        from: "subjects",
-        localField: "subjects.subjectId",
-        foreignField: "_id",
-        as: "ref",
-      },
-    },
+    { $unwind: "$courses" },
     {
       $lookup: {
         from: "courses",
-        localField: "course",
+        localField: "courses.courseId",
         foreignField: "_id",
-        as: "refC",
+        as: "courRef",
       },
     },
     {
       $project: {
+        _id: 1,
         name: 1,
         surname: 1,
         email: 1,
         role: 1,
         album: 1,
-        courseId: "$course",
-        course: "$refC.name",
-        subjects: {
-          id: "$subjects.subjectId",
-          name: { $first: "$ref.name" },
-          type: { $first: "$ref.type" },
-          firstTerm: "$subjects.firstTerm",
-          secondTerm: "$subjects.secondTerm",
-          conditional: "$subjects.conditional",
-          promotion: "$subjects.promotion",
-          committe: "$subjects.committe",
+        courses: {
+          _id: "$courses.courseId",
+          name: { $first: "$courRef.name" },
+          status: "$courses.status",
         },
+        accounts: 1,
+        payments: 1,
       },
     },
     {
@@ -332,9 +320,9 @@ const getUsers = asyncHandler(async (req, res) => {
         email: { $first: "$email" },
         role: { $first: "$role" },
         album: { $first: "$album" },
-        course: { $first: "$course" },
-        courseId: { $first: "$courseId" },
-        subjects: { $push: "$subjects" },
+        courses: { $push: "$courses" },
+        accounts: { $first: "$accounts" },
+        payments: { $first: "$payments" },
       },
     },
   ]);

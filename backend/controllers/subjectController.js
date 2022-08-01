@@ -5,7 +5,28 @@ import Subject from "../models/subjectModel.js";
 // @route GET /api/subjects
 // @access Private
 const getAllSubjects = asyncHandler(async (req, res) => {
-  const subjects = await Subject.find().select("-__v");
+  const subjects = await Subject.aggregate([
+    {
+      $lookup: {
+        from: "users",
+        localField: "lecturer",
+        foreignField: "_id",
+        as: "ref",
+      },
+    },
+    {
+      $project: {
+        _id: 1,
+        name: 1,
+        type: 1,
+        hours: 1,
+        ects: 1,
+        credit: 1,
+        lecturer: 1,
+        lecturerName: { $first: "$ref.name" },
+      },
+    },
+  ]);
 
   res.status(200).json(subjects);
 });
