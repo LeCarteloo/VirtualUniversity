@@ -22,8 +22,11 @@ const getAllSubjects = asyncHandler(async (req, res) => {
         hours: 1,
         ects: 1,
         credit: 1,
-        lecturer: 1,
-        lecturerName: { $first: "$ref.name" },
+        lecturer: {
+          _id: { $first: "$ref._id" },
+          name: { $first: "$ref.name" },
+          surname: { $first: "$ref.surname" },
+        },
       },
     },
   ]);

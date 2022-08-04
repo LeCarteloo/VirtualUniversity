@@ -5,6 +5,17 @@ input {
   &[type="checkbox"] {
     cursor: pointer;
   }
+  // Removing arrows - Firefox
+  &[type="number"] {
+    -moz-appearance: textfield;
+  }
+
+  // Removing arrows - chrome, safari, edge, opera
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 }
 
 .input-container {

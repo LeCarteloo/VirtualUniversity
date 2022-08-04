@@ -43,7 +43,6 @@ Input.defaultProps = {
 
 Input.propTypes = {
   title: PropTypes.string,
-  value: PropTypes.string,
 };
 
 export default Input;

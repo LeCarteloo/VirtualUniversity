@@ -11,9 +11,10 @@ import Button from "../Button";
 import { errorToast, successToast } from "../../utility/toast";
 
 const Subjects = () => {
-  const [subjects, setSubjects] = useState([]);
-  const [lecturers, setLecturers] = useState([]);
+  const [subjects, setSubjects] = useState();
+  const [lecturers, setLecturers] = useState();
   const [addModal, setAddModal] = useState(false);
+  const [editModal, setEditModal] = useState(false);
   const [subject, setSubject] = useState({
     name: "",
     type: "",
@@ -58,16 +59,19 @@ const Subjects = () => {
       label: "Hours",
       regex: /^[0-9]+$/,
       error: "Hours should be numeric",
+      type: "number",
     },
     {
       label: "ECTS",
       regex: /^[0-9]+$/,
       error: "ECTS should be numeric",
+      type: "number",
     },
   ];
 
   const onAddSubject = async (e) => {
     e.preventDefault();
+    console.log(subject);
 
     let validateErrors = {};
 
@@ -108,6 +112,55 @@ const Subjects = () => {
     }
   };
 
+  const onEditSubject = async (e) => {
+    e.preventDefault();
+
+    let validateErrors = {};
+
+    // Validating all inputs and dropdowns
+    inputs.forEach((input) => {
+      const name = input.label.toLowerCase();
+      const error = validate(name, subject[name], input.regex, input.error);
+      validateErrors[error.name] = error.msg;
+    });
+
+    if (subject.credit === "") {
+      validateErrors["credit"] = "Please choose one of the credits";
+    }
+
+    if (subject.lecturer === "") {
+      validateErrors["lecturer"] = "Please choose one of the lecturers";
+    }
+
+    setErrors({ ...errors, ...validateErrors });
+
+    // Check if there is any error
+    for (const error of Object.values(validateErrors)) {
+      if (error !== "") {
+        return;
+      }
+    }
+
+    try {
+      const response = await axiosPrivate.put(
+        `/subjects/${subject._id}`,
+        JSON.stringify(subject)
+      );
+
+      const newState = subjects.map((obj) =>
+        obj._id === subject._id ? { ...obj, ...response.data } : obj
+      );
+
+      setSubjects(newState);
+      console.log(newState);
+      setSubject(clear(subject));
+      setEditModal(!editModal);
+      successToast("Successfully edited subject");
+    } catch (error) {
+      errorToast(error?.response?.message?.data);
+    }
+  };
+
   const onRemoveSubject = async (id) => {
     try {
       const response = await axiosPrivate.delete(`/subjects/${id}`);
@@ -118,6 +171,14 @@ const Subjects = () => {
     } catch (error) {
       errorToast(error?.response?.data?.message);
     }
+  };
+
+  const editSubjectModal = async (id) => {
+    const foundSubject = subjects.find((obj) => obj._id === id);
+    console.log(foundSubject);
+    console.log(subject);
+    setSubject({ ...subject, ...foundSubject });
+    setEditModal(!editModal);
   };
 
   useEffect(() => {
@@ -152,13 +213,19 @@ const Subjects = () => {
         title={"Subjects"}
         data={subjects}
         headers={headers}
+        onEdit={editSubjectModal}
         onAdd={() => setAddModal(!addModal)}
         onRemove={onRemoveSubject}
       />
+      {/* Add subject modal */}
       <Modal
         show={addModal}
         title={"Add subject"}
-        onClose={() => setAddModal(!addModal)}
+        onClose={() => {
+          setAddModal(!addModal);
+          setSubject(clear(subject));
+          setErrors(clear(errors));
+        }}
       >
         <form onSubmit={onAddSubject}>
           {inputs.map((input, i) => (
@@ -199,6 +266,61 @@ const Subjects = () => {
             error={errors.credit}
           />
           <Button text={"Add subject"} />
+        </form>
+      </Modal>
+      {/* Edit subject modal */}
+      <Modal
+        title={"Edit modal"}
+        show={editModal}
+        onClose={() => {
+          setEditModal(!editModal);
+          setSubject(clear(subject));
+          setErrors(clear(errors));
+        }}
+      >
+        <form onSubmit={onEditSubject}>
+          {inputs.map((input, i) => (
+            <Input
+              key={`subjects-input-${i}`}
+              {...input}
+              name={input.label.toLowerCase()}
+              value={subject[input.label.toLowerCase()]}
+              onChange={(e) => {
+                const error = validate(
+                  e.target.name,
+                  e.target.value,
+                  input.regex,
+                  input.error
+                );
+                setErrors({ ...errors, [error.name]: error.msg });
+                setSubject({ ...subject, [e.target.name]: e.target.value });
+              }}
+              error={errors[input.label.toLowerCase()]}
+            />
+          ))}
+          <Dropdown
+            state={
+              subject.lecturer.name
+                ? subject.lecturer.name
+                : subject.lecturerName
+            }
+            setState={(lecturer) => {
+              setErrors({ ...errors, lecturer: "" });
+              setSubject({ ...subject, lecturer });
+            }}
+            options={lecturers}
+            error={errors.lecturer}
+          />
+          <Dropdown
+            state={subject.credit}
+            setState={(credit) => {
+              setErrors({ ...errors, credit: "" });
+              setSubject({ ...subject, credit: credit.name });
+            }}
+            options={credits}
+            error={errors.credit}
+          />
+          <Button text={"Edit subject"} />
         </form>
       </Modal>
     </section>

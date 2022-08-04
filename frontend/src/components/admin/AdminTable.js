@@ -75,38 +75,68 @@ const AdminTable = ({ title, data, headers, onEdit, onRemove, onAdd }) => {
         show={modal.show}
         onClose={() => setModal({ show: false, data: {} })}
       >
-        {Object.keys(items).map((itemKey, i) =>
-          Array.isArray(items[itemKey]) ? (
-            <details key={`array-details-${i}`}>
-              <summary>{itemKey.toString()}</summary>
-              <div>
-                {items[itemKey].map((obj, j) => (
-                  <div key={`array-div-${j}`} className="array-display">
-                    {Object.keys(obj).map(
+        {Object.keys(items).map((itemKey, i) => {
+          if (Array.isArray(items[itemKey])) {
+            return (
+              <details key={`array-details-${i}`}>
+                <summary>{itemKey.toString()}</summary>
+                <div>
+                  {items[itemKey].map((obj, j) => (
+                    <div key={`array-div-${j}`} className="array-display">
+                      {Object.keys(obj).map(
+                        (objKey, k) =>
+                          objKey !== "_id" && (
+                            <Input
+                              key={`array-input-${k}`}
+                              label={objKey.toString()}
+                              labelBg="#2f3142"
+                              value={obj[objKey] !== null ? obj[objKey] : "-"}
+                              readOnly={true}
+                            />
+                          )
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </details>
+            );
+          } else if (typeof items[itemKey] === "object") {
+            return (
+              <details key={`object-details-${i}`}>
+                <summary>{itemKey.toString()}</summary>
+                <div>
+                  <div className="array-display">
+                    {Object.keys(items[itemKey]).map(
                       (objKey, k) =>
                         objKey !== "_id" && (
                           <Input
                             key={`array-input-${k}`}
                             label={objKey.toString()}
                             labelBg="#2f3142"
-                            value={obj[objKey] !== null ? obj[objKey] : "-"}
+                            value={
+                              items[itemKey][objKey] !== null
+                                ? items[itemKey][objKey]
+                                : "-"
+                            }
                             readOnly={true}
                           />
                         )
                     )}
                   </div>
-                ))}
-              </div>
-            </details>
-          ) : (
-            <Input
-              key={`modal-input-${i}`}
-              label={itemKey.toString()}
-              value={items[itemKey].toString()}
-              readOnly={true}
-            />
-          )
-        )}
+                </div>
+              </details>
+            );
+          } else {
+            return (
+              <Input
+                key={`modal-input-${i}`}
+                label={itemKey.toString()}
+                value={items[itemKey].toString()}
+                readOnly={true}
+              />
+            );
+          }
+        })}
       </Modal>
     );
   };
