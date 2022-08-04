@@ -75,25 +75,32 @@ const getMySyllabus = asyncHandler(async (req, res) => {
       },
     },
     {
-      $group: {
-        _id: "$_id",
-        name: { $first: "$name" },
-        semester: { $first: "$semester" },
-        subjects: {
-          $push: "$subjects",
-        },
-      },
-    },
-    {
       $project: {
         _id: 1,
         name: 1,
         subjects: {
-          $filter: {
-            input: "$subjects",
-            as: "a",
-            cond: { $ifNull: ["$$a._id", false] },
+          _id: "$subjects._id",
+          name: "$subjects.name",
+          type: "$subjects.type",
+          ects: "$subjects.ects",
+          hours: "$subjects.hours",
+          credit: "$subjects.credit",
+          lecturer: {
+            $concat: [
+              { $first: "$subjects.lecturer.name" },
+              " ",
+              { $first: "$subjects.lecturer.surname" },
+            ],
           },
+        },
+      },
+    },
+    {
+      $group: {
+        _id: "$_id",
+        name: { $first: "$name" },
+        subjects: {
+          $push: "$subjects",
         },
       },
     },
