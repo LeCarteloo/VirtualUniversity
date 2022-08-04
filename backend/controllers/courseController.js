@@ -52,37 +52,49 @@ const getMySyllabus = asyncHandler(async (req, res) => {
 
   // {{ _id: { $in: userCourses } }}
   const courses = await Course.aggregate([
-    { $match: { _id: { $in: userCourses } } },
-    { $unwind: "$subjects" },
     {
       $lookup: {
         from: "subjects",
         localField: "subjects",
         foreignField: "_id",
-        as: "ref",
+        as: "subjects",
       },
     },
     {
-      $project: {
-        _id: 1,
-        year: 1,
-        semester: 1,
-        subjects: {
-          name: { $first: "$ref.name" },
-          lecturer: { $first: "$ref.lecturer" },
-          type: { $first: "$ref.type" },
-          hours: { $first: "$ref.hours" },
-          ects: { $first: "$ref.ects" },
-          credit: { $first: "$ref.credit" },
-        },
+      $unwind: {
+        path: "$subjects",
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+    {
+      $lookup: {
+        from: "users",
+        localField: "subjects.lecturer",
+        foreignField: "_id",
+        as: "subjects.lecturer",
       },
     },
     {
       $group: {
         _id: "$_id",
-        year: { $first: "$year" },
+        name: { $first: "$name" },
         semester: { $first: "$semester" },
-        subjects: { $push: "$subjects" },
+        subjects: {
+          $push: "$subjects",
+        },
+      },
+    },
+    {
+      $project: {
+        _id: 1,
+        name: 1,
+        subjects: {
+          $filter: {
+            input: "$subjects",
+            as: "a",
+            cond: { $ifNull: ["$$a._id", false] },
+          },
+        },
       },
     },
   ]);

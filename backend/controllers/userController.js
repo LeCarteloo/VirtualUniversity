@@ -296,10 +296,10 @@ const getUsers = asyncHandler(async (req, res) => {
   // Getting role from auth middleware
   const { role } = req.user;
 
-  if (role !== "admin") {
-    res.status(401);
-    throw new Error("Not authorized");
-  }
+  // if (role !== "admin") {
+  //   res.status(401);
+  //   throw new Error("Not authorized");
+  // }
 
   const users = await User.find({ courses: [] }).select(
     "-password -__v -refreshToken"
@@ -327,6 +327,8 @@ const getUsers = asyncHandler(async (req, res) => {
         courses: {
           _id: "$courses.courseId",
           name: { $first: "$courRef.name" },
+          year: { $first: "$courRef.year" },
+          semester: { $first: "$courRef.semester" },
           status: "$courses.status",
         },
         accounts: 1,
@@ -350,7 +352,7 @@ const getUsers = asyncHandler(async (req, res) => {
 
   const combine = [...users, ...aggregate];
 
-  res.status(200).json(combine);
+  res.status(200).json(aggregate);
 });
 
 // @desc Get user by email
