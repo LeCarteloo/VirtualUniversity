@@ -13,6 +13,18 @@ const courseSchema = mongoose.Schema({
     type: Number,
     required: ["Please add year!"],
   },
+  semester: {
+    type: String,
+    required: ["Please add semester!"],
+  },
+  type: {
+    type: String,
+    required: ["Please add type!"],
+  },
+  department: {
+    type: String,
+    required: ["Please add department!"],
+  },
   subjects: [
     {
       type: mongoose.Schema.Types.ObjectId,

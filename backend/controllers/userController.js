@@ -10,12 +10,30 @@ import mongoose from "mongoose";
 // @access Public
 const registerUser = asyncHandler(async (req, res) => {
   // TODO: In future album should be auto generated
-  const { name, surname, email, password, role, course } = req.body;
+  const {
+    name,
+    surname,
+    email,
+    password,
+    telephone,
+    role,
+    idDoc,
+    placeOfBirth,
+    course,
+  } = req.body;
   // let { role } = req.body;
   // role = role.toLowerCase();
 
   // Checking if all fields are provided
-  if (!name || !surname || !email || !password || !role) {
+  if (
+    !name ||
+    !surname ||
+    !email ||
+    !password ||
+    !role ||
+    !placeOfBirth ||
+    !idDoc
+  ) {
     res.status(400);
     throw new Error("Please add all fields");
   }
@@ -71,6 +89,9 @@ const registerUser = asyncHandler(async (req, res) => {
     name,
     surname,
     email,
+    telephone,
+    idDoc,
+    placeOfBirth,
     password: hashedPassword,
     album,
     role,
@@ -467,6 +488,41 @@ const getUsersByRole = asyncHandler(async (req, res) => {
   res.status(200).json(users);
 });
 
+// @desc Get my data
+// @route GET /api/users/data/me
+// @access Private
+const getMyCourse = asyncHandler(async (req, res) => {
+  const { _id } = req.user;
+
+  const user = await User.findById(_id);
+
+  const activeCourse = user.courses.find(
+    (course) => course.status === "active"
+  );
+
+  const courseData = await Course.findById(activeCourse.courseId).select(
+    "-subjects"
+  );
+
+  if (!courseData) {
+    res.status(401);
+    throw new Error("Not authorized");
+  }
+
+  res.status(200).json(courseData);
+});
+
+// @desc Get my data
+// @route GET /api/users/data/me
+// @access Private
+const getMyData = asyncHandler(async (req, res) => {
+  const { _id } = req.user;
+
+  const user = await User.findById(_id);
+
+  res.status(200).json(user);
+});
+
 // @desc Get user
 // @route GET /api/users/grades/me
 // @access Private
@@ -574,6 +630,8 @@ export {
   addAccount,
   getCharges,
   updateCharge,
+  getMyData,
+  getMyCourse,
   getMyGrades,
   getAverageGrade,
 };

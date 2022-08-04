@@ -17,6 +17,17 @@ const userSchema = mongoose.Schema(
       match:
         /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     },
+    telephone: {
+      type: String,
+    },
+    idDoc: {
+      type: String,
+      required: [true, "Please add id document!"],
+    },
+    placeOfBirth: {
+      type: String,
+      required: [true, "Please add place of birth!"],
+    },
     password: {
       type: String,
       required: [true, "Please add password!"],

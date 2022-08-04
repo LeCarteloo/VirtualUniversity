@@ -32,8 +32,60 @@ const addCourse = asyncHandler(async (req, res) => {
   res.status(200).json(course);
 });
 
+// @desc Get all courses
+// @route Get /api/courses
+// @access Private
 const getCourses = asyncHandler(async (req, res) => {
   const courses = await Course.find();
+
+  res.status(200).json(courses);
+});
+
+// @desc Get all data of user courses
+// @route Get /api/courses/me
+// @access Private
+const getMySyllabus = asyncHandler(async (req, res) => {
+  const { _id } = req.user;
+
+  const user = await User.findById(_id);
+  const userCourses = user.courses.map((course) => course.courseId);
+
+  // {{ _id: { $in: userCourses } }}
+  const courses = await Course.aggregate([
+    { $match: { _id: { $in: userCourses } } },
+    { $unwind: "$subjects" },
+    {
+      $lookup: {
+        from: "subjects",
+        localField: "subjects",
+        foreignField: "_id",
+        as: "ref",
+      },
+    },
+    {
+      $project: {
+        _id: 1,
+        year: 1,
+        semester: 1,
+        subjects: {
+          name: { $first: "$ref.name" },
+          lecturer: { $first: "$ref.lecturer" },
+          type: { $first: "$ref.type" },
+          hours: { $first: "$ref.hours" },
+          ects: { $first: "$ref.ects" },
+          credit: { $first: "$ref.credit" },
+        },
+      },
+    },
+    {
+      $group: {
+        _id: "$_id",
+        year: { $first: "$year" },
+        semester: { $first: "$semester" },
+        subjects: { $push: "$subjects" },
+      },
+    },
+  ]);
 
   res.status(200).json(courses);
 });
@@ -70,4 +122,4 @@ const addCharge = asyncHandler(async (req, res) => {
   res.status(200).json(updatedUsers);
 });
 
-export { getCourses, addCourse, addCharge };
+export { getCourses, getMySyllabus, addCourse, addCharge };

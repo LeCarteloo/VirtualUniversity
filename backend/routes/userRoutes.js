@@ -4,6 +4,8 @@ import {
   deleteUser,
   getAverageGrade,
   getCharges,
+  getMyData,
+  getMyCourse,
   getMyGrades,
   getUser,
   getUsers,
@@ -23,19 +25,25 @@ const userRouter = express.Router();
 // userRouter.use(protectUser);
 
 // Adding routes with functions from controller
+userRouter.get("/", protectUser, getUsers);
+
 userRouter.post("/register", registerUser);
 userRouter.post("/login", loginUser);
 userRouter.get("/logout", logoutUser);
 userRouter.get("/refresh", refreshToken);
-userRouter.delete("/:id", protectUser, deleteUser);
-userRouter.put("/:id", protectUser, updateUser);
-userRouter.get("/", protectUser, getUsers);
+userRouter.post("/account", protectUser, addAccount);
+
 userRouter.get("/:email", protectUser, getUser);
-userRouter.get("/role/:role", protectUser, getUsersByRole);
+userRouter.put("/:id", protectUser, updateUser);
+userRouter.delete("/:id", protectUser, deleteUser);
+
 userRouter.get("/grades/me", protectUser, getMyGrades);
+userRouter.get("/data/me", protectUser, getMyData);
+userRouter.get("/course/me", protectUser, getMyCourse);
+
+userRouter.get("/role/:role", protectUser, getUsersByRole);
 userRouter.get("/grades/:userId", protectUser, getAverageGrade);
 userRouter.get("/charges/:courseId", protectUser, getCharges);
-userRouter.post("/account", protectUser, addAccount);
 userRouter.put("/charges/:userId", protectUser, updateCharge);
 
 export default userRouter;
