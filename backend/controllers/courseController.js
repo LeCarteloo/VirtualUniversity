@@ -48,10 +48,11 @@ const getMySyllabus = asyncHandler(async (req, res) => {
   const { _id } = req.user;
 
   const user = await User.findById(_id);
+
   const userCourses = user.courses.map((course) => course.courseId);
 
-  // {{ _id: { $in: userCourses } }}
   const courses = await Course.aggregate([
+    { $match: { _id: { $in: userCourses } } },
     {
       $lookup: {
         from: "subjects",
@@ -78,6 +79,8 @@ const getMySyllabus = asyncHandler(async (req, res) => {
       $project: {
         _id: 1,
         name: 1,
+        year: 1,
+        semester: 1,
         subjects: {
           _id: "$subjects._id",
           name: "$subjects.name",
@@ -99,6 +102,8 @@ const getMySyllabus = asyncHandler(async (req, res) => {
       $group: {
         _id: "$_id",
         name: { $first: "$name" },
+        year: { $first: "$year" },
+        semester: { $first: "$semester" },
         subjects: {
           $push: "$subjects",
         },

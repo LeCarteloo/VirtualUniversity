@@ -350,7 +350,7 @@ const getUsers = asyncHandler(async (req, res) => {
     },
   ]);
 
-  const combine = [...users, ...aggregate];
+  // const combine = [...users, ...aggregate];
 
   res.status(200).json(aggregate);
 });

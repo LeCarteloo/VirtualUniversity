@@ -4,17 +4,22 @@ import "../styles/groupTable.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import Loading from "./Loading";
 
 const GroupTable = ({
   title,
+  tableData,
+  tableKeys,
+  tableHeaders,
   actionIcon,
   onAction,
-  object,
+  // object,
   isCollapsed,
   tabOrient,
   children,
 }) => {
   const [collapse, setCollapse] = useState(isCollapsed);
+
   return (
     <div className={`table-group ${!collapse && "open"}`}>
       <div className="header" onClick={() => setCollapse(!collapse)}>
@@ -37,17 +42,22 @@ const GroupTable = ({
         </div>
       </div>
       <div className="content">
-        {object &&
-          object.rows.length > 0 &&
-          object.rows.map((row, i) => (
+        {tableData &&
+          tableData.map((tableRow, i) => (
             <Table
               key={i}
-              headers={object.headers}
-              rows={row}
+              headers={tableHeaders}
+              rows={tableKeys.map((key) => {
+                return tableRow[key];
+              })}
               orient={tabOrient}
             />
           ))}
-        {!children && !object ? "No data to display" : children}
+        {!children && !tableData && <Loading />}
+        {!children &&
+          tableData &&
+          tableData.length === 0 &&
+          "No data to display"}
       </div>
     </div>
   );
