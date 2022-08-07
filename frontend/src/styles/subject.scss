@@ -11,10 +11,14 @@
   box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.511);
   display: flex;
   overflow: hidden;
-  transition: height 0.3s;
+  transition: 0.2s ease-in-out;
 
   // Hover animation
   @include animation.shine();
+
+  &:hover {
+    transform: scale(1.02);
+  }
 
   .subject-icon {
     height: 100%;

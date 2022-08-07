@@ -9,11 +9,10 @@ import Loading from "./Loading";
 const GroupTable = ({
   title,
   tableData,
-  tableKeys,
+  dataKeys,
   tableHeaders,
   actionIcon,
   onAction,
-  // object,
   isCollapsed,
   tabOrient,
   children,
@@ -42,17 +41,24 @@ const GroupTable = ({
         </div>
       </div>
       <div className="content">
-        {tableData &&
-          tableData.map((tableRow, i) => (
-            <Table
-              key={i}
-              headers={tableHeaders}
-              rows={tableKeys.map((key) => {
-                return tableRow[key];
-              })}
-              orient={tabOrient}
-            />
-          ))}
+        {tableData && dataKeys
+          ? tableData.map((tableRow, i) => (
+              <Table
+                key={i}
+                headers={tableHeaders}
+                rows={dataKeys.map((key) => {
+                  return tableRow[key];
+                })}
+                orient={tabOrient}
+              />
+            ))
+          : tableData && (
+              <Table
+                headers={tableHeaders}
+                rows={tableData}
+                orient={tabOrient}
+              />
+            )}
         {!children && !tableData && <Loading />}
         {!children &&
           tableData &&

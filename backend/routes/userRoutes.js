@@ -16,6 +16,7 @@ import {
   registerUser,
   updateCharge,
   updateUser,
+  updateContact,
 } from "../controllers/userController.js";
 import { protectUser } from "../middleware/authMiddleware.js";
 
@@ -32,6 +33,7 @@ userRouter.post("/login", loginUser);
 userRouter.get("/logout", logoutUser);
 userRouter.get("/refresh", refreshToken);
 userRouter.post("/account", protectUser, addAccount);
+userRouter.put("/contact", protectUser, updateContact);
 
 userRouter.get("/:email", protectUser, getUser);
 userRouter.put("/:id", protectUser, updateUser);

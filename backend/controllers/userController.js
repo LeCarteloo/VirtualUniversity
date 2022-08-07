@@ -230,7 +230,24 @@ const updateUser = asyncHandler(async (req, res) => {
     }
   );
 
-  console.log(updatedUser);
+  res.status(200).json(updatedUser);
+});
+
+// @desc Update contact
+// @route PUT /api/users/contact
+// @access Private
+const updateContact = asyncHandler(async (req, res) => {
+  const { _id } = req.user;
+  const { secEmail, telephone } = req.body;
+
+  // if (!secEmail || !telephone) {
+  //   res.status(400);
+  //   throw new Error("Please add all fields");
+  // }
+
+  const updatedUser = await User.findByIdAndUpdate(_id, {
+    ...req.body,
+  }).select("-password -courses -accounts -payments");
 
   res.status(200).json(updatedUser);
 });
@@ -385,6 +402,7 @@ const getUser = asyncHandler(async (req, res) => {
 // @route POST /api/users/account
 // @access Private
 const addAccount = asyncHandler(async (req, res) => {
+  const { _id } = req.user;
   const { bankName, accountNumber, currency } = req.body;
 
   if (!bankName || !accountNumber || !currency) {
@@ -400,16 +418,9 @@ const addAccount = asyncHandler(async (req, res) => {
     throw new Error("Account number must have 26 digits!");
   }
 
-  const user = await User.findById(req.user.id);
-
-  if (!user) {
-    res.status(400);
-    throw new Error("User doesn't exist!");
-  }
-
   // Getting the user and pushing account info to array
   const updatedUser = await User.findByIdAndUpdate(
-    user._id,
+    _id,
     {
       $push: {
         accounts: {
@@ -520,7 +531,7 @@ const getMyCourse = asyncHandler(async (req, res) => {
 const getMyData = asyncHandler(async (req, res) => {
   const { _id } = req.user;
 
-  const user = await User.findById(_id);
+  const user = await User.findById(_id).select("-password");
 
   res.status(200).json(user);
 });
@@ -624,6 +635,7 @@ export {
   loginUser,
   logoutUser,
   updateUser,
+  updateContact,
   deleteUser,
   refreshToken,
   getUsers,

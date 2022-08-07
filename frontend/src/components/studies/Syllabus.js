@@ -21,7 +21,8 @@ const Syllabus = () => {
     getSyllabus();
   }, []);
 
-  const tableHeaders = [
+  // Headers of each mapped table (inside GroupTable)
+  const syllabusHeaders = [
     t("student.subject"),
     t("student.lecturer"),
     t("student.classType"),
@@ -29,6 +30,9 @@ const Syllabus = () => {
     t("student.ects"),
     t("student.credit"),
   ];
+
+  // Keys for reading the response object (from /course/me route)
+  const syllabusKeys = ["name", "lecturer", "type", "hours", "ects", "credit"];
 
   return (
     <section
@@ -41,9 +45,8 @@ const Syllabus = () => {
             key={`group-table-${i}`}
             title={`${syll.name} - ${syll.year} ${syll.semester}`}
             tableData={syll.subjects}
-            tableKeys={["name", "lecturer", "type", "hours", "ects", "credit"]}
-            tableHeaders={tableHeaders}
-            isCollapsed={false}
+            dataKeys={syllabusKeys}
+            tableHeaders={syllabusHeaders}
           />
         ))}
     </section>
