@@ -12,17 +12,24 @@ import Input from "../Input";
 import Button from "../Button";
 import Modal from "../Modal";
 import { errorToast, successToast } from "../../utility/toast";
+import { validate } from "../../utility/validate";
+import { clear } from "../../utility/clear";
+import Dropdown from "../Dropdown";
 
 const Payments = () => {
-  const [showModal, setShowModal] = useState(false);
+  const [accountModal, setAccountModal] = useState(false);
   const [t] = useTranslation("translation");
   const [student, setStudent] = useState();
-  const [bank, setBank] = useState({
+  const [bankAccount, setBankAccount] = useState({
     bankName: "",
     accountNumber: "",
     currency: "",
   });
-  const [errors, setErrors] = useState();
+  const [errors, setErrors] = useState({
+    bankName: "",
+    accountNumber: "",
+    currency: "",
+  });
 
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
@@ -60,24 +67,85 @@ const Payments = () => {
     keys: ["bankName", "accountNumber", "currency", "confirmed"],
   };
 
+  console.log(student.payments[0].payed);
+
   const charges = {
-    headers: [t("payments.title"), t("payments.value"), t("payments.dueDate")],
+    headers: [
+      t("payments.title"),
+      t("payments.value"),
+      t("payments.dueDate"),
+      "Payed",
+    ],
     keys: ["title", "value", "due", "payed"],
   };
+
+  const inputs = [
+    {
+      label: "Account number",
+      name: "accountNumber",
+      type: "number",
+      regex: /^[0-9]{26}$/,
+      error: "Account number should be in valid format",
+    },
+    {
+      label: "Bank name",
+      name: "bankName",
+      regex: /^[a-zA-Z]+$/,
+      error: "Bank name should contain only letters",
+    },
+  ];
+
+  const currency = [
+    { _id: "1", name: "PLN" },
+    { _id: "2", name: "USD" },
+    { _id: "3", name: "EUR" },
+  ];
 
   const onAddAccount = async (e) => {
     e.preventDefault();
 
-    try {
-      const response = await axiosPrivate.post("users/account",
-      JSON.stringify({
+    let validateErrors = {};
 
-      })
-      )
-    } catch(error) {
+    // Validating all inputs and dropdowns
+    inputs.forEach((input) => {
+      const error = validate(
+        input.name,
+        bankAccount[input.name],
+        input.regex,
+        input.error
+      );
+      validateErrors[error.name] = error.msg;
+    });
 
+    if (bankAccount.currency === "") {
+      validateErrors["currency"] = "Please choose one of the currencies";
     }
-  }
+
+    setErrors({ ...errors, ...validateErrors });
+
+    // Check if there is any error
+    for (const error of Object.values(validateErrors)) {
+      if (error !== "") {
+        return;
+      }
+    }
+
+    try {
+      const response = await axiosPrivate.post(
+        "users/account",
+        JSON.stringify({
+          ...bankAccount,
+          currency: bankAccount.currency.name,
+        })
+      );
+      setStudent({ ...student, accounts: response.data.accounts });
+      setAccountModal(!accountModal);
+      setErrors(clear(errors));
+      successToast("Successfully added bank account");
+    } catch (error) {
+      errorToast(error?.response?.data?.message);
+    }
+  };
 
   return (
     <section
@@ -86,14 +154,45 @@ const Payments = () => {
     >
       <Modal
         title={"Add bank account"}
-        show={showModal}
-        onClose={() => setShowModal(!showModal)}
+        show={accountModal}
+        onClose={() => setAccountModal(!accountModal)}
         footer={"*Bank account will be checked in two working days"}
       >
-        <form onSubmit={}>
-          <Input label={"Account number"} />
-          <Input label={"Bank name"} />
-          <Input label={"Currency"} />
+        <form onSubmit={onAddAccount}>
+          {inputs.map((input, i) => (
+            <Input
+              key={`accounts-input-${i}`}
+              {...input}
+              label={input.label}
+              name={input.name}
+              error={errors[input.name]}
+              onChange={(e) => {
+                const error = validate(
+                  input.name,
+                  e.target.value,
+                  input.regex,
+                  input.error
+                );
+                setBankAccount({
+                  ...bankAccount,
+                  [e.target.name]: e.target.value,
+                });
+                setErrors({
+                  ...errors,
+                  [e.target.name]: error.msg,
+                });
+              }}
+            />
+          ))}
+          <Dropdown
+            state={bankAccount.currency.name}
+            setState={(currency) => {
+              setErrors({ ...errors, currency: "" });
+              setBankAccount({ ...bankAccount, currency: currency });
+            }}
+            options={currency}
+            error={errors.currency}
+          />
           <Button text={"Add bank"} />
         </form>
       </Modal>
@@ -107,7 +206,7 @@ const Payments = () => {
         actionIcon={faPlusCircle}
         onAction={(e) => {
           e.stopPropagation();
-          setShowModal(!showModal);
+          setAccountModal(!accountModal);
         }}
         tableHeaders={accounts.headers}
         tableData={student?.accounts}

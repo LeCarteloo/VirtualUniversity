@@ -174,7 +174,7 @@ const Student = () => {
               value={contact[input.name]}
               onChange={(e) => {
                 const error = validate(
-                  e.target.name,
+                  input.name,
                   e.target.value,
                   input.regex,
                   input.error
