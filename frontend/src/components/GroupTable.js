@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import Loading from "./Loading";
+import NoData from "./tables/NoData";
 
 const GroupTable = ({
   title,
@@ -60,10 +61,7 @@ const GroupTable = ({
               />
             )}
         {!children && !tableData && <Loading />}
-        {!children &&
-          tableData &&
-          tableData.length === 0 &&
-          "No data to display"}
+        {!children && tableData && tableData.length === 0 && <NoData />}
       </div>
     </div>
   );

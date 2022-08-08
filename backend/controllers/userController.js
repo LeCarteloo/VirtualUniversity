@@ -225,9 +225,7 @@ const updateUser = asyncHandler(async (req, res) => {
       role,
       course,
     },
-    {
-      new: true,
-    }
+    { new: true }
   );
 
   res.status(200).json(updatedUser);
@@ -245,9 +243,11 @@ const updateContact = asyncHandler(async (req, res) => {
   //   throw new Error("Please add all fields");
   // }
 
-  const updatedUser = await User.findByIdAndUpdate(_id, {
-    ...req.body,
-  }).select("-password -courses -accounts -payments");
+  const updatedUser = await User.findByIdAndUpdate(
+    _id,
+    { ...req.body },
+    { new: true }
+  ).select("-password -courses -accounts -payments");
 
   res.status(200).json(updatedUser);
 });
@@ -418,6 +418,14 @@ const addAccount = asyncHandler(async (req, res) => {
     throw new Error("Account number must have 26 digits!");
   }
 
+  let formatedNumber = "";
+  for (let i = 0; i < accountNumber.toString().length; i++) {
+    if (i !== 0 && (i === 2 || (formatedNumber.length + 3) % 5 === 0)) {
+      formatedNumber += " ";
+    }
+    formatedNumber += accountNumber.charAt(i);
+  }
+
   // Getting the user and pushing account info to array
   const updatedUser = await User.findByIdAndUpdate(
     _id,
@@ -425,13 +433,13 @@ const addAccount = asyncHandler(async (req, res) => {
       $push: {
         accounts: {
           bankName,
-          accountNumber,
+          accountNumber: formatedNumber,
           currency,
         },
       },
     },
     { new: true }
-  ).select("-password -role");
+  ).select("accounts");
 
   res.status(200).json(updatedUser);
 });

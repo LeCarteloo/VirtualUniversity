@@ -98,6 +98,7 @@ const userSchema = mongoose.Schema(
         },
         accountNumber: {
           type: String,
+          unique: true,
           required: [true, "Please add account number!"],
         },
         currency: {

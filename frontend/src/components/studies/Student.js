@@ -17,7 +17,7 @@ import { validate } from "../../utility/validate";
 import { clear } from "../../utility/clear";
 
 const Student = () => {
-  const [showModal, setShowModal] = useState(false);
+  const [contactModal, setContactModal] = useState(false);
   const [t] = useTranslation("translation");
   const [student, setStudent] = useState();
   const [course, setCourse] = useState();
@@ -33,10 +33,6 @@ const Student = () => {
       try {
         const response = await axiosPrivate.get("/users/data/me");
         setStudent(response.data);
-        setContact({
-          email: response.data.secEmail ? response.data.secEmail : "",
-          telephone: response.data.telephone ? response.data.telephone : "",
-        });
       } catch (error) {
         errorToast(error?.response?.data?.message);
         navigate("/", { state: { from: location }, replace: true });
@@ -136,7 +132,6 @@ const Student = () => {
     // Check if there is any error
     for (const error of Object.values(validateErrors)) {
       if (error !== "") {
-        console.log("SIEMA");
         return;
       }
     }
@@ -149,22 +144,25 @@ const Student = () => {
           telephone: contact.telephone,
         })
       );
-      setStudent({ ...student, ...response.data });
+      setStudent({
+        ...student,
+        secEmail: response.data.secEmail,
+        telephone: response.data.telephone,
+      });
+      setContactModal(!contactModal);
       setErrors(clear(errors));
       successToast("Successfully updated contact information");
     } catch (error) {
       errorToast(error?.response?.message?.data);
     }
-
-    console.log(contact);
   };
 
   return (
     <section className="student-section">
       <Modal
         title={"Update contact"}
-        show={showModal}
-        onClose={() => setShowModal(!showModal)}
+        show={contactModal}
+        onClose={() => setContactModal(!contactModal)}
       >
         <form onSubmit={onEditInfo}>
           {inputs.map((input, i) => (
@@ -200,7 +198,11 @@ const Student = () => {
           actionIcon={faPenToSquare}
           onAction={(e) => {
             e.stopPropagation();
-            setShowModal(!showModal);
+            setContact({
+              email: student.secEmail ? student.secEmail : "",
+              telephone: student.telephone ? student.telephone : "",
+            });
+            setContactModal(!contactModal);
           }}
         />
         <GroupTable

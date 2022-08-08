@@ -16,7 +16,6 @@ import Syllabus from "./studies/Syllabus";
 import Student from "./studies/Student";
 import Choices from "./studies/Choices";
 
-
 import {
   faFolder,
   faCalendarDays,
@@ -36,6 +35,7 @@ import {
 const Home = () => {
   const [t] = useTranslation("translation");
 
+  // Notifications
   const notifs = [
     {
       id: 1,
@@ -124,7 +124,7 @@ const Home = () => {
   return (
     <section className="home-section">
       <Notifications notifs={notifs} />
-      <NavBar navItems={navItems}/>
+      <NavBar navItems={navItems} />
       <section className="content-section">
         <Routes>
           <Route index path="articles" exact element={<Articles />} />

@@ -1,44 +1,83 @@
 import { faFilter, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
 // Hooks
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useLocation, useNavigate } from "react-router-dom";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 // Components
 import GroupTable from "../GroupTable";
 import Input from "../Input";
 import Button from "../Button";
 import Modal from "../Modal";
+import { errorToast, successToast } from "../../utility/toast";
 
 const Payments = () => {
   const [showModal, setShowModal] = useState(false);
   const [t] = useTranslation("translation");
+  const [student, setStudent] = useState();
+  const [bank, setBank] = useState({
+    bankName: "",
+    accountNumber: "",
+    currency: "",
+  });
+  const [errors, setErrors] = useState();
 
-  const info = {
-    headers: ["Album", t("payments.bankName"), t("payments.accountNumber")],
-    rows: [["111111", "Bank Test SA", "49 1020 2892 2276 3005 0000 0000"]],
+  const axiosPrivate = useAxiosPrivate();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    const getMyData = async () => {
+      try {
+        const response = await axiosPrivate.get("/users/data/me");
+        setStudent(response.data);
+      } catch (error) {
+        errorToast(error?.response?.data?.message);
+        navigate("/", { state: { from: location }, replace: true });
+      }
+    };
+    getMyData();
+  }, []);
+
+  const uniInfo = {
+    headers: ["Recipient", t("payments.bankName"), t("payments.accountNumber")],
+    data: [
+      "Virtual University",
+      "Bank Test SA",
+      "49 1020 2892 2276 3005 0000 0000",
+    ],
   };
 
-  const account = {
+  const accounts = {
     headers: [
       t("payments.bankName"),
       t("payments.accountNumber"),
       t("payments.currency"),
       t("payments.confirmed"),
     ],
-    rows: [
-      ["Test I O. Warsaw", "49 1020 2892 2276 3005 0000 0000", "USD", "Yes"],
-      ["Test I O. Warsaw", "49 1020 2892 2276 3005 0000 0000", "PLN", "Yes"],
-    ],
+    keys: ["bankName", "accountNumber", "currency", "confirmed"],
   };
 
   const charges = {
     headers: [t("payments.title"), t("payments.value"), t("payments.dueDate")],
-    rows: [
-      ["Activation of student card", "4.99 $", "25.04.2022"],
-      ["Activation of student card", "4.99 $", "25.04.2022"],
-    ],
+    keys: ["title", "value", "due", "payed"],
   };
+
+  const onAddAccount = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axiosPrivate.post("users/account",
+      JSON.stringify({
+
+      })
+      )
+    } catch(error) {
+
+    }
+  }
 
   return (
     <section
@@ -51,14 +90,18 @@ const Payments = () => {
         onClose={() => setShowModal(!showModal)}
         footer={"*Bank account will be checked in two working days"}
       >
-        <form>
+        <form onSubmit={}>
           <Input label={"Account number"} />
           <Input label={"Bank name"} />
           <Input label={"Currency"} />
           <Button text={"Add bank"} />
         </form>
       </Modal>
-      <GroupTable title={t("payments.uniInfo")} object={info} />
+      <GroupTable
+        title={t("payments.uniInfo")}
+        tableHeaders={uniInfo.headers}
+        tableData={uniInfo.data}
+      />
       <GroupTable
         title={t("payments.yourBank")}
         actionIcon={faPlusCircle}
@@ -66,12 +109,16 @@ const Payments = () => {
           e.stopPropagation();
           setShowModal(!showModal);
         }}
-        object={account}
+        tableHeaders={accounts.headers}
+        tableData={student?.accounts}
+        dataKeys={accounts.keys}
       />
       <GroupTable
         title={t("payments.yourCharges")}
         actionIcon={faFilter}
-        object={charges}
+        tableHeaders={charges.headers}
+        tableData={student?.payments}
+        dataKeys={charges.keys}
       />
     </section>
   );
