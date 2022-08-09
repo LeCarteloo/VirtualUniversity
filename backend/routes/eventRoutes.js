@@ -1,13 +1,17 @@
 import express from "express";
-import { addEvent, getEvents, updateEvent } from "../controllers/eventController.js";
+import {
+  addEvent,
+  getEvents,
+  updateEvent,
+} from "../controllers/eventController.js";
 import { protectUser } from "../middleware/authMiddleware.js";
 
 const eventRouter = express.Router();
 
-eventRouter.use(protectUser);
+// eventRouter.use(protectUser);
 
-eventRouter.post("/", addEvent);
-eventRouter.get("/:courseId", getEvents);
-eventRouter.put("/:id", updateEvent)
+eventRouter.post("/", protectUser, addEvent);
+eventRouter.get("/:courseId", protectUser, getEvents);
+eventRouter.put("/:id", protectUser, updateEvent);
 
 export default eventRouter;

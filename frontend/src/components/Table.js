@@ -11,7 +11,7 @@ const Table = ({ headers, rows, bg, padd, orient, mOrient }) => {
               {header}
             </span>
             <span className="row-content" style={{ padding: padd }}>
-              {rows[i] !== undefined ? rows[i].toString() : "-"}
+              {rows[i] !== undefined ? rows[i] : "-"}
             </span>
           </div>
         </div>

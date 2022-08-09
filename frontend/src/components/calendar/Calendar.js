@@ -11,6 +11,7 @@ import i18n from "i18next";
 // Hooks
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
 //Components
 import CalendarDay from "./CalendarDay";
@@ -20,7 +21,10 @@ import TimeMarker from "./TimeMarker";
 const Calendar = () => {
   // Initializing hooks
   const [width, setWidth] = useState(window.innerWidth);
+  const [events, setEvents] = useState();
   const [t] = useTranslation("translation");
+  const axiosPrivate = useAxiosPrivate();
+
   let currentDate = new Date();
   const [changeWeek, setChangeWeek] = useState(
     new Date(
@@ -58,15 +62,10 @@ const Calendar = () => {
   const moveDays = width > 790 ? 7 : 1;
   const slideDays = width > 790 ? 7 : 3;
 
-  // For tests
-  const startDate = new Date();
-  const endDate = new Date();
-  endDate.setHours(endDate.getHours() + 1);
-  endDate.setMinutes(endDate.getMinutes() + 30);
-
   // First day of weekend starting at Monday
   let currentWeek = [];
   let tempWeek = new Date(changeWeek);
+
   for (let i = 0; i < columns; i++) {
     currentWeek.push({
       number: tempWeek.getDate(),
@@ -81,16 +80,20 @@ const Calendar = () => {
     tempWeek.setDate(tempWeek.getDate() + 1);
   }
 
-  // Object will contain future API call
-  const events = [
-    {
-      title: "Artificial Intelligence",
-      author: "John Doe",
-      startDate: startDate,
-      endDate: endDate,
-      isOnline: true,
-    },
-  ];
+  useEffect(() => {
+    const getEvents = async () => {
+      try {
+        const response = await axiosPrivate.get(
+          `events/62ebdbe09addf7645adfbca0`
+        );
+        setEvents(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getEvents();
+  }, []);
 
   return (
     <section className="calendar-section">
@@ -173,7 +176,11 @@ const Calendar = () => {
             ))}
           </div>
           {[...Array(columns)].map((e, i) => (
-            <CalendarColumn key={i} events={events} />
+            <CalendarColumn
+              key={i}
+              events={events}
+              day={currentWeek[i].number}
+            />
           ))}
         </div>
       </div>

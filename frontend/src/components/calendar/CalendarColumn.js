@@ -1,6 +1,9 @@
 import EventItem from "./EventItem";
 
-const CalendarColumn = ({ events }) => {
+const CalendarColumn = ({ events, day }) => {
+  console.log(day);
+  console.log(events);
+
   return (
     <div className="calendar-column">
       {[...Array(30)].map((e, i) => (
@@ -8,7 +11,13 @@ const CalendarColumn = ({ events }) => {
       ))}
       <div className="event-list">
         {events ? (
-          events.map((event) => <EventItem key={event.startDate} {...event} />)
+          events.map((event) => {
+            return (
+              new Date(event.startDate).getDate() === day && (
+                <EventItem key={event.startDate} {...event} />
+              )
+            );
+          })
         ) : (
           <p style={{ textAlign: "center", margin: "0.75em 1em 0 0 " }}>
             No Events

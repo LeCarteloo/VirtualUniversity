@@ -17,8 +17,17 @@ const EventItem = ({
   room,
   code,
 }) => {
+  // console.log("S", startDate);
+  // console.log("E", endDate);
+
+  startDate = new Date(startDate);
+  endDate = new Date(endDate);
+
+  // console.log(new Date());
+  // console.log(startDate.getUTCHours());
+
   // Event start time
-  const startTime = startDate.getHours() + startDate.getMinutes() / 60;
+  const startTime = startDate.getUTCHours() + startDate.getUTCMinutes() / 60;
 
   // Counting the length of event
   const datesDiff = (endDate - startDate) / 1000;

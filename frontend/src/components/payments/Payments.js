@@ -67,8 +67,6 @@ const Payments = () => {
     keys: ["bankName", "accountNumber", "currency", "confirmed"],
   };
 
-  console.log(student.payments[0].payed);
-
   const charges = {
     headers: [
       t("payments.title"),
