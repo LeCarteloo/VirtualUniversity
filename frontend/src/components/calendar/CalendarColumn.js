@@ -1,18 +1,20 @@
 import EventItem from "./EventItem";
 
-const CalendarColumn = ({ events }) => {
+const CalendarColumn = ({ events, columnDay, onHourClick }) => {
   return (
     <div className="calendar-column">
       {[...Array(30)].map((e, i) => (
-        <div className="calendar-row" key={"row-" + i}></div>
+        <div
+          className={`calendar-row ${onHourClick ? "clickable" : ""}`}
+          key={"row-" + i}
+          onClick={() => onHourClick(columnDay, i)}
+        ></div>
       ))}
       <div className="event-list">
         {events && events.length !== 0 ? (
           events.map((event) => <EventItem key={event.startDate} {...event} />)
         ) : (
-          <p style={{ textAlign: "center", margin: "0.75em 1em 0 0 " }}>
-            No Events
-          </p>
+          <p className="no-events">No Events</p>
         )}
       </div>
     </div>

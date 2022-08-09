@@ -1,17 +1,11 @@
 @use "./global" as global;
 @use "./animation" as animation;
-.calendar-section {
+
+.calendar {
   width: 100%;
   height: 100%;
-  overflow: hidden;
-
-  .calendar {
-    width: 100%;
-    height: 100%;
-    // border: 1px solid global.$font;
-    box-shadow: inset 0 0 0 1px global.$font;
-  }
-
+  // border: 1px solid global.$font;
+  box-shadow: inset 0 0 0 1px global.$font;
   .calendar-navigation {
     border: 1px solid global.$font;
     border-bottom: 0;
@@ -26,7 +20,8 @@
           display: none;
         }
       }
-      &:hover {
+      &:hover,
+      &:focus-within {
         color: global.$primary;
       }
     }
@@ -85,7 +80,7 @@
     border: 1px solid global.$font;
     .hour {
       text-align: center;
-      height: 100px;
+      height: 102px;
     }
   }
 
@@ -101,6 +96,11 @@
       height: 50px;
       border-bottom: 1px dashed global.$font;
       opacity: 0.3;
+      &.clickable {
+        &:hover {
+          background-color: global.$fourth;
+        }
+      }
     }
 
     .event-list {
@@ -108,6 +108,13 @@
       top: 0;
       width: 100%;
       margin: 0 0.5em 0 0.5em;
+      .no-events {
+        user-select: none;
+        pointer-events: none;
+        height: 0;
+        text-align: center;
+        margin: 0.75em 1em 0 0;
+      }
     }
   }
 
@@ -117,6 +124,7 @@
     border-radius: 5px;
     width: 90%;
     display: flex;
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.511);
 
     &.canceled {
       text-decoration: line-through;

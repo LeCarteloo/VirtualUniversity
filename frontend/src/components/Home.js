@@ -31,6 +31,7 @@ import {
   fa5,
   faNewspaper,
 } from "@fortawesome/free-solid-svg-icons";
+import StudentCalendar from "./calendar/StudentCalendar";
 
 const Home = () => {
   const [t] = useTranslation("translation");
@@ -137,7 +138,7 @@ const Home = () => {
           <Route path="choices" exact element={<Choices />} />
           {/* Your studies */}
           <Route path="payments" exact element={<Payments />} />
-          <Route path="calendar" exact element={<Calendar />} />
+          <Route path="calendar" exact element={<StudentCalendar />} />
           <Route path="files" exact element={<Files />} />
           <Route path="groups" exact element={<Groups />} />
         </Routes>
