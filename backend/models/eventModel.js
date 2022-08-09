@@ -12,24 +12,19 @@ const eventSchema = mongoose.Schema({
   },
   room: {
     type: String,
-    default: null,
   },
   code: {
     type: String,
-    default: null,
   },
   isCanceled: {
     type: Boolean,
-    default: false,
   },
   isOnline: {
     type: Boolean,
-    default: false,
   },
   // Atm. boolean value (reapting every 7 days)
   onReapet: {
     type: Boolean,
-    default: false,
   },
   subjectId: {
     type: mongoose.Schema.Types.ObjectId,

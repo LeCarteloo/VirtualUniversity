@@ -2,6 +2,7 @@ import asyncHandler from "express-async-handler";
 import Event from "../models/eventModel.js";
 import Subject from "../models/subjectModel.js";
 import Course from "../models/courseModel.js";
+import mongoose from "mongoose";
 
 // @desc Get all events for course
 // @route GET /api/events/:courseId
@@ -14,7 +15,47 @@ const getEvents = asyncHandler(async (req, res) => {
     throw new Error("Course doesn't exist!");
   }
 
-  const events = await Event.find({ courseId: req.params.courseId });
+  // Joining with Subject and User model to get necessary info
+  const events = await Event.aggregate([
+    { $match: { courseId: mongoose.Types.ObjectId(req.params.courseId) } },
+    {
+      $lookup: {
+        from: "subjects",
+        localField: "subjectId",
+        foreignField: "_id",
+        as: "subjects",
+      },
+    },
+    { $unwind: "$subjects" },
+    {
+      $lookup: {
+        from: "users",
+        localField: "subjects.lecturer",
+        foreignField: "_id",
+        as: "subjects.lecturer",
+      },
+    },
+    {
+      $project: {
+        _id: 1,
+        startDate: 1,
+        endDate: 1,
+        room: 1,
+        code: 1,
+        isCanceled: 1,
+        isOnline: 1,
+        onReapet: 1,
+        title: "$subjects.name",
+        author: {
+          $concat: [
+            { $first: "$subjects.lecturer.name" },
+            " ",
+            { $first: "$subjects.lecturer.surname" },
+          ],
+        },
+      },
+    },
+  ]);
 
   res.status(200).json(events);
 });

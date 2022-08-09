@@ -68,17 +68,30 @@ const Calendar = () => {
 
   for (let i = 0; i < columns; i++) {
     currentWeek.push({
-      number: tempWeek.getDate(),
+      dayNumber: tempWeek.getDate(),
       name: capitalize(
         tempWeek.toLocaleDateString(dateLocale, { weekday: "long" })
       ),
       month: capitalize(
         tempWeek.toLocaleDateString(dateLocale, { month: "long" })
       ),
+      monthNumber: tempWeek.getMonth(),
       isToday: tempWeek.toDateString() === new Date().toDateString(),
     });
     tempWeek.setDate(tempWeek.getDate() + 1);
   }
+
+  const getDayEvents = (columnNumber) => {
+    // Filtering the events and returning only with the same month and day
+    return events.filter((event) => {
+      const date = new Date(event.startDate);
+      if (
+        date.getDate() === currentWeek[columnNumber].dayNumber &&
+        date.getMonth() === currentWeek[columnNumber].monthNumber
+      )
+        return event;
+    });
+  };
 
   useEffect(() => {
     const getEvents = async () => {
@@ -176,11 +189,7 @@ const Calendar = () => {
             ))}
           </div>
           {[...Array(columns)].map((e, i) => (
-            <CalendarColumn
-              key={i}
-              events={events}
-              day={currentWeek[i].number}
-            />
+            <CalendarColumn key={i} events={events && getDayEvents(i)} />
           ))}
         </div>
       </div>

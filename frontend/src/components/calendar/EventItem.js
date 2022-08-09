@@ -17,14 +17,8 @@ const EventItem = ({
   room,
   code,
 }) => {
-  // console.log("S", startDate);
-  // console.log("E", endDate);
-
   startDate = new Date(startDate);
   endDate = new Date(endDate);
-
-  // console.log(new Date());
-  // console.log(startDate.getUTCHours());
 
   // Event start time
   const startTime = startDate.getUTCHours() + startDate.getUTCMinutes() / 60;
