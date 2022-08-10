@@ -168,3 +168,52 @@ select {
     background-color: global.$fourth;
   }
 }
+
+.data-picker {
+  .name {
+    background-color: global.$primary;
+    padding: 1em;
+  }
+  .data-calendar {
+    position: absolute;
+    border: 1px solid global.$font;
+    border-radius: 0 5px 5px 5px;
+    width: 300px;
+    background-color: global.$fourth;
+
+    .data-calendar {
+      width: 100%;
+      height: 100%;
+      background-color: red;
+    }
+
+    .data-calendar-header {
+      display: flex;
+      padding: 1em;
+      justify-content: space-between;
+      border-bottom: 1px solid global.$font;
+      span::first-letter {
+        text-transform: uppercase;
+      }
+    }
+
+    .data-calendar-content {
+      padding: 0.3em;
+      table {
+        width: 100%;
+        th,
+        td {
+          padding: 0.5em;
+          text-align: center;
+        }
+        td {
+          transition: 0.2s ease-in-out;
+          &:hover {
+            background-color: global.$primary;
+            border-radius: 5px;
+          }
+        }
+      }
+    }
+  }
+}
