@@ -203,14 +203,24 @@ select {
         width: 100%;
         th,
         td {
-          padding: 0.5em;
           text-align: center;
         }
         td {
           transition: 0.2s ease-in-out;
+          border-radius: 5px;
+          border: solid 1px transparent;
+
           &:hover {
+            border: solid 1px global.$font;
+          }
+          &.today {
             background-color: global.$primary;
-            border-radius: 5px;
+          }
+          &.other {
+            opacity: 0.3;
+          }
+          button {
+            padding: 0.5em;
           }
         }
       }
