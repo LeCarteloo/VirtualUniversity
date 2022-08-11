@@ -5,12 +5,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faCircleExclamation } from "@fortawesome/free-solid-svg-icons";
 
 const Input = (props) => {
-  const { label, labelBg, leadIcon, error, onChange, ...inputProps } = props;
+  const { label, labelBg, leadIcon, error, onChange, onClick, ...inputProps } =
+    props;
 
   return (
     <div className="input-container">
       <div className="input-wrapper">
         <input
+          onClick={onClick}
           onChange={onChange}
           className={`${error && "error"} ${leadIcon && "hasLeadIcn"}`}
           placeholder=" "
@@ -24,7 +26,7 @@ const Input = (props) => {
           {label}
         </label>
         {leadIcon && (
-          <FontAwesomeIcon icon={faUser} size="xl" className="leading-icon" />
+          <FontAwesomeIcon icon={leadIcon} size="xl" className="leading-icon" />
         )}
         <FontAwesomeIcon
           icon={faCircleExclamation}

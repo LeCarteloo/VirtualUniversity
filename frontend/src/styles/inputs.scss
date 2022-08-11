@@ -60,6 +60,9 @@ input {
   input:focus,
   textarea:focus {
     border-color: global.$primary;
+    ~ .leading-icon {
+      color: global.$primary;
+    }
   }
 
   input:focus ~ label,
@@ -69,9 +72,6 @@ input {
     left: 0.2em;
     padding: 0 0.75em 0 0.4em;
     transform: scale(0.85);
-    ~ .leading-icon {
-      color: global.$primary;
-    }
   }
 
   textarea:focus ~ label,
@@ -170,16 +170,25 @@ select {
 }
 
 .data-picker {
+  width: 100%;
+  // position: relative;
   .name {
     background-color: global.$primary;
     padding: 1em;
   }
   .data-calendar {
     position: absolute;
+    z-index: 10;
+    // top: 3.1em;
     border: 1px solid global.$font;
-    border-radius: 0 5px 5px 5px;
-    width: 300px;
+    border-radius: 0 0 5px 5px;
+    width: 285px;
     background-color: global.$fourth;
+    display: none;
+
+    &.open {
+      display: block;
+    }
 
     .data-calendar {
       width: 100%;
@@ -191,7 +200,8 @@ select {
       display: flex;
       padding: 1em;
       justify-content: space-between;
-      border-bottom: 1px solid global.$font;
+      font-weight: bolder;
+      background-color: global.$primary;
       span::first-letter {
         text-transform: uppercase;
       }

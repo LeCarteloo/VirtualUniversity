@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faAngleLeft, faAngleRight } from "@fortawesome/free-solid-svg-icons";
+import {
+  faAngleLeft,
+  faAngleRight,
+  faCalendarDays,
+} from "@fortawesome/free-solid-svg-icons";
+import Input from "../Input";
 
-const DataPicker = () => {
+const DataPicker = ({ label, onDayClick, value }) => {
   const [symbols, setSymbols] = useState();
   const [months, setMonths] = useState();
+  const [open, setOpen] = useState(false);
   const [currDate, setCurrDate] = useState(new Date()); // 2022, 9, 0
   // const [days, setDays] = useState();
 
@@ -82,7 +88,8 @@ const DataPicker = () => {
         date: new Date(
           prevMonthLast.getFullYear(),
           prevMonthLast.getMonth(),
-          number
+          number,
+          8
         ),
       });
     }
@@ -99,7 +106,8 @@ const DataPicker = () => {
         date: new Date(
           currMonthLast.getFullYear(),
           currMonthLast.getMonth(),
-          i
+          i,
+          8
         ),
       });
     }
@@ -112,7 +120,8 @@ const DataPicker = () => {
         date: new Date(
           nextMonthFirst.getFullYear(),
           nextMonthFirst.getMonth(),
-          i + 1
+          i + 1,
+          8
         ),
       });
     }
@@ -121,10 +130,6 @@ const DataPicker = () => {
   };
 
   let days = getCalendarDays();
-
-  const onDayClick = (date) => {
-    console.log(date);
-  };
 
   const previousMonth = () => {
     setCurrDate(
@@ -148,8 +153,15 @@ const DataPicker = () => {
 
   return (
     <div className="data-picker">
-      <button className="name">DATA PICKER</button>
-      <div className="data-calendar">
+      <Input
+        label={label}
+        value={value}
+        leadIcon={faCalendarDays}
+        readOnly
+        onClick={() => setOpen(!open)}
+      />
+      {/* <button className="name">DATA PICKER</button> */}
+      <div className={`data-calendar ${open ? "open" : ""}`}>
         <div className="data-calendar-header">
           <button onClick={() => previousMonth()}>
             <FontAwesomeIcon icon={faAngleLeft} size="xl" />
@@ -182,7 +194,10 @@ const DataPicker = () => {
                         key={`day-${dayNumber}`}
                       >
                         <button
-                          onClick={() => onDayClick(days[dayNumber]?.date)}
+                          onClick={() => {
+                            setOpen(false);
+                            onDayClick(days[dayNumber]?.date);
+                          }}
                         >
                           {days[dayNumber]?.number}
                         </button>
