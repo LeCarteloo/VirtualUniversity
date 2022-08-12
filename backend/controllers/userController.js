@@ -383,14 +383,30 @@ const searchUser = asyncHandler(async (req, res) => {
   //   throw new Error("Not authorized");
   // }
 
-  const user = await User.find({ $text: { $search: query } }).select(
-    "name surname email telephone"
-  );
-
-  if (!user) {
-    res.status(400);
-    throw new Error("User does not exists");
-  }
+  const user = await User.aggregate([
+    {
+      $search: {
+        index: "searchUsers",
+        text: {
+          query: query,
+          path: {
+            wildcard: "*",
+          },
+          fuzzy: {},
+        },
+      },
+    },
+    {
+      $limit: 5,
+    },
+    {
+      $project: {
+        _id: 1,
+        name: { $concat: ["$name", " ", "$surname"] },
+        extra: "$email",
+      },
+    },
+  ]);
 
   res.status(200).json(user);
 });

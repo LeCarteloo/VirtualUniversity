@@ -68,3 +68,52 @@ details {
     gap: 0em 0.5em;
   }
 }
+
+.search-list {
+  position: absolute;
+  border: 1px solid global.$font;
+  border-radius: 0 0 5px 5px;
+  z-index: 10;
+  background-color: global.$secondary;
+  max-height: 165px;
+  overflow: auto;
+  padding: 0.55em 0.8em 0.6em 0.8em;
+  list-style: none;
+  display: none;
+
+  &.open {
+    display: block;
+  }
+
+  li {
+    width: 215px;
+  }
+
+  .search-list-item {
+    cursor: pointer;
+    padding: 0.69em 0 0.69em 0.69em;
+
+    &:hover,
+    &:focus-within {
+      background-color: global.$primary;
+    }
+
+    .search-list-button {
+      display: flex;
+      align-items: center;
+      font-size: 1em;
+
+      div {
+        display: flex;
+        flex-direction: column;
+        margin-left: 1em;
+        text-align: left;
+
+        span:nth-child(2) {
+          opacity: 0.5;
+          font-size: 0.7em;
+        }
+      }
+    }
+  }
+}

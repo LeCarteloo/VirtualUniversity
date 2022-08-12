@@ -7,6 +7,7 @@ import DataPicker from "../inputs/DataPicker";
 import Dropdown from "../Dropdown";
 import Button from "../Button";
 import Checkbox from "../inputs/Checkbox";
+import DBSearchInput from "../inputs/DBSearchInput";
 
 const AdminCalendar = () => {
   const [events, setEvents] = useState();
@@ -90,6 +91,9 @@ const AdminCalendar = () => {
         show={eventModal}
         onClose={() => setEventModal(!eventModal)}
       >
+        <DBSearchInput label={"Search subject"} />
+        <DBSearchInput label={"Search course"} />
+
         <form onSubmit={onAddEvent}>
           <div style={{ display: "flex", gap: "2em" }}>
             <Input
