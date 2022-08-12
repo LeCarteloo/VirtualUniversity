@@ -53,8 +53,8 @@ const AdminCalendar = () => {
     e.preventDefault();
   };
 
+  //TODO: Should be changed
   let timeOptions = [];
-
   for (let i = 0; i < 29; i++) {
     let date = new Date(2022, 0, 1, Math.floor(i / 2) + 8, (i * 30) % 60);
     timeOptions.push({
@@ -67,6 +67,21 @@ const AdminCalendar = () => {
     });
   }
 
+  const repeatOptions = [
+    {
+      _id: 1,
+      name: "Does not repeat",
+    },
+    {
+      _id: 2,
+      name: "Every week",
+    },
+    {
+      _id: 3,
+      name: "Every second week",
+    },
+  ];
+
   return (
     <section style={{ width: "100%", height: "90%", overflow: "hidden" }}>
       <Calendar events={events} onHourClick={onHourClick} />
@@ -76,7 +91,30 @@ const AdminCalendar = () => {
         onClose={() => setEventModal(!eventModal)}
       >
         <form onSubmit={onAddEvent}>
-          <Input label={"Start date"} value={newEvent.startDate} readOnly />
+          <div style={{ display: "flex", gap: "2em" }}>
+            <Input
+              label={"Room number"}
+              value={newEvent.room}
+              onChange={(e) =>
+                setNewEvent({ ...newEvent, room: e.target.value })
+              }
+            />
+            <Input
+              label={"Online code"}
+              value={newEvent.code}
+              onChange={(e) =>
+                setNewEvent({ ...newEvent, code: e.target.value })
+              }
+            />
+          </div>
+
+          <Dropdown
+            state={newEvent.onRepeat.name}
+            setState={(repeat) =>
+              setNewEvent({ ...newEvent, onRepeat: repeat })
+            }
+            options={repeatOptions}
+          />
 
           <div
             style={{
@@ -100,14 +138,13 @@ const AdminCalendar = () => {
               }
             />
           </div>
-
           <div
             style={{
               display: "flex",
               gap: "0.4em",
             }}
           >
-            <div style={{ width: "300px" }}>
+            <div style={{ width: "100%" }}>
               <DataPicker
                 label={"Start date"}
                 onDayClick={(date) =>
@@ -138,7 +175,7 @@ const AdminCalendar = () => {
                 options={timeOptions}
               />
             </div>
-            <div style={{ width: "300px" }}>
+            <div style={{ width: "100%" }}>
               <DataPicker
                 label={"End date"}
                 onDayClick={(date) =>

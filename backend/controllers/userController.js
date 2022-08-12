@@ -372,30 +372,27 @@ const getUsers = asyncHandler(async (req, res) => {
   res.status(200).json(aggregate);
 });
 
-// @desc Get user by email
-// @route GET /api/users/:email
+// @desc Search for user by name or surname
+// @route GET /api/users/:query
 // @access Private admin
-const getUser = asyncHandler(async (req, res) => {
-  const { role } = req.user;
+const searchUser = asyncHandler(async (req, res) => {
+  // const { role } = req.user;
+  const query = req.params.query;
 
-  if (role !== "admin") {
-    throw new Error("Not authorized");
-  }
+  // if (role !== "admin") {
+  //   throw new Error("Not authorized");
+  // }
 
-  const user = await User.findOne({ email: req.params.email }).select(
-    "-password -role"
+  const user = await User.find({ $text: { $search: query } }).select(
+    "name surname email telephone"
   );
 
   if (!user) {
+    res.status(400);
     throw new Error("User does not exists");
   }
 
-  res.status(200).json({
-    name: user.name,
-    surname: user.surname,
-    email: user.email,
-    album: user.album,
-  });
+  res.status(200).json(user);
 });
 
 // @desc Add bank account
@@ -647,7 +644,7 @@ export {
   deleteUser,
   refreshToken,
   getUsers,
-  getUser,
+  searchUser,
   getUsersByRole,
   addAccount,
   getCharges,
