@@ -2,9 +2,6 @@
 
 input {
   font-family: "Roboto", sans-serif;
-  &[type="checkbox"] {
-    cursor: pointer;
-  }
   // Removing arrows - Firefox
   &[type="number"] {
     -moz-appearance: textfield;
@@ -145,6 +142,35 @@ input {
     border: none;
     outline: none;
     color: global.$font;
+  }
+}
+
+.checkbox-label {
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  margin-top: 1.5em;
+
+  input[type="checkbox"] {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+  }
+
+  .checkbox {
+    display: inline-block;
+    height: 18px;
+    width: 18px;
+    border-radius: 3px;
+    border: 2.5px global.$font solid;
+    padding: 0.1em;
+    margin-right: 0.5em;
+    &.checked {
+      border-color: global.$primary;
+      background: global.$primary;
+    }
   }
 }
 
