@@ -35,7 +35,7 @@ userRouter.get("/refresh", refreshToken);
 userRouter.post("/account", protectUser, addAccount);
 userRouter.put("/contact", protectUser, updateContact);
 
-userRouter.get("/:query", protectUser, searchUser);
+userRouter.get("/search/:query", protectUser, searchUser);
 userRouter.put("/:id", protectUser, updateUser);
 userRouter.delete("/:id", protectUser, deleteUser);
 

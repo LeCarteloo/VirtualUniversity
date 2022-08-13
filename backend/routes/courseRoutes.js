@@ -5,14 +5,16 @@ import {
   addCourse,
   getCourses,
   getMySyllabus,
+  searchCoruses,
 } from "../controllers/courseController.js";
 
 const courseRouter = express.Router();
 // courseRouter.use(protectUser);
 
 courseRouter.get("/", protectUser, getCourses);
-courseRouter.get("/me", protectUser, getMySyllabus);
 courseRouter.post("/", protectUser, addCourse);
+courseRouter.get("/me", protectUser, getMySyllabus);
+courseRouter.get("/search/:query", protectUser, searchCoruses);
 courseRouter.post("/charges/:id", protectUser, addCharge);
 
 export default courseRouter;

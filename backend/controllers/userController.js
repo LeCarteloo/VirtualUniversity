@@ -373,7 +373,7 @@ const getUsers = asyncHandler(async (req, res) => {
 });
 
 // @desc Search for user by name or surname
-// @route GET /api/users/:query
+// @route GET /api/users/search/:query
 // @access Private admin
 const searchUser = asyncHandler(async (req, res) => {
   // const { role } = req.user;
@@ -387,12 +387,27 @@ const searchUser = asyncHandler(async (req, res) => {
     {
       $search: {
         index: "searchUsers",
-        text: {
-          query: query,
-          path: {
-            wildcard: "*",
-          },
-          fuzzy: {},
+        compound: {
+          should: [
+            {
+              autocomplete: {
+                query: query,
+                path: "name",
+              },
+            },
+            {
+              autocomplete: {
+                query: query,
+                path: "surname",
+              },
+            },
+            {
+              autocomplete: {
+                query: query,
+                path: "email",
+              },
+            },
+          ],
         },
       },
     },

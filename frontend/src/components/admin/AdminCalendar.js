@@ -20,8 +20,8 @@ const AdminCalendar = () => {
     isCanceled: false,
     isOnline: false,
     onRepeat: "",
-    subjectId: "",
-    courseId: "",
+    subject: "",
+    course: "",
   });
   const axiosPrivate = useAxiosPrivate();
 
@@ -91,7 +91,12 @@ const AdminCalendar = () => {
         show={eventModal}
         onClose={() => setEventModal(!eventModal)}
       >
-        <DBSearchInput label={"Search subject"} />
+        <DBSearchInput
+          label={"Search subject"}
+          value={newEvent.subject?.name}
+          onClick={(item) => setNewEvent({ ...newEvent, subject: item })}
+          route="/users/search"
+        />
         <DBSearchInput label={"Search course"} />
 
         <form onSubmit={onAddEvent}>

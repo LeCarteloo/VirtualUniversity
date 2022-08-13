@@ -41,6 +41,46 @@ const getCourses = asyncHandler(async (req, res) => {
   res.status(200).json(courses);
 });
 
+const searchCoruses = asyncHandler(async (req, res) => {
+  const query = req.params.query;
+
+  const courses = await Course.aggregate([
+    {
+      $search: {
+        index: "searchCourses",
+        compound: {
+          should: [
+            {
+              autocomplete: {
+                query: query,
+                path: "name",
+              },
+            },
+            {
+              autocomplete: {
+                query: query,
+                path: "semester",
+              },
+            },
+          ],
+        },
+      },
+    },
+    {
+      $limit: 5,
+    },
+    {
+      $project: {
+        _id: 1,
+        name: 1,
+        extra: "$type",
+      },
+    },
+  ]);
+
+  res.status(200).json(courses);
+});
+
 // @desc Get all data of user courses
 // @route Get /api/courses/me
 // @access Private
@@ -146,4 +186,4 @@ const addCharge = asyncHandler(async (req, res) => {
   res.status(200).json(updatedUsers);
 });
 
-export { getCourses, getMySyllabus, addCourse, addCharge };
+export { searchCoruses, getCourses, getMySyllabus, addCourse, addCharge };

@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import Input from "../Input";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
-import Loading from "../Loading";
+import Input from "../Input";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
-const DBSearchInput = ({ value, onChange, label }) => {
+const DBSearchInput = ({ value, onClick, label, route }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [display, setDisplay] = useState(false);
   const [items, setItems] = useState();
@@ -15,8 +14,8 @@ const DBSearchInput = ({ value, onChange, label }) => {
     const search = async () => {
       if (searchTerm.length >= 3) {
         try {
+          const response = await axiosPrivate.get(`${route}/${searchTerm}`);
           setDisplay(true);
-          const response = await axiosPrivate.get(`/users/${searchTerm}`);
           setItems(response.data);
         } catch (error) {
           console.error(error);
@@ -36,11 +35,19 @@ const DBSearchInput = ({ value, onChange, label }) => {
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-      <ul className={`search-list ${display ? "open" : ""}`}>
+      <ul className={`search-list ${items ? "open" : ""}`}>
         {items && items.length !== 0 ? (
           items.map((item, i) => (
             <li className="search-list-item" key={`list-item-${i}`}>
-              <button className="search-list-button">
+              <button
+                className="search-list-button"
+                onClick={() => {
+                  onClick(item);
+                  setSearchTerm(item.name);
+                  setDisplay(false);
+                  setItems();
+                }}
+              >
                 <FontAwesomeIcon icon={faUser} size="xl" />
                 <div>
                   <span>{item.name}</span>
@@ -49,10 +56,6 @@ const DBSearchInput = ({ value, onChange, label }) => {
               </button>
             </li>
           ))
-        ) : !items ? (
-          <li>
-            <Loading size={"xs"} />
-          </li>
         ) : (
           <li>No results found</li>
         )}

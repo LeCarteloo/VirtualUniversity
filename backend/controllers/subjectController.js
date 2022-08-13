@@ -34,6 +34,49 @@ const getAllSubjects = asyncHandler(async (req, res) => {
   res.status(200).json(subjects);
 });
 
+// @desc Search for subjects by name or type
+// @route GET /api/subjects/search/:query
+// @access Private
+const searchSubjects = asyncHandler(async (req, res) => {
+  const query = req.params.query;
+
+  const subjects = await Subject.aggregate([
+    {
+      $search: {
+        index: "searchSubjects",
+        compound: {
+          should: [
+            {
+              autocomplete: {
+                query: query,
+                path: "name",
+              },
+            },
+            {
+              autocomplete: {
+                query: query,
+                path: "type",
+              },
+            },
+          ],
+        },
+      },
+    },
+    {
+      $limit: 5,
+    },
+    {
+      $project: {
+        _id: 1,
+        name: 1,
+        extra: "$type",
+      },
+    },
+  ]);
+
+  res.status(200).json(subjects);
+});
+
 // @desc Add a new subject
 // @route POST /api/subjects
 // @access Private
@@ -88,4 +131,10 @@ const deleteSubject = asyncHandler(async (req, res) => {
   res.status(200).json(deletedSubject);
 });
 
-export { getAllSubjects, addSubject, updateSubject, deleteSubject };
+export {
+  getAllSubjects,
+  addSubject,
+  updateSubject,
+  deleteSubject,
+  searchSubjects,
+};
