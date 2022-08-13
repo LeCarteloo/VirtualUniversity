@@ -12,7 +12,6 @@ const DataPicker = ({ label, onDayClick, value }) => {
   const [months, setMonths] = useState();
   const [open, setOpen] = useState(false);
   const [currDate, setCurrDate] = useState(new Date()); // 2022, 9, 0
-  // const [days, setDays] = useState();
 
   useEffect(() => {
     const getWeekDays = (locale) => {

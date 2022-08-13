@@ -73,7 +73,7 @@ const Calendar = ({ events, onHourClick }) => {
         tempWeek.toLocaleDateString(dateLocale, { month: "long" })
       ),
       monthNumber: tempWeek.getMonth(),
-      fullDate: tempWeek,
+      fullDate: new Date(tempWeek),
       isToday: tempWeek.toDateString() === new Date().toDateString(),
     });
     tempWeek.setDate(tempWeek.getDate() + 1);

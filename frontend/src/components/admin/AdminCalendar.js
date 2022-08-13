@@ -41,6 +41,7 @@ const AdminCalendar = () => {
   }, []);
 
   const onHourClick = (day, hour) => {
+    console.log(day, hour);
     day.setHours(hour / 2 + 8, (hour % 2) * 30, 0);
     setEventModal(!eventModal);
     setNewEvent({
@@ -50,8 +51,33 @@ const AdminCalendar = () => {
     });
   };
 
-  const onAddEvent = (e) => {
+  const onAddEvent = async (e) => {
     e.preventDefault();
+
+    console.log(newEvent);
+
+    try {
+      const response = await axiosPrivate.post(
+        "/events",
+        JSON.stringify({
+          ...newEvent,
+          subjectId: newEvent.subject._id,
+          courseId: newEvent.course._id,
+          onRepeat: false,
+        })
+      );
+      setEvents([
+        ...events,
+        {
+          ...newEvent,
+          title: newEvent.subject.name,
+          author: newEvent.subject.extra,
+        },
+      ]);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   //TODO: Should be changed
@@ -93,11 +119,14 @@ const AdminCalendar = () => {
       >
         <DBSearchInput
           label={"Search subject"}
-          value={newEvent.subject?.name}
           onClick={(item) => setNewEvent({ ...newEvent, subject: item })}
-          route="/users/search"
+          route="/subjects/search"
         />
-        <DBSearchInput label={"Search course"} />
+        <DBSearchInput
+          label={"Search course"}
+          onClick={(item) => setNewEvent({ ...newEvent, course: item })}
+          route="/courses/search"
+        />
 
         <form onSubmit={onAddEvent}>
           <div style={{ display: "flex", gap: "2em" }}>

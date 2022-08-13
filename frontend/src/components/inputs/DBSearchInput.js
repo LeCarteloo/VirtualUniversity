@@ -4,37 +4,37 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import Input from "../Input";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
-const DBSearchInput = ({ value, onClick, label, route }) => {
+const DBSearchInput = ({ onClick, label, route }) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [display, setDisplay] = useState(false);
   const [items, setItems] = useState();
   const axiosPrivate = useAxiosPrivate();
 
-  useEffect(() => {
+  const onChange = (e) => {
+    // const value = e.target.value;
+
     const search = async () => {
-      if (searchTerm.length >= 3) {
+      const value = e.target.value;
+      if (value.length >= 3) {
         try {
-          const response = await axiosPrivate.get(`${route}/${searchTerm}`);
-          setDisplay(true);
+          const response = await axiosPrivate.get(`${route}/${value}`);
           setItems(response.data);
         } catch (error) {
           console.error(error);
         }
       } else if (items !== undefined) {
-        setDisplay(false);
         setItems();
       }
     };
+
     search();
-  }, [searchTerm]);
+    setSearchTerm(e.target.value);
+  };
+
+  console.log(items);
 
   return (
     <>
-      <Input
-        label={label}
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
+      <Input label={label} value={searchTerm} onChange={onChange} />
       <ul className={`search-list ${items ? "open" : ""}`}>
         {items && items.length !== 0 ? (
           items.map((item, i) => (
@@ -44,7 +44,6 @@ const DBSearchInput = ({ value, onClick, label, route }) => {
                 onClick={() => {
                   onClick(item);
                   setSearchTerm(item.name);
-                  setDisplay(false);
                   setItems();
                 }}
               >

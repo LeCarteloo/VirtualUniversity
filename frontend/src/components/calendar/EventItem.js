@@ -21,7 +21,7 @@ const EventItem = ({
   endDate = new Date(endDate);
 
   // Event start time
-  const startTime = startDate.getUTCHours() + startDate.getUTCMinutes() / 60;
+  const startTime = startDate.getHours() + startDate.getMinutes() / 60;
 
   // Counting the length of event
   const datesDiff = (endDate - startDate) / 1000;

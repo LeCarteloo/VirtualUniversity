@@ -41,6 +41,9 @@ const getCourses = asyncHandler(async (req, res) => {
   res.status(200).json(courses);
 });
 
+// @desc Search for courses by name or semester
+// @route Get /api/courses/search/:query
+// @access Private
 const searchCoruses = asyncHandler(async (req, res) => {
   const query = req.params.query;
 
@@ -73,7 +76,7 @@ const searchCoruses = asyncHandler(async (req, res) => {
       $project: {
         _id: 1,
         name: 1,
-        extra: "$type",
+        extra: { $concat: [{ $toString: "$year" }, " ", "$semester"] },
       },
     },
   ]);

@@ -66,10 +66,20 @@ const searchSubjects = asyncHandler(async (req, res) => {
       $limit: 5,
     },
     {
+      $lookup: {
+        from: "users",
+        localField: "lecturer",
+        foreignField: "_id",
+        as: "ref",
+      },
+    },
+    {
       $project: {
         _id: 1,
         name: 1,
-        extra: "$type",
+        extra: {
+          $concat: [{ $first: "$ref.name" }, " ", { $first: "$ref.surname" }],
+        },
       },
     },
   ]);
