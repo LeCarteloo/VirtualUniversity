@@ -172,4 +172,20 @@ const updateEvent = asyncHandler(async (req, res) => {
   res.status(200).json(updatedEvent);
 });
 
-export { getEvents, addEvent, updateEvent };
+// @desc Delete event
+// @route DELETE /api/events/:id
+// @access Private
+const deleteEvent = asyncHandler(async (req, res) => {
+  const eventExist = await Event.findById(req.params.id);
+
+  if (!eventExist) {
+    res.status(400);
+    throw new Error("Event doesn't exist!");
+  }
+
+  const deletedEvent = await Event.findByIdAndDelete(req.params.id);
+
+  res.status(200).json(deletedEvent);
+});
+
+export { getEvents, addEvent, updateEvent, deleteEvent };

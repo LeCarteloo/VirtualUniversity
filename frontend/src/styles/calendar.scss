@@ -10,15 +10,9 @@
     border: 1px solid global.$font;
     border-bottom: 0;
     padding: 0.5em;
-    button {
-      background-color: transparent;
-      border: none;
-      color: global.$font;
-      cursor: pointer;
-      .this-week {
-        @media (max-width: 350px) {
-          display: none;
-        }
+    .this-week {
+      @media (max-width: 350px) {
+        display: none;
       }
       &:hover,
       &:focus-within {

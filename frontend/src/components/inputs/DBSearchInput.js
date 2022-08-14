@@ -33,8 +33,6 @@ const DBSearchInput = ({ value, onClick, label, route }) => {
     setSearchTerm(e.target.value);
   };
 
-  console.log(items);
-
   return (
     <>
       <Input label={label} value={searchTerm} onChange={onChange} />

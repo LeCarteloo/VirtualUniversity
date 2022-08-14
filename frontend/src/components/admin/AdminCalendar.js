@@ -8,6 +8,7 @@ import Dropdown from "../Dropdown";
 import Button from "../Button";
 import Checkbox from "../inputs/Checkbox";
 import DBSearchInput from "../inputs/DBSearchInput";
+import { errorToast, successToast } from "../../utility/toast";
 
 const initialNewEvent = {
   startDate: undefined,
@@ -35,7 +36,6 @@ const AdminCalendar = () => {
           `events/62ebdbe09addf7645adfbca0`
         );
         setEvents(response.data);
-        console.log(response.data);
       } catch (error) {
         console.error(error);
       }
@@ -55,8 +55,8 @@ const AdminCalendar = () => {
     });
   };
 
+  // Opening modal and setting data
   const onEventClick = (event) => {
-    console.log(event);
     setEditModal(!editModal);
     setNewEvent({ ...newEvent, ...event });
   };
@@ -86,16 +86,15 @@ const AdminCalendar = () => {
       ]);
       setAddModal(false);
       setNewEvent({ ...initialNewEvent });
+      successToast("Successfully added event");
     } catch (error) {
-      console.log(error);
+      errorToast(error?.response?.data?.message);
     }
   };
 
   // Updating event on submiting form inside modal
   const onEditEvent = async (e) => {
     e.preventDefault();
-
-    console.log(newEvent);
 
     try {
       const response = await axiosPrivate.put(
@@ -113,10 +112,24 @@ const AdminCalendar = () => {
       );
 
       setEvents(newState);
-      setAddModal(false);
+      setEditModal(false);
       setNewEvent({ ...initialNewEvent });
+      successToast("Successfully updated event");
     } catch (error) {
-      console.log(error);
+      errorToast(error?.response?.data?.message);
+    }
+  };
+
+  // Removing event with given id
+  const onRemoveEvent = async (e) => {
+    try {
+      const response = await axiosPrivate.delete(`/events/${newEvent._id}`);
+      setEvents(events.filter((event) => event._id !== response.data._id));
+      setNewEvent({ ...initialNewEvent });
+      setEditModal(false);
+      successToast("Successfully removed event");
+    } catch (error) {
+      errorToast(error?.response?.data?.message);
     }
   };
 
@@ -410,7 +423,7 @@ const AdminCalendar = () => {
           <Button
             text={"Remove event"}
             bgColor={"#1164aa"}
-            // onClick={onRemoveEvent}
+            onClick={onRemoveEvent}
           />
         </Modal>
       )}

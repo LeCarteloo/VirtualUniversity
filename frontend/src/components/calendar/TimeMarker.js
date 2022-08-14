@@ -13,7 +13,6 @@ const TimeMarker = () => {
   const [top, setTop] = useState(getTime());
 
   useEffect(() => {
-    console.log("YO");
     const interval = setInterval(() => setTop(getTime()), 60000);
     return () => {
       clearInterval(interval);

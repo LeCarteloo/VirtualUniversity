@@ -1,6 +1,7 @@
 import express from "express";
 import {
   addEvent,
+  deleteEvent,
   getEvents,
   updateEvent,
 } from "../controllers/eventController.js";
@@ -13,5 +14,6 @@ const eventRouter = express.Router();
 eventRouter.post("/", protectUser, addEvent);
 eventRouter.get("/:courseId", protectUser, getEvents);
 eventRouter.put("/:id", protectUser, updateEvent);
+eventRouter.delete("/:id", protectUser, deleteEvent);
 
 export default eventRouter;

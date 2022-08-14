@@ -5,6 +5,7 @@ import {
   faAngleRight,
   faCalendarWeek,
   faFileDownload,
+  faPlus,
 } from "@fortawesome/free-solid-svg-icons";
 import i18n from "i18next";
 
