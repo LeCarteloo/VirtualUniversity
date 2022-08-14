@@ -22,10 +22,14 @@ const eventSchema = mongoose.Schema({
   isOnline: {
     type: Boolean,
   },
-  // Atm. boolean value (reapting every 7 days)
-  onReapet: {
-    type: Boolean,
-  },
+  // category: {
+  //   type: "String",
+  //   enum: ["red", "orange", "blue", "yellow", "green"],
+  //   default: "blue",
+  // },
+  // onRepeat: {
+  //   type: Number,
+  // },
   subjectId: {
     type: mongoose.Schema.Types.ObjectId,
     required: [true, "Please add subject!"],

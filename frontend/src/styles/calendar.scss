@@ -144,6 +144,10 @@
       }
     }
 
+    &.clickable {
+      cursor: pointer;
+    }
+
     .event-marker {
       min-width: 5px;
       height: 100%;

@@ -17,7 +17,7 @@ import CalendarDay from "./CalendarDay";
 import CalendarColumn from "./CalendarColumn";
 import TimeMarker from "./TimeMarker";
 
-const Calendar = ({ events, onHourClick }) => {
+const Calendar = ({ events, onHourClick, onEventClick }) => {
   // Initializing hooks
   const [width, setWidth] = useState(window.innerWidth);
   const [t] = useTranslation("translation");
@@ -81,13 +81,38 @@ const Calendar = ({ events, onHourClick }) => {
 
   const getDayEvents = (columnNumber) => {
     // Filtering the events and returning only with the same month and day
-    return events.filter((event) => {
-      const date = new Date(event.startDate);
+    return events.filter((event, i) => {
+      const startDate = new Date(event.startDate);
+      // If the event start day is equal to current column day add it to array
       if (
-        date.getDate() === currentWeek[columnNumber].dayNumber &&
-        date.getMonth() === currentWeek[columnNumber].monthNumber
-      )
+        startDate.getDate() === currentWeek[columnNumber].dayNumber &&
+        startDate.getMonth() === currentWeek[columnNumber].monthNumber
+      ) {
         return event;
+      }
+      // TODO: Think about reccurring events design
+      // else if (event?.onRepeat) {
+      //   // If the event has attribute onRepeat add this value to date and check again
+      //   startDate.setDate(startDate.getDate() + event.onRepeat);
+      //   if (
+      //     startDate.getDate() === currentWeek[columnNumber].dayNumber &&
+      //     startDate.getMonth() === currentWeek[columnNumber].monthNumber
+      //   ) {
+      //     // If the event date is equal to current one, change it and add to array
+      //     const endDate = new Date(event.endDate);
+      //     endDate.setDate(endDate.getDate() + event.onRepeat);
+      //     events.push({
+      //       ...event,
+      //       startDate: startDate,
+      //       endDate: endDate,
+      //     });
+      //     return {
+      //       ...event,
+      //       startDate: startDate,
+      //       endDate: endDate,
+      //     };
+      //   }
+      // }
     });
   };
 
@@ -167,6 +192,7 @@ const Calendar = ({ events, onHourClick }) => {
             key={i}
             events={events && getDayEvents(i)}
             onHourClick={onHourClick}
+            onEventClick={onEventClick}
             columnDay={currentWeek[i].fullDate}
           />
         ))}

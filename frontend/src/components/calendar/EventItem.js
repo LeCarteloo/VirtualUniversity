@@ -1,21 +1,26 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHeadphonesSimple,
+  faRepeat,
   faScroll,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 // import { useState } from "react";
 
 const EventItem = ({
-  title,
+  _id,
+  subject,
   author,
   startDate,
   endDate,
   isCanceled,
   isOnline,
+  onRepeat,
   desc,
   room,
   code,
+  course,
+  onClick,
 }) => {
   startDate = new Date(startDate);
   endDate = new Date(endDate);
@@ -32,7 +37,7 @@ const EventItem = ({
 
   // Date display in tooltip
   const date =
-    startDate.toLocaleDateString("en-US", {
+    startDate.toLocaleDateString(navigator.language, {
       day: "2-digit",
       month: "short",
       year: "numeric",
@@ -40,7 +45,7 @@ const EventItem = ({
       minute: "2-digit",
     }) +
     " - " +
-    endDate.toLocaleTimeString("en-US", {
+    endDate.toLocaleTimeString(navigator.language, {
       hour: "2-digit",
       minute: "2-digit",
     });
@@ -51,12 +56,30 @@ const EventItem = ({
         height: length * 102 + "px",
         top: (startTime - 8) * 102 + "px",
       }}
-      className={`event-item ${isCanceled && "canceled"}`}
+      className={`event-item 
+      ${isCanceled ? "canceled" : ""} 
+      ${onClick ? "clickable" : ""}`}
+      onClick={() =>
+        onClick({
+          _id,
+          subject,
+          author,
+          startDate,
+          endDate,
+          isCanceled,
+          isOnline,
+          onRepeat,
+          desc,
+          room,
+          code,
+          course,
+        })
+      }
     >
-      <div className="event-marker"></div>
+      <div className="event-marker" aria-hidden={true}></div>
       <div className="event-content">
         <div>
-          <span className="event-title"> {title} </span>
+          <span className="event-title"> {subject.name} </span>
           {length > 0.5 && <span className="event-author"> {author} </span>}
         </div>
         {isOnline && length > 0.7 && (
@@ -67,12 +90,14 @@ const EventItem = ({
         )}
       </div>
       <FontAwesomeIcon className="event-info" icon={faScroll} />
+      {/* {onRepeat && <FontAwesomeIcon className="event-info" icon={faRepeat} />} */}
+      {/* Hover tooltip (more information) */}
       <span className="event-tooltip">
         <div className="tooltip-wrapper">
           <span> {date} </span>
           <h4 className="tooltip-title">
             {isCanceled && "Canceled: "}
-            {title}
+            {subject.name}
           </h4>
           <p>{desc}</p>
           <p>Room: {room} </p>

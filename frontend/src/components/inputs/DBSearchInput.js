@@ -4,19 +4,22 @@ import { faUser } from "@fortawesome/free-solid-svg-icons";
 import Input from "../Input";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
-const DBSearchInput = ({ onClick, label, route }) => {
+const DBSearchInput = ({ value, onClick, label, route }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [items, setItems] = useState();
   const axiosPrivate = useAxiosPrivate();
 
-  const onChange = (e) => {
-    // const value = e.target.value;
+  // Displaying default value
+  useEffect(() => {
+    value && setSearchTerm(value);
+  }, []);
 
+  const onChange = (e) => {
     const search = async () => {
-      const value = e.target.value;
-      if (value.length >= 3) {
+      const query = e.target.value;
+      if (query.length >= 3) {
         try {
-          const response = await axiosPrivate.get(`${route}/${value}`);
+          const response = await axiosPrivate.get(`${route}/${query}`);
           setItems(response.data);
         } catch (error) {
           console.error(error);

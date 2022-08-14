@@ -44,8 +44,14 @@ const getEvents = asyncHandler(async (req, res) => {
         code: 1,
         isCanceled: 1,
         isOnline: 1,
-        onReapet: 1,
-        title: "$subjects.name",
+        course: {
+          _id: course._id,
+          name: course.name,
+        },
+        subject: {
+          _id: "$subjects._id",
+          name: "$subjects.name",
+        },
         author: {
           $concat: [
             { $first: "$subjects.lecturer.name" },
@@ -59,6 +65,11 @@ const getEvents = asyncHandler(async (req, res) => {
 
   res.status(200).json(events);
 });
+
+// @desc Get all events for course in date range
+// @route GET /api/events/:courseId/:startDate/:endDate
+// @access Private
+const getEventsInRange = asyncHandler(async (req, res) => {});
 
 // @desc Add event
 // @route POST /api/events
@@ -131,8 +142,11 @@ const updateEvent = asyncHandler(async (req, res) => {
     const eDate = endDate ? endDate : eventExist.endDate;
 
     /* Check if event is taking place between given dates
-        $gte - greater or equal than, $lte - less or equal than */
+    $gte - greater or equal than, $lte - less or equal than */
     const eventInProgress = await Event.findOne({
+      _id: {
+        $ne: req.params.id,
+      },
       startDate: {
         $gte: sDate,
         $lte: eDate,
