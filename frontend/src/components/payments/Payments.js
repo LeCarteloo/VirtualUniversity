@@ -13,24 +13,20 @@ import Button from "../Button";
 import Modal from "../Modal";
 import { errorToast, successToast } from "../../utility/toast";
 import { validate } from "../../utility/validate";
-import { clear } from "../../utility/clear";
 import Dropdown from "../Dropdown";
+
+const initialBank = {
+  bankName: "",
+  accountNumber: "",
+  currency: "",
+};
 
 const Payments = () => {
   const [accountModal, setAccountModal] = useState(false);
   const [t] = useTranslation("translation");
   const [student, setStudent] = useState();
-  const [bankAccount, setBankAccount] = useState({
-    bankName: "",
-    accountNumber: "",
-    currency: "",
-  });
-  const [errors, setErrors] = useState({
-    bankName: "",
-    accountNumber: "",
-    currency: "",
-  });
-
+  const [bankAccount, setBankAccount] = useState({ ...initialBank });
+  const [errors, setErrors] = useState({ ...initialBank });
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const location = useLocation();
@@ -99,6 +95,7 @@ const Payments = () => {
     { _id: "3", name: "EUR" },
   ];
 
+  // Adding account on subbmiting form inside modal
   const onAddAccount = async (e) => {
     e.preventDefault();
 
@@ -138,7 +135,7 @@ const Payments = () => {
       );
       setStudent({ ...student, accounts: response.data.accounts });
       setAccountModal(!accountModal);
-      setErrors(clear(errors));
+      setErrors({ ...initialBank });
       successToast("Successfully added bank account");
     } catch (error) {
       errorToast(error?.response?.data?.message);

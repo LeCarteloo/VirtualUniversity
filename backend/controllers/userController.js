@@ -532,7 +532,9 @@ const updateCharge = asyncHandler(async (req, res) => {
 // @route GET /api/users/role/:role
 // @access Private
 const getUsersByRole = asyncHandler(async (req, res) => {
-  const users = await User.find({ role: req.params.role });
+  const users = await User.find({ role: req.params.role }).select(
+    "name surname email"
+  );
 
   res.status(200).json(users);
 });

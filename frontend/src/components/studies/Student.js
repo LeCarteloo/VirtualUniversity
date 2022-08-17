@@ -14,7 +14,6 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useLocation, useNavigate } from "react-router-dom";
 import { errorToast, successToast } from "../../utility/toast";
 import { validate } from "../../utility/validate";
-import { clear } from "../../utility/clear";
 
 const Student = () => {
   const [contactModal, setContactModal] = useState(false);
@@ -150,7 +149,7 @@ const Student = () => {
         telephone: response.data.telephone,
       });
       setContactModal(!contactModal);
-      setErrors(clear(errors));
+      setErrors({ email: "", telephone: "" });
       successToast("Successfully updated contact information");
     } catch (error) {
       errorToast(error?.response?.message?.data);

@@ -1,4 +1,6 @@
 import asyncHandler from "express-async-handler";
+import mongoose from "mongoose";
+import Event from "../models/eventModel.js";
 import Subject from "../models/subjectModel.js";
 
 // @desc Get all subjects
@@ -136,7 +138,14 @@ const deleteSubject = asyncHandler(async (req, res) => {
     throw new Error("Subject doesn't exist!");
   }
 
-  const deletedSubject = await Subject.findByIdAndDelete(req.params.id);
+  const deletedSubject = await Subject.findByIdAndDelete(req.params.id, {
+    new: true,
+  });
+
+  // Removing all events with deleted subject id
+  await Event.deleteMany({
+    subjectId: mongoose.Types.ObjectId(req.params.id),
+  });
 
   res.status(200).json(deletedSubject);
 });

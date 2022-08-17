@@ -76,6 +76,9 @@ const AdminCalendar = () => {
           courseId: newEvent.course._id,
         })
       );
+
+      console.log(response.data);
+
       setEvents([
         ...events,
         {
@@ -108,8 +111,10 @@ const AdminCalendar = () => {
 
       // Updating the state with edited event
       const newState = events.map((obj) =>
-        obj._id === newEvent._id ? { ...obj, ...response.data } : obj
+        obj._id === newEvent._id ? { ...obj, ...newEvent } : obj
       );
+
+      console.log(newState);
 
       setEvents(newState);
       setEditModal(false);
@@ -155,278 +160,274 @@ const AdminCalendar = () => {
         onEventClick={onEventClick}
       />
       {/* Add modal */}
-      {addModal && (
-        <Modal
-          title="Add event"
-          show={addModal}
-          onClose={() => {
-            setAddModal(!addModal);
-            setNewEvent({ ...initialNewEvent });
-          }}
-        >
-          <form onSubmit={onAddEvent}>
-            <DBSearchInput
-              label={"Search subject"}
-              value={newEvent.subject?.name}
-              onClick={(item) => setNewEvent({ ...newEvent, subject: item })}
-              route="/subjects/search"
-            />
-            <DBSearchInput
-              label={"Search course"}
-              value={newEvent.course?.name}
-              onClick={(item) => setNewEvent({ ...newEvent, course: item })}
-              route="/courses/search"
-            />
-            <div style={{ display: "flex", gap: "2em" }}>
-              <Input
-                label={"Room"}
-                value={newEvent.room}
-                onChange={(e) =>
-                  setNewEvent({ ...newEvent, room: e.target.value })
-                }
-              />
-              <Input
-                label={"Code"}
-                value={newEvent.code}
-                onChange={(e) =>
-                  setNewEvent({ ...newEvent, code: e.target.value })
-                }
-              />
-            </div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                width: "200px",
-              }}
-            >
-              <Checkbox
-                label="Online"
-                value={newEvent.isOnline}
-                onChange={(value) =>
-                  setNewEvent({ ...newEvent, isOnline: value })
-                }
-              />
-              <Checkbox
-                label="Canceled"
-                value={newEvent.isCanceled}
-                onChange={(value) =>
-                  setNewEvent({ ...newEvent, isCanceled: value })
-                }
-              />
-            </div>
-            <div
-              style={{
-                display: "flex",
-                gap: "0.4em",
-              }}
-            >
-              <div style={{ width: "100%" }}>
-                <DataPicker
-                  label={"Start date"}
-                  onDayClick={(date) =>
-                    setNewEvent({ ...newEvent, startDate: date })
-                  }
-                  value={newEvent.startDate?.toLocaleDateString()}
-                />
-                <Dropdown
-                  state={newEvent.startDate?.toLocaleTimeString(
-                    navigator.language,
-                    {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    }
-                  )}
-                  setState={(time) =>
-                    setNewEvent({
-                      ...newEvent,
-                      startDate: new Date(
-                        newEvent.startDate.getFullYear(),
-                        newEvent.startDate.getMonth(),
-                        newEvent.startDate.getDate(),
-                        time.date.getHours(),
-                        time.date.getMinutes()
-                      ),
-                    })
-                  }
-                  options={timeOptions}
-                />
-              </div>
-              <div style={{ width: "100%" }}>
-                <DataPicker
-                  label={"End date"}
-                  onDayClick={(date) =>
-                    setNewEvent({ ...newEvent, endDate: date })
-                  }
-                  value={newEvent.endDate?.toLocaleDateString()}
-                />
-                <Dropdown
-                  state={newEvent.endDate?.toLocaleTimeString(
-                    navigator.language,
-                    {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    }
-                  )}
-                  setState={(time) =>
-                    setNewEvent({
-                      ...newEvent,
-                      endDate: new Date(
-                        newEvent.endDate.getFullYear(),
-                        newEvent.endDate.getMonth(),
-                        newEvent.endDate.getDate(),
-                        time.date.getHours(),
-                        time.date.getMinutes()
-                      ),
-                    })
-                  }
-                  options={timeOptions}
-                />
-              </div>
-            </div>
-            <Button text={"Add event"} />
-          </form>
-        </Modal>
-      )}
-      {/* Edit Modal */}
-      {editModal && (
-        <Modal
-          title="Edit modal"
-          show={editModal}
-          onClose={() => {
-            setEditModal(!editModal);
-            setNewEvent({ ...initialNewEvent });
-          }}
-        >
-          <form onSubmit={onEditEvent}>
-            <DBSearchInput
-              label={"Search subject"}
-              value={newEvent.subject?.name}
-              onClick={(item) => setNewEvent({ ...newEvent, subject: item })}
-              route="/subjects/search"
-            />
-            <DBSearchInput
-              label={"Search course"}
-              value={newEvent.course?.name}
-              onClick={(item) => setNewEvent({ ...newEvent, course: item })}
-              route="/courses/search"
-            />
-            <div style={{ display: "flex", gap: "2em" }}>
-              <Input
-                label={"Room"}
-                value={newEvent.room}
-                onChange={(e) =>
-                  setNewEvent({ ...newEvent, room: e.target.value })
-                }
-              />
-              <Input
-                label={"Code"}
-                value={newEvent.code}
-                onChange={(e) =>
-                  setNewEvent({ ...newEvent, code: e.target.value })
-                }
-              />
-            </div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                width: "200px",
-              }}
-            >
-              <Checkbox
-                label="Online"
-                value={newEvent.isOnline}
-                onChange={(value) =>
-                  setNewEvent({ ...newEvent, isOnline: value })
-                }
-              />
-              <Checkbox
-                label="Canceled"
-                value={newEvent.isCanceled}
-                onChange={(value) =>
-                  setNewEvent({ ...newEvent, isCanceled: value })
-                }
-              />
-            </div>
-            <div
-              style={{
-                display: "flex",
-                gap: "0.4em",
-              }}
-            >
-              <div style={{ width: "100%" }}>
-                <DataPicker
-                  label={"Start date"}
-                  onDayClick={(date) =>
-                    setNewEvent({ ...newEvent, startDate: date })
-                  }
-                  value={newEvent.startDate?.toLocaleDateString()}
-                />
-                <Dropdown
-                  state={newEvent.startDate?.toLocaleTimeString(
-                    navigator.language,
-                    {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    }
-                  )}
-                  setState={(time) =>
-                    setNewEvent({
-                      ...newEvent,
-                      startDate: new Date(
-                        newEvent.startDate.getFullYear(),
-                        newEvent.startDate.getMonth(),
-                        newEvent.startDate.getDate(),
-                        time.date.getHours(),
-                        time.date.getMinutes()
-                      ),
-                    })
-                  }
-                  options={timeOptions}
-                />
-              </div>
-              <div style={{ width: "100%" }}>
-                <DataPicker
-                  label={"End date"}
-                  onDayClick={(date) =>
-                    setNewEvent({ ...newEvent, endDate: date })
-                  }
-                  value={newEvent.endDate?.toLocaleDateString()}
-                />
-                <Dropdown
-                  state={newEvent.endDate?.toLocaleTimeString(
-                    navigator.language,
-                    {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    }
-                  )}
-                  setState={(time) =>
-                    setNewEvent({
-                      ...newEvent,
-                      endDate: new Date(
-                        newEvent.endDate.getFullYear(),
-                        newEvent.endDate.getMonth(),
-                        newEvent.endDate.getDate(),
-                        time.date.getHours(),
-                        time.date.getMinutes()
-                      ),
-                    })
-                  }
-                  options={timeOptions}
-                />
-              </div>
-            </div>
-            <Button text={"Edit event"} />
-          </form>
-          <Button
-            text={"Remove event"}
-            bgColor={"#1164aa"}
-            onClick={onRemoveEvent}
+      <Modal
+        title="Add event"
+        show={addModal}
+        onClose={() => {
+          setAddModal(!addModal);
+          setNewEvent({ ...initialNewEvent });
+        }}
+      >
+        <form onSubmit={onAddEvent}>
+          <DBSearchInput
+            label={"Search subject"}
+            value={newEvent.subject?.name}
+            onClick={(item) => setNewEvent({ ...newEvent, subject: item })}
+            route="/subjects/search"
           />
-        </Modal>
-      )}
+          <DBSearchInput
+            label={"Search course"}
+            value={newEvent.course?.name}
+            onClick={(item) => setNewEvent({ ...newEvent, course: item })}
+            route="/courses/search"
+          />
+          <div style={{ display: "flex", gap: "2em" }}>
+            <Input
+              label={"Room"}
+              value={newEvent.room}
+              onChange={(e) =>
+                setNewEvent({ ...newEvent, room: e.target.value })
+              }
+            />
+            <Input
+              label={"Code"}
+              value={newEvent.code}
+              onChange={(e) =>
+                setNewEvent({ ...newEvent, code: e.target.value })
+              }
+            />
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "200px",
+            }}
+          >
+            <Checkbox
+              label="Online"
+              value={newEvent.isOnline}
+              onChange={(value) =>
+                setNewEvent({ ...newEvent, isOnline: value })
+              }
+            />
+            <Checkbox
+              label="Canceled"
+              value={newEvent.isCanceled}
+              onChange={(value) =>
+                setNewEvent({ ...newEvent, isCanceled: value })
+              }
+            />
+          </div>
+          <div
+            style={{
+              display: "flex",
+              gap: "0.4em",
+            }}
+          >
+            <div style={{ width: "100%" }}>
+              <DataPicker
+                label={"Start date"}
+                onDayClick={(date) =>
+                  setNewEvent({ ...newEvent, startDate: date })
+                }
+                value={newEvent.startDate?.toLocaleDateString()}
+              />
+              <Dropdown
+                state={newEvent.startDate?.toLocaleTimeString(
+                  navigator.language,
+                  {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  }
+                )}
+                setState={(time) =>
+                  setNewEvent({
+                    ...newEvent,
+                    startDate: new Date(
+                      newEvent.startDate.getFullYear(),
+                      newEvent.startDate.getMonth(),
+                      newEvent.startDate.getDate(),
+                      time.date.getHours(),
+                      time.date.getMinutes()
+                    ),
+                  })
+                }
+                options={timeOptions}
+              />
+            </div>
+            <div style={{ width: "100%" }}>
+              <DataPicker
+                label={"End date"}
+                onDayClick={(date) =>
+                  setNewEvent({ ...newEvent, endDate: date })
+                }
+                value={newEvent.endDate?.toLocaleDateString()}
+              />
+              <Dropdown
+                state={newEvent.endDate?.toLocaleTimeString(
+                  navigator.language,
+                  {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  }
+                )}
+                setState={(time) =>
+                  setNewEvent({
+                    ...newEvent,
+                    endDate: new Date(
+                      newEvent.endDate.getFullYear(),
+                      newEvent.endDate.getMonth(),
+                      newEvent.endDate.getDate(),
+                      time.date.getHours(),
+                      time.date.getMinutes()
+                    ),
+                  })
+                }
+                options={timeOptions}
+              />
+            </div>
+          </div>
+          <Button text={"Add event"} />
+        </form>
+      </Modal>
+      {/* Edit Modal */}
+      <Modal
+        title="Edit modal"
+        show={editModal}
+        onClose={() => {
+          setEditModal(!editModal);
+          setNewEvent({ ...initialNewEvent });
+        }}
+      >
+        <form onSubmit={onEditEvent}>
+          <DBSearchInput
+            label={"Search subject"}
+            value={newEvent.subject?.name}
+            onClick={(item) => setNewEvent({ ...newEvent, subject: item })}
+            route="/subjects/search"
+          />
+          <DBSearchInput
+            label={"Search course"}
+            value={newEvent.course?.name}
+            onClick={(item) => setNewEvent({ ...newEvent, course: item })}
+            route="/courses/search"
+          />
+          <div style={{ display: "flex", gap: "2em" }}>
+            <Input
+              label={"Room"}
+              value={newEvent.room}
+              onChange={(e) =>
+                setNewEvent({ ...newEvent, room: e.target.value })
+              }
+            />
+            <Input
+              label={"Code"}
+              value={newEvent.code}
+              onChange={(e) =>
+                setNewEvent({ ...newEvent, code: e.target.value })
+              }
+            />
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "200px",
+            }}
+          >
+            <Checkbox
+              label="Online"
+              value={newEvent.isOnline}
+              onChange={(value) =>
+                setNewEvent({ ...newEvent, isOnline: value })
+              }
+            />
+            <Checkbox
+              label="Canceled"
+              value={newEvent.isCanceled}
+              onChange={(value) =>
+                setNewEvent({ ...newEvent, isCanceled: value })
+              }
+            />
+          </div>
+          <div
+            style={{
+              display: "flex",
+              gap: "0.4em",
+            }}
+          >
+            <div style={{ width: "100%" }}>
+              <DataPicker
+                label={"Start date"}
+                onDayClick={(date) =>
+                  setNewEvent({ ...newEvent, startDate: date })
+                }
+                value={newEvent.startDate?.toLocaleDateString()}
+              />
+              <Dropdown
+                state={newEvent.startDate?.toLocaleTimeString(
+                  navigator.language,
+                  {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  }
+                )}
+                setState={(time) =>
+                  setNewEvent({
+                    ...newEvent,
+                    startDate: new Date(
+                      newEvent.startDate.getFullYear(),
+                      newEvent.startDate.getMonth(),
+                      newEvent.startDate.getDate(),
+                      time.date.getHours(),
+                      time.date.getMinutes()
+                    ),
+                  })
+                }
+                options={timeOptions}
+              />
+            </div>
+            <div style={{ width: "100%" }}>
+              <DataPicker
+                label={"End date"}
+                onDayClick={(date) =>
+                  setNewEvent({ ...newEvent, endDate: date })
+                }
+                value={newEvent.endDate?.toLocaleDateString()}
+              />
+              <Dropdown
+                state={newEvent.endDate?.toLocaleTimeString(
+                  navigator.language,
+                  {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  }
+                )}
+                setState={(time) =>
+                  setNewEvent({
+                    ...newEvent,
+                    endDate: new Date(
+                      newEvent.endDate.getFullYear(),
+                      newEvent.endDate.getMonth(),
+                      newEvent.endDate.getDate(),
+                      time.date.getHours(),
+                      time.date.getMinutes()
+                    ),
+                  })
+                }
+                options={timeOptions}
+              />
+            </div>
+          </div>
+          <Button text={"Edit event"} />
+        </form>
+        <Button
+          text={"Remove event"}
+          bgColor={"#2f3142"}
+          onClick={onRemoveEvent}
+        />
+      </Modal>
     </section>
   );
 };

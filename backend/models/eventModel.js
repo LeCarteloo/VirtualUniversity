@@ -32,6 +32,7 @@ const eventSchema = mongoose.Schema({
   // },
   subjectId: {
     type: mongoose.Schema.Types.ObjectId,
+    ref: "Subject",
     required: [true, "Please add subject!"],
   },
   courseId: {

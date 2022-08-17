@@ -1,10 +1,7 @@
 import NavBar from "../nav/NavBar";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBookBookmark,
-  faCalendar,
   faCalendarDays,
-  faRoad,
   faTimeline,
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
@@ -13,6 +10,7 @@ import Users from "./Users";
 import Subjects from "./Subjects";
 import Courses from "./Courses";
 import AdminCalendar from "./AdminCalendar";
+
 const Admin = () => {
   // Navbar navigation items
   const navItems = [
@@ -28,7 +26,7 @@ const Admin = () => {
     },
     {
       name: "Calendar",
-      icon: faRoad,
+      icon: faCalendarDays,
       path: "calendar",
     },
     {

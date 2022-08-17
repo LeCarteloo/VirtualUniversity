@@ -1,7 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { validate } from "../../utility/validate";
-import { clear } from "../../utility/clear";
 import { useEffect, useState } from "react";
 import AdminTable from "./AdminTable";
 import Modal from "../Modal";
@@ -10,27 +9,22 @@ import Dropdown from "../Dropdown";
 import Button from "../Button";
 import { errorToast, successToast } from "../../utility/toast";
 
+const initialSubject = {
+  name: "",
+  type: "",
+  hours: "",
+  ects: "",
+  lecturer: "",
+  credit: "",
+};
+
 const Subjects = () => {
   const [subjects, setSubjects] = useState();
   const [lecturers, setLecturers] = useState();
   const [addModal, setAddModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
-  const [subject, setSubject] = useState({
-    name: "",
-    type: "",
-    hours: "",
-    ects: "",
-    lecturer: "",
-    credit: "",
-  });
-  const [errors, setErrors] = useState({
-    name: "",
-    type: "",
-    hours: "",
-    ects: "",
-    lecturer: "",
-    credit: "",
-  });
+  const [subject, setSubject] = useState({ ...initialSubject });
+  const [errors, setErrors] = useState({ ...initialSubject });
 
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
@@ -69,6 +63,7 @@ const Subjects = () => {
     },
   ];
 
+  // Adding event on subbmiting form inside modal
   const onAddSubject = async (e) => {
     e.preventDefault();
     console.log(subject);
@@ -105,7 +100,7 @@ const Subjects = () => {
         JSON.stringify({ ...subject, lecturer: subject.lecturer._id })
       );
       setSubjects([...subjects, response.data]);
-      setSubject(clear(subject));
+      setSubject({ ...initialSubject });
       successToast("Successfully added subject");
     } catch (error) {
       errorToast(error?.response?.data?.message);
@@ -148,12 +143,12 @@ const Subjects = () => {
       );
 
       const newState = subjects.map((obj) =>
-        obj._id === subject._id ? { ...obj, ...response.data } : obj
+        obj._id === subject._id ? { ...obj, ...subject } : obj
       );
 
       setSubjects(newState);
       console.log(newState);
-      setSubject(clear(subject));
+      setSubject({ ...initialSubject });
       setEditModal(!editModal);
       successToast("Successfully edited subject");
     } catch (error) {
@@ -165,6 +160,8 @@ const Subjects = () => {
     try {
       const response = await axiosPrivate.delete(`/subjects/${id}`);
       successToast("Successfully removed subject");
+      console.log(response.data, id);
+      console.log(subjects.filter((subject) => subject._id !== id));
       setSubjects(
         subjects.filter((subject) => subject._id !== response.data._id)
       );
@@ -223,8 +220,8 @@ const Subjects = () => {
         title={"Add subject"}
         onClose={() => {
           setAddModal(!addModal);
-          setSubject(clear(subject));
-          setErrors(clear(errors));
+          setSubject({ ...initialSubject });
+          setErrors({ ...initialSubject });
         }}
       >
         <form onSubmit={onAddSubject}>
@@ -274,8 +271,8 @@ const Subjects = () => {
         show={editModal}
         onClose={() => {
           setEditModal(!editModal);
-          setSubject(clear(subject));
-          setErrors(clear(errors));
+          setSubject({ ...initialSubject });
+          setErrors({ ...initialSubject });
         }}
       >
         <form onSubmit={onEditSubject}>

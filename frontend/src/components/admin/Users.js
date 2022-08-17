@@ -1,7 +1,6 @@
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 import { useNavigate, useLocation } from "react-router-dom";
 import { validate } from "../../utility/validate";
-import { clear } from "../../utility/clear";
 import { useState, useEffect } from "react";
 import AdminTable from "./AdminTable";
 import Dropdown from "../Dropdown";
@@ -11,29 +10,23 @@ import Input from "../Input";
 import "../../styles/modal.scss";
 import { errorToast, successToast } from "../../utility/toast";
 
+const initialUser = {
+  name: "",
+  surname: "",
+  email: "",
+  password: "",
+  album: "",
+  role: "",
+  course: "",
+};
+
 const Users = () => {
   const [users, setUsers] = useState();
   const [courses, setCourses] = useState();
   const [addModal, setAddModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
-  const [user, setUser] = useState({
-    name: "",
-    surname: "",
-    email: "",
-    password: "",
-    album: "",
-    role: "",
-    course: "",
-  });
-  const [errors, setErrors] = useState({
-    name: "",
-    surname: "",
-    email: "",
-    password: "",
-    album: "",
-    role: "",
-    course: "",
-  });
+  const [user, setUser] = useState({ ...initialUser });
+  const [errors, setErrors] = useState({ ...initialUser });
 
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
@@ -157,7 +150,7 @@ const Users = () => {
         JSON.stringify({ ...user, course: user.course._id })
       );
       setUsers([...users, response.data]);
-      setUser(clear(user));
+      setUser({ ...initialUser });
       successToast("Successfully added user");
     } catch (error) {
       errorToast(error?.response?.data?.message);
@@ -204,8 +197,8 @@ const Users = () => {
         show={addModal}
         onClose={() => {
           setAddModal(!addModal);
-          setUser(clear(user));
-          setErrors(clear(errors));
+          setUser({ ...initialUser });
+          setErrors({ ...initialUser });
         }}
       >
         <form onSubmit={submitAddForm}>
@@ -257,8 +250,8 @@ const Users = () => {
         show={editModal}
         onClose={() => {
           setEditModal(!editModal);
-          setUser(clear(user));
-          setErrors(clear(errors));
+          setUser({ ...initialUser });
+          setErrors({ ...initialUser });
         }}
       >
         <form onSubmit={submitEditForm}>

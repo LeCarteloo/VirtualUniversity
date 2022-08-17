@@ -99,6 +99,7 @@ const addEvent = asyncHandler(async (req, res) => {
   /* Check if event is taking place between given dates
     $gte - greater or equal than, $lte - less or equal than */
   const eventInProgress = await Event.findOne({
+    courseId: courseId,
     startDate: {
       $gte: startDate,
       $lte: endDate,
@@ -147,6 +148,7 @@ const updateEvent = asyncHandler(async (req, res) => {
       _id: {
         $ne: req.params.id,
       },
+      courseId: eventExist.courseId,
       startDate: {
         $gte: sDate,
         $lte: eDate,
