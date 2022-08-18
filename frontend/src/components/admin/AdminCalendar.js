@@ -47,9 +47,11 @@ const AdminCalendar = () => {
   useEffect(() => {
     const getEvents = async () => {
       try {
-        const response = await axiosPrivate.get(
-          `events/62ebdbe09addf7645adfbca0`
-        );
+        if (!course) {
+          return;
+        }
+
+        const response = await axiosPrivate.get(`events/${course._id}`);
         setEvents(response.data);
       } catch (error) {
         console.error(error);

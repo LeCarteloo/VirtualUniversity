@@ -15,7 +15,7 @@ import Modal from "../Modal";
 import Input from "../Input";
 import Pagination from "../Pagination";
 
-const AdminTable = ({ title, data, headers, onEdit, onRemove, onAdd }) => {
+const AdminTable = ({ title, data, headers, onAdd, onEdit, onRemove }) => {
   // States for pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -199,14 +199,14 @@ const AdminTable = ({ title, data, headers, onEdit, onRemove, onAdd }) => {
                             className="action-row"
                             onClick={() => onEdit(item._id)}
                           >
-                            <span>Edit User</span>
+                            <span>Edit row</span>
                             <FontAwesomeIcon icon={faGear} size="lg" />
                           </button>
                           <button
                             className="action-row"
                             onClick={() => onRemove(item._id)}
                           >
-                            <span>Remove User</span>
+                            <span>Remove row</span>
                             <FontAwesomeIcon icon={faTrash} size="lg" />
                           </button>
                         </div>

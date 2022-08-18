@@ -36,7 +36,44 @@ const addCourse = asyncHandler(async (req, res) => {
 // @route Get /api/courses
 // @access Private
 const getCourses = asyncHandler(async (req, res) => {
-  const courses = await Course.find();
+  const courses = await Course.aggregate([
+    { $unwind: "$subjects" },
+    {
+      $lookup: {
+        from: "subjects",
+        localField: "subjects",
+        foreignField: "_id",
+        as: "ref",
+      },
+    },
+    {
+      $project: {
+        _id: 1,
+        name: 1,
+        degree: 1,
+        year: 1,
+        semester: 1,
+        type: 1,
+        department: 1,
+        subjects: {
+          name: { $first: "$ref.name" },
+          type: { $first: "$ref.type" },
+        },
+      },
+    },
+    {
+      $group: {
+        _id: "$_id",
+        name: { $first: "$name" },
+        degree: { $first: "$degree" },
+        year: { $first: "$year" },
+        semester: { $first: "$semester" },
+        type: { $first: "$type" },
+        department: { $first: "$department" },
+        subjects: { $push: "$subjects" },
+      },
+    },
+  ]);
 
   res.status(200).json(courses);
 });

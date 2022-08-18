@@ -11,6 +11,7 @@ import BgAuth from "../assets/bg-auth.svg";
 import Button from "./Button";
 import Input from "./Input";
 import axios from "../api/axios";
+import { errorToast } from "../utility/toast";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -55,11 +56,11 @@ const Login = () => {
       navigate(from, { replace: true });
     } catch (error) {
       if (!error?.response) {
-        console.log("No server response");
+        errorToast("No server response");
       } else if (error.response?.status === 400) {
-        console.log("Wrong name or password");
+        errorToast("Wrong email or password");
       } else {
-        console.log("Login Failed");
+        errorToast("Login failed");
       }
     }
   };

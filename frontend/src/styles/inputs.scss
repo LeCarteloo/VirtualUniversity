@@ -151,6 +151,14 @@ input {
   align-items: center;
   margin-top: 1.5em;
 
+  &:hover,
+  &:focus-within {
+    color: global.$primary;
+    .checkbox {
+      border-color: global.$primary;
+    }
+  }
+
   input[type="checkbox"] {
     clip: rect(0 0 0 0);
     clip-path: inset(50%);

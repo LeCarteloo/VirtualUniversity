@@ -4,7 +4,7 @@ import { faAngleUp } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 import "../styles/buttons.scss";
 
-const Dropdown = ({ selected, setSelected, options, error }) => {
+const Dropdown = ({ selected, setSelected, options, error, placeholder }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -18,7 +18,7 @@ const Dropdown = ({ selected, setSelected, options, error }) => {
         }}
       >
         <div aria-hidden={true} className="dropdown-txt">
-          {!selected ? "Choose one" : selected}
+          {!selected ? placeholder : selected}
           <FontAwesomeIcon icon={faAngleUp} size="xl" />
         </div>
       </button>
@@ -49,6 +49,11 @@ Dropdown.propTypes = {
   setSelected: PropTypes.func,
   options: PropTypes.array,
   error: PropTypes.string,
+  placeholder: PropTypes.string,
+};
+
+Dropdown.defaultProps = {
+  placeholder: "Choose one",
 };
 
 export default Dropdown;

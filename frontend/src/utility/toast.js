@@ -10,21 +10,21 @@ const successToast = (text) => {
 };
 
 const infoToast = (text) => {
-  return toast.info(text ? text : "Error", {
+  return toast.info(text ? text : "Info", {
     className: "toast",
     theme: "dark",
   });
 };
 
 const warnToast = (text) => {
-  return toast.warning(text ? text : "Error", {
+  return toast.warning(text ? text : "Warn", {
     className: "toast",
     theme: "dark",
   });
 };
 
 const errorToast = (text) => {
-  return toast.success(text ? text : "Error", {
+  return toast.error(text ? text : "Error", {
     className: "toast",
     theme: "dark",
   });

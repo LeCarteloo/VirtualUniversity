@@ -14,8 +14,8 @@ const initialSubject = {
   type: "",
   hours: "",
   ects: "",
-  lecturer: "",
   credit: "",
+  lecturer: "",
 };
 
 const Subjects = () => {
@@ -32,10 +32,17 @@ const Subjects = () => {
 
   const headers = ["Name", "Type", "Credit", "ECTS"];
 
-  const credits = [
+  const creditOptions = [
     { _id: "1", name: "Non-graded credit" },
     { _id: "2", name: "Graded credit" },
     { _id: "3", name: "Exam" },
+  ];
+
+  const typeOptions = [
+    { _id: "1", name: "Labolatory" },
+    { _id: "2", name: "Exercise" },
+    { _id: "3", name: "Lecture" },
+    { _id: "4", name: "Other" },
   ];
 
   const inputs = [
@@ -43,11 +50,6 @@ const Subjects = () => {
       label: "Name",
       regex: /^[a-zA-Z\s]+$/,
       error: "Name should contain only letters",
-    },
-    {
-      label: "Type",
-      regex: /^[a-zA-Z]+$/,
-      error: "Type should contain only letters",
     },
     {
       label: "Hours",
@@ -66,7 +68,6 @@ const Subjects = () => {
   // Adding event on subbmiting form inside modal
   const onAddSubject = async (e) => {
     e.preventDefault();
-    console.log(subject);
 
     let validateErrors = {};
 
@@ -85,6 +86,10 @@ const Subjects = () => {
       validateErrors["lecturer"] = "Please choose one of the lecturers";
     }
 
+    if (subject.type === "") {
+      validateErrors["type"] = "Please choose one of the types";
+    }
+
     setErrors({ ...errors, ...validateErrors });
 
     // Check if there is any error
@@ -95,11 +100,12 @@ const Subjects = () => {
     }
 
     try {
+      setAddModal(false);
       const response = await axiosPrivate.post(
         "/subjects",
         JSON.stringify({ ...subject, lecturer: subject.lecturer._id })
       );
-      setSubjects([...subjects, response.data]);
+      setSubjects([...subjects, subject]);
       setSubject({ ...initialSubject });
       successToast("Successfully added subject");
     } catch (error) {
@@ -107,6 +113,7 @@ const Subjects = () => {
     }
   };
 
+  // Updating event on subbmiting form inside modal
   const onEditSubject = async (e) => {
     e.preventDefault();
 
@@ -137,6 +144,8 @@ const Subjects = () => {
     }
 
     try {
+      setEditModal(!editModal);
+
       const response = await axiosPrivate.put(
         `/subjects/${subject._id}`,
         JSON.stringify(subject)
@@ -147,21 +156,18 @@ const Subjects = () => {
       );
 
       setSubjects(newState);
-      console.log(newState);
       setSubject({ ...initialSubject });
-      setEditModal(!editModal);
       successToast("Successfully edited subject");
     } catch (error) {
       errorToast(error?.response?.message?.data);
     }
   };
 
+  // Removing event on action
   const onRemoveSubject = async (id) => {
     try {
       const response = await axiosPrivate.delete(`/subjects/${id}`);
       successToast("Successfully removed subject");
-      console.log(response.data, id);
-      console.log(subjects.filter((subject) => subject._id !== id));
       setSubjects(
         subjects.filter((subject) => subject._id !== response.data._id)
       );
@@ -172,8 +178,6 @@ const Subjects = () => {
 
   const editSubjectModal = async (id) => {
     const foundSubject = subjects.find((obj) => obj._id === id);
-    console.log(foundSubject);
-    console.log(subject);
     setSubject({ ...subject, ...foundSubject });
     setEditModal(!editModal);
   };
@@ -245,21 +249,38 @@ const Subjects = () => {
             />
           ))}
           <Dropdown
-            state={subject.lecturer.name}
-            setState={(lecturer) => {
+            selected={subject.type}
+            setSelected={(type) => {
+              setErrors({ ...errors, type: "" });
+              setSubject({ ...subject, type: type.name });
+            }}
+            options={typeOptions}
+            error={errors.type}
+          />
+          <Dropdown
+            selected={subject.lecturer.name}
+            setSelected={(lecturer) => {
               setErrors({ ...errors, lecturer: "" });
               setSubject({ ...subject, lecturer });
             }}
-            options={lecturers}
+            options={
+              lecturers &&
+              lecturers.map((lecturer) => {
+                return {
+                  _id: lecturer._id,
+                  name: `${lecturer.name}  ${lecturer.surname}`,
+                };
+              })
+            }
             error={errors.lecturer}
           />
           <Dropdown
-            state={subject.credit}
-            setState={(credit) => {
+            selected={subject.credit}
+            setSelected={(credit) => {
               setErrors({ ...errors, credit: "" });
               setSubject({ ...subject, credit: credit.name });
             }}
-            options={credits}
+            options={creditOptions}
             error={errors.credit}
           />
           <Button text={"Add subject"} />
@@ -296,12 +317,21 @@ const Subjects = () => {
             />
           ))}
           <Dropdown
-            state={
+            selected={subject.type}
+            setSelected={(type) => {
+              setErrors({ ...errors, type: "" });
+              setSubject({ ...subject, type: type.name });
+            }}
+            options={typeOptions}
+            error={errors.type}
+          />
+          <Dropdown
+            selected={
               subject.lecturer.name
                 ? subject.lecturer.name
                 : subject.lecturerName
             }
-            setState={(lecturer) => {
+            setSelected={(lecturer) => {
               setErrors({ ...errors, lecturer: "" });
               setSubject({ ...subject, lecturer });
             }}
@@ -309,12 +339,12 @@ const Subjects = () => {
             error={errors.lecturer}
           />
           <Dropdown
-            state={subject.credit}
-            setState={(credit) => {
+            selected={subject.credit}
+            setSelected={(credit) => {
               setErrors({ ...errors, credit: "" });
               setSubject({ ...subject, credit: credit.name });
             }}
-            options={credits}
+            options={creditOptions}
             error={errors.credit}
           />
           <Button text={"Edit subject"} />
