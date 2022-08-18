@@ -11,7 +11,7 @@ const DataPicker = ({ label, onDayClick, value }) => {
   const [symbols, setSymbols] = useState();
   const [months, setMonths] = useState();
   const [open, setOpen] = useState(false);
-  const [currDate, setCurrDate] = useState(new Date()); // 2022, 9, 0
+  const [currDate, setCurrDate] = useState(new Date());
 
   useEffect(() => {
     const getWeekDays = (locale) => {
@@ -162,13 +162,13 @@ const DataPicker = ({ label, onDayClick, value }) => {
       {/* <button className="name">DATA PICKER</button> */}
       <div className={`data-calendar ${open ? "open" : ""}`}>
         <div className="data-calendar-header">
-          <button onClick={() => previousMonth()}>
+          <button type="button" onClick={() => previousMonth()}>
             <FontAwesomeIcon icon={faAngleLeft} size="xl" />
           </button>
           <span>{`${
             months?.[currDate.getMonth()]
           }, ${currDate.getFullYear()} `}</span>
-          <button onClick={() => nextMonth()}>
+          <button type="button" onClick={() => nextMonth()}>
             <FontAwesomeIcon icon={faAngleRight} size="xl" />
           </button>
         </div>
@@ -193,6 +193,7 @@ const DataPicker = ({ label, onDayClick, value }) => {
                         key={`day-${dayNumber}`}
                       >
                         <button
+                          type="button"
                           onClick={() => {
                             setOpen(false);
                             onDayClick(days[dayNumber]?.date);

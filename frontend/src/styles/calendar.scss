@@ -4,10 +4,10 @@
 .calendar {
   width: 100%;
   height: 100%;
-  // border: 1px solid global.$font;
+
   box-shadow: inset 0 0 0 1px global.$font;
+  border-radius: 5px;
   .calendar-navigation {
-    border: 1px solid global.$font;
     border-bottom: 0;
     padding: 0.5em;
     .this-week {
@@ -29,7 +29,8 @@
     .calendar-corner {
       min-width: 70px;
       height: 70px;
-      border: 1px solid global.$font;
+      border-top: 1px solid global.$font;
+      border-bottom: 1px solid global.$font;
     }
     .calendar-days {
       width: calc(100% - 70px);
@@ -40,8 +41,13 @@
         width: 100%;
         padding: 1em;
         border-right: 1px solid global.$font;
+
         &.today {
           color: global.$primary;
+        }
+
+        &:last-child {
+          border-right: none;
         }
 
         .day-number {
@@ -71,7 +77,7 @@
   .calendar-hours {
     height: 1582px;
     min-width: 70px;
-    border: 1px solid global.$font;
+    border-right: 1px solid global.$font;
     .hour {
       text-align: center;
       height: 102px;
@@ -85,6 +91,10 @@
     display: inline-block;
 
     border-right: 1px solid global.$font;
+
+    &:last-child {
+      border-right: none;
+    }
 
     .calendar-row {
       height: 50px;

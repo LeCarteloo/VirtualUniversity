@@ -22,11 +22,26 @@ const initialNewEvent = {
 };
 
 const AdminCalendar = () => {
+  const [course, setCourse] = useState();
+  const [courses, setCourses] = useState();
   const [events, setEvents] = useState();
   const [addModal, setAddModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [newEvent, setNewEvent] = useState({ ...initialNewEvent });
   const axiosPrivate = useAxiosPrivate();
+
+  // Loading all courses
+  useEffect(() => {
+    const getCourses = async () => {
+      try {
+        const response = await axiosPrivate.get("/courses/");
+        setCourses(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    getCourses();
+  }, []);
 
   // Loading all events for specific course
   useEffect(() => {
@@ -41,7 +56,7 @@ const AdminCalendar = () => {
       }
     };
     getEvents();
-  }, []);
+  }, [course]);
 
   /* Fn when user clicks div in calendar,
   it will open modal with date which user clicked*/
@@ -65,8 +80,6 @@ const AdminCalendar = () => {
   const onAddEvent = async (e) => {
     e.preventDefault();
 
-    console.log(newEvent);
-
     try {
       const response = await axiosPrivate.post(
         "/events",
@@ -76,8 +89,6 @@ const AdminCalendar = () => {
           courseId: newEvent.course._id,
         })
       );
-
-      console.log(response.data);
 
       setEvents([
         ...events,
@@ -113,8 +124,6 @@ const AdminCalendar = () => {
       const newState = events.map((obj) =>
         obj._id === newEvent._id ? { ...obj, ...newEvent } : obj
       );
-
-      console.log(newState);
 
       setEvents(newState);
       setEditModal(false);
@@ -153,12 +162,29 @@ const AdminCalendar = () => {
   }
 
   return (
-    <section style={{ width: "100%", height: "90%", overflow: "hidden" }}>
-      <Calendar
-        events={events}
-        onHourClick={onHourClick}
-        onEventClick={onEventClick}
-      />
+    <section style={{ width: "100%", height: "100%", overflow: "hidden" }}>
+      <div style={{ marginTop: "-1.3em", marginBottom: "0.2em" }}>
+        <Dropdown
+          selected={course?.name}
+          setSelected={setCourse}
+          options={
+            courses &&
+            courses.map((course) => {
+              return {
+                _id: course._id,
+                name: `${course.name} ${course.year} ${course.semester}`,
+              };
+            })
+          }
+        />
+      </div>
+      <div style={{ height: "90%", overflow: "hidden" }}>
+        <Calendar
+          events={events}
+          onHourClick={onHourClick}
+          onEventClick={onEventClick}
+        />
+      </div>
       {/* Add modal */}
       <Modal
         title="Add event"
@@ -181,7 +207,7 @@ const AdminCalendar = () => {
             onClick={(item) => setNewEvent({ ...newEvent, course: item })}
             route="/courses/search"
           />
-          <div style={{ display: "flex", gap: "2em" }}>
+          <div style={{ display: "flex", gap: "1em" }}>
             <Input
               label={"Room"}
               value={newEvent.room}
@@ -200,28 +226,6 @@ const AdminCalendar = () => {
           <div
             style={{
               display: "flex",
-              justifyContent: "space-between",
-              width: "200px",
-            }}
-          >
-            <Checkbox
-              label="Online"
-              value={newEvent.isOnline}
-              onChange={(value) =>
-                setNewEvent({ ...newEvent, isOnline: value })
-              }
-            />
-            <Checkbox
-              label="Canceled"
-              value={newEvent.isCanceled}
-              onChange={(value) =>
-                setNewEvent({ ...newEvent, isCanceled: value })
-              }
-            />
-          </div>
-          <div
-            style={{
-              display: "flex",
               gap: "0.4em",
             }}
           >
@@ -234,14 +238,14 @@ const AdminCalendar = () => {
                 value={newEvent.startDate?.toLocaleDateString()}
               />
               <Dropdown
-                state={newEvent.startDate?.toLocaleTimeString(
+                selected={newEvent.startDate?.toLocaleTimeString(
                   navigator.language,
                   {
                     hour: "2-digit",
                     minute: "2-digit",
                   }
                 )}
-                setState={(time) =>
+                setSelected={(time) =>
                   setNewEvent({
                     ...newEvent,
                     startDate: new Date(
@@ -265,14 +269,14 @@ const AdminCalendar = () => {
                 value={newEvent.endDate?.toLocaleDateString()}
               />
               <Dropdown
-                state={newEvent.endDate?.toLocaleTimeString(
+                selected={newEvent.endDate?.toLocaleTimeString(
                   navigator.language,
                   {
                     hour: "2-digit",
                     minute: "2-digit",
                   }
                 )}
-                setState={(time) =>
+                setSelected={(time) =>
                   setNewEvent({
                     ...newEvent,
                     endDate: new Date(
@@ -287,6 +291,28 @@ const AdminCalendar = () => {
                 options={timeOptions}
               />
             </div>
+          </div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              width: "200px",
+            }}
+          >
+            <Checkbox
+              label="Online"
+              value={newEvent.isOnline}
+              onChange={(value) =>
+                setNewEvent({ ...newEvent, isOnline: value })
+              }
+            />
+            <Checkbox
+              label="Canceled"
+              value={newEvent.isCanceled}
+              onChange={(value) =>
+                setNewEvent({ ...newEvent, isCanceled: value })
+              }
+            />
           </div>
           <Button text={"Add event"} />
         </form>
@@ -313,7 +339,7 @@ const AdminCalendar = () => {
             onClick={(item) => setNewEvent({ ...newEvent, course: item })}
             route="/courses/search"
           />
-          <div style={{ display: "flex", gap: "2em" }}>
+          <div style={{ display: "flex", gap: "1em" }}>
             <Input
               label={"Room"}
               value={newEvent.room}
@@ -366,14 +392,14 @@ const AdminCalendar = () => {
                 value={newEvent.startDate?.toLocaleDateString()}
               />
               <Dropdown
-                state={newEvent.startDate?.toLocaleTimeString(
+                selected={newEvent.startDate?.toLocaleTimeString(
                   navigator.language,
                   {
                     hour: "2-digit",
                     minute: "2-digit",
                   }
                 )}
-                setState={(time) =>
+                setSelected={(time) =>
                   setNewEvent({
                     ...newEvent,
                     startDate: new Date(
@@ -397,14 +423,14 @@ const AdminCalendar = () => {
                 value={newEvent.endDate?.toLocaleDateString()}
               />
               <Dropdown
-                state={newEvent.endDate?.toLocaleTimeString(
+                selected={newEvent.endDate?.toLocaleTimeString(
                   navigator.language,
                   {
                     hour: "2-digit",
                     minute: "2-digit",
                   }
                 )}
-                setState={(time) =>
+                setSelected={(time) =>
                   setNewEvent({
                     ...newEvent,
                     endDate: new Date(

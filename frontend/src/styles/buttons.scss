@@ -213,48 +213,65 @@ button {
   }
 }
 
-.dropdown-btn {
-  margin: 1.3em 0 0em 0;
-  border: 1.5px solid global.$font;
-  padding: 0.55em 0.8em 0.6em 0.8em;
-  font-size: 1em;
+.dropdown {
   width: 100%;
-  border-radius: 5px;
-  text-align: left;
-  background-color: global.$secondary;
-  transition: ease-in-out 0.2s;
 
-  &:hover,
-  &:focus-within {
-    border-color: global.$primary;
-    color: global.$primary;
-  }
+  .dropdown-btn {
+    margin: 1.3em 0 0em 0;
+    border: 1.5px solid global.$font;
+    padding: 0.55em 0.8em 0.6em 0.8em;
+    font-size: 1em;
+    width: 100%;
+    border-radius: 5px;
+    text-align: left;
+    background-color: global.$secondary;
+    transition: ease-in-out 0.2s;
 
-  .dropdown-txt {
-    font-size: 1.1em;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    position: static;
+
+    &:hover,
+    &:focus-within {
+      border-color: global.$primary;
+      color: global.$primary;
+    }
+
+    .dropdown-txt {
+      font-size: 1.1em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    &.error {
+      color: global.$error;
+      border-color: global.$error;
+    }
   }
 
   .options {
     color: global.$font;
-    width: calc(100% - 0.3rem);
     padding-right: 0.3rem;
-    transition: ease-in-out 0.2s;
-    height: 0;
-    max-height: 192px;
+    margin-top: 0.2em;
+    display: none;
+    position: absolute;
+    z-index: 5;
+    max-height: 123.18px;
     overflow: auto;
     background-color: global.$secondary;
+    border: 1px solid global.$font;
+    border-radius: 5px;
+    width: 40%;
 
     &.open {
       display: block;
-      height: auto;
     }
 
     .option {
+      display: block;
+      width: 100%;
+      text-align: inherit;
       font-size: 1rem;
-      padding: 0.69em 0 0.69em 0.69em;
+      padding: 0.69em 0.69em 0.69em 0.8em;
       &:hover,
       &:focus-within {
         background-color: global.$primary;
@@ -263,11 +280,6 @@ button {
         background-color: global.$primary-dark;
       }
     }
-  }
-
-  &.error {
-    color: global.$error;
-    border-color: global.$error;
   }
 }
 
