@@ -215,7 +215,7 @@ button {
 
 .dropdown {
   width: 100%;
-
+  position: relative;
   .dropdown-btn {
     margin: 1.3em 0 0em 0;
     border: 1.5px solid global.$font;
@@ -226,8 +226,6 @@ button {
     text-align: left;
     background-color: global.$secondary;
     transition: ease-in-out 0.2s;
-
-    position: static;
 
     &:hover,
     &:focus-within {
@@ -253,15 +251,16 @@ button {
     padding-right: 0.3rem;
     margin-top: 0.2em;
     display: none;
-    position: absolute;
-    z-index: 5;
     max-height: 123.18px;
     overflow: auto;
     background-color: global.$secondary;
     border: 1px solid global.$font;
     border-radius: 5px;
-    width: 40%;
-
+    list-style: none;
+    width: calc(100% - 0.3rem - 2px);
+    position: absolute;
+    // top: 50px;
+    z-index: 15;
     &.open {
       display: block;
     }

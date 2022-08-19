@@ -162,6 +162,16 @@ const Courses = () => {
     }
   };
 
+  const onRemoveCourse = async (id) => {
+    try {
+      const response = await axiosPrivate.delete(`/courses/${id}`);
+      setCourses(courses.filter((course) => course._id !== id));
+      successToast("Successfully removed course");
+    } catch (error) {
+      errorToast(error?.response?.data?.message);
+    }
+  };
+
   return (
     <section className="courses-section">
       <AdminTable
@@ -169,6 +179,7 @@ const Courses = () => {
         data={courses}
         headers={headers}
         onAdd={() => setAddModal(!addModal)}
+        onRemove={(id) => onRemoveCourse(id)}
       />
       <Modal
         title="Add course"
@@ -211,7 +222,7 @@ const Courses = () => {
             />
           ))}
           <details>
-            <summary>Pick subjects...</summary>
+            <summary>Pick subjects</summary>
             {/* <SearchInput placeholder={"Search..."} /> */}
             <div className="option-test">
               <SelectionTable

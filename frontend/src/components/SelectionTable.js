@@ -13,6 +13,7 @@ const SelectionTable = ({ selection, setSelection, data, headers }) => {
   const indexOfFirst = indexOfLast - rowsPerPage;
   const current = data && data.slice(indexOfFirst, indexOfLast);
 
+  // Selecting one record in talbe
   const onSelect = (subject) => {
     // Checking if selection is already in array
     if (!selection.some((select) => select._id === subject._id)) {
@@ -30,7 +31,7 @@ const SelectionTable = ({ selection, setSelection, data, headers }) => {
 
   // Selecting all records in table
   const selectAll = (e) => {
-    // If checkbox is
+    // If checkbox is checked then remove all from array
     if (!e.target.checked) {
       setSelection([]);
       return;

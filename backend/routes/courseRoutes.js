@@ -3,6 +3,7 @@ import { protectUser } from "../middleware/authMiddleware.js";
 import {
   addCharge,
   addCourse,
+  deleteCourse,
   getCourses,
   getMySyllabus,
   searchCoruses,
@@ -13,6 +14,7 @@ const courseRouter = express.Router();
 
 courseRouter.get("/", protectUser, getCourses);
 courseRouter.post("/", protectUser, addCourse);
+courseRouter.delete("/:id", protectUser, deleteCourse);
 courseRouter.get("/me", protectUser, getMySyllabus);
 courseRouter.get("/search/:query", protectUser, searchCoruses);
 courseRouter.post("/charges/:id", protectUser, addCharge);

@@ -11,34 +11,40 @@ const Dropdown = ({ selected, setSelected, options, error, placeholder }) => {
     <div className="dropdown">
       <button
         type="button"
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
         className={`dropdown-btn ${error && "error"}`}
         onClick={(e) => {
           e.stopPropagation();
           setIsOpen(!isOpen);
         }}
       >
-        <div aria-hidden={true} className="dropdown-txt">
+        <div className="dropdown-txt">
           {!selected ? placeholder : selected}
           <FontAwesomeIcon icon={faAngleUp} size="xl" />
         </div>
       </button>
-      <div className={`options ${isOpen && "open"}`}>
-        {options &&
-          options.map((option) => (
-            <button
-              type="button"
-              key={`dropdown-option-${option._id}`}
-              className={`option ${option.name === selected && "selected"}`}
-              onClick={() => {
-                setSelected(option);
-                setIsOpen(!isOpen);
-              }}
-              tabIndex={0}
-            >
-              {option.name}
-            </button>
-          ))}
-      </div>
+      <ul className={`options ${isOpen && "open"}`} tabIndex={-1}>
+        <li>
+          {options &&
+            options.map((option) => (
+              <button
+                type="button"
+                role="option"
+                aria-selected={option.name === selected}
+                key={`dropdown-option-${option._id}`}
+                className={`option ${option.name === selected && "selected"}`}
+                onClick={() => {
+                  setSelected(option);
+                  setIsOpen(!isOpen);
+                }}
+                tabIndex={0}
+              >
+                {option.name}
+              </button>
+            ))}
+        </li>
+      </ul>
       {error && <p className="error-msg">{error}</p>}
     </div>
   );

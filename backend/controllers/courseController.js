@@ -78,6 +78,24 @@ const getCourses = asyncHandler(async (req, res) => {
   res.status(200).json(courses);
 });
 
+// @desc Delete course with given id
+// @route Delete /api/courses/:id
+// @access Private
+const deleteCourse = asyncHandler(async (req, res) => {
+  const courseExist = await Course.findById(req.params.id);
+
+  if (!courseExist) {
+    res.status(400);
+    throw new Error("Course doesn't exist!");
+  }
+
+  const deletedCourse = await Course.findByIdAndDelete(req.params.id, {
+    new: true,
+  });
+
+  res.status(200).json(deletedCourse);
+});
+
 // @desc Search for courses by name or semester
 // @route Get /api/courses/search/:query
 // @access Private
@@ -226,4 +244,11 @@ const addCharge = asyncHandler(async (req, res) => {
   res.status(200).json(updatedUsers);
 });
 
-export { searchCoruses, getCourses, getMySyllabus, addCourse, addCharge };
+export {
+  searchCoruses,
+  getCourses,
+  deleteCourse,
+  getMySyllabus,
+  addCourse,
+  addCharge,
+};
