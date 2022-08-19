@@ -7,6 +7,7 @@ import {
   getCourses,
   getMySyllabus,
   searchCoruses,
+  updateCourse,
 } from "../controllers/courseController.js";
 
 const courseRouter = express.Router();
@@ -14,6 +15,7 @@ const courseRouter = express.Router();
 
 courseRouter.get("/", protectUser, getCourses);
 courseRouter.post("/", protectUser, addCourse);
+courseRouter.put("/:id", protectUser, updateCourse);
 courseRouter.delete("/:id", protectUser, deleteCourse);
 courseRouter.get("/me", protectUser, getMySyllabus);
 courseRouter.get("/search/:query", protectUser, searchCoruses);

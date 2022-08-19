@@ -56,6 +56,7 @@ const getCourses = asyncHandler(async (req, res) => {
         type: 1,
         department: 1,
         subjects: {
+          _id: { $first: "$ref._id" },
           name: { $first: "$ref.name" },
           type: { $first: "$ref.type" },
         },
@@ -76,6 +77,26 @@ const getCourses = asyncHandler(async (req, res) => {
   ]);
 
   res.status(200).json(courses);
+});
+
+// @desc Update course with given id
+// @route Put /api/courses/:id
+// @access Private
+const updateCourse = asyncHandler(async (req, res) => {
+  const courseExist = await Course.findById(req.params.id);
+
+  if (!courseExist) {
+    res.status(400);
+    throw new Error("Course doesn't exist!");
+  }
+
+  const updatedCourse = await Course.findByIdAndUpdate(
+    req.params.id,
+    ...req.body,
+    { new: true }
+  );
+
+  res.status(200).json(updateCourse);
 });
 
 // @desc Delete course with given id
@@ -247,6 +268,7 @@ const addCharge = asyncHandler(async (req, res) => {
 export {
   searchCoruses,
   getCourses,
+  updateCourse,
   deleteCourse,
   getMySyllabus,
   addCourse,
