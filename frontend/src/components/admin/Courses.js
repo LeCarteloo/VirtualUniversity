@@ -2,10 +2,13 @@ import { useEffect, useState } from "react";
 import SelectionTable from "../SelectionTable";
 import SearchInput from "../SearchInput";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate";
-import { errorToast } from "../../utility/toast";
+import { errorToast, successToast } from "../../utility/toast";
 import AdminTable from "./AdminTable";
 import Modal from "../Modal";
 import Input from "../Input";
+import { validate } from "../../utility/validate";
+import Dropdown from "../Dropdown";
+import Button from "../Button";
 
 const initialNewCourse = {
   name: "",
@@ -81,21 +84,83 @@ const Courses = () => {
     },
   ];
 
-  const degreeOptions = [
-    { _id: 1, name: "Engineer" },
-    { _id: 2, name: "Master" },
-    { _id: 3, name: "Doctoral" },
+  const dropdowns = [
+    {
+      name: "degree",
+      options: [
+        { _id: 1, name: "Engineer" },
+        { _id: 2, name: "Master" },
+        { _id: 3, name: "Doctoral" },
+      ],
+      error: "Please choose one of the degrees",
+    },
+    {
+      name: "semester",
+      options: [
+        { _id: 1, name: "Summer" },
+        { _id: 2, name: "Winter" },
+      ],
+      error: "Please choose one of the semesters",
+    },
+    {
+      name: "type",
+      options: [
+        { _id: 1, name: "Full-time" },
+        { _id: 2, name: "Part-time" },
+      ],
+      error: "Please choose one of the types",
+    },
   ];
 
-  const semesterOptions = [
-    { _id: 1, name: "Summer" },
-    { _id: 2, name: "Winter" },
-  ];
+  const onAddCourse = async (e) => {
+    e.preventDefault();
 
-  const typeOptions = [
-    { _id: 1, name: "Full-time" },
-    { _id: 2, name: "Part-time" },
-  ];
+    let validateErrors = {};
+
+    // Validating all inputs and dropdowns
+    inputs.forEach((input) => {
+      const error = validate(
+        input.name,
+        course[input.name],
+        input.regex,
+        input.error
+      );
+
+      if (error.msg !== "") {
+        validateErrors[error.name] = error.msg;
+      }
+    });
+
+    dropdowns.forEach((drop) => {
+      if (course[drop.name] === "") {
+        validateErrors[drop.name] = drop.error;
+      }
+    });
+
+    /* If there is at least one error update 
+    errors state and prevent submitting */
+    if (Object.keys(validateErrors).length !== 0) {
+      setErrors({ ...errors, ...validateErrors });
+      return;
+    }
+
+    // If no errors send payload
+    try {
+      const response = await axiosPrivate.post(
+        "/courses/",
+        JSON.stringify({
+          ...course,
+          subjects: course.subjects.map((subject) => subject._id),
+        })
+      );
+      setAddModal(false);
+      setCourses([...courses, course]);
+      setCourse({ ...initialNewCourse });
+      successToast("Successfully added course");
+    } catch (error) {
+      errorToast(error?.response?.data?.message);
+    }
+  };
 
   return (
     <section className="courses-section">
@@ -108,24 +173,62 @@ const Courses = () => {
       <Modal
         title="Add course"
         show={addModal}
-        onClose={() => setAddModal(!addModal)}
+        onClose={() => {
+          setAddModal(!addModal);
+          setCourse({ ...initialNewCourse });
+          setErrors({ ...initialErrors });
+        }}
       >
-        {inputs.map((input, i) => (
-          <Input key={`courses-input-${i}`} {...input} />
-        ))}
+        <form onSubmit={onAddCourse}>
+          {inputs.map((input, i) => (
+            <Input
+              key={`courses-input-${i}`}
+              {...input}
+              value={course[input.name]}
+              onChange={(e) => {
+                const error = validate(
+                  input.name,
+                  e.target.value,
+                  input.regex,
+                  input.error
+                );
+                setErrors({ ...errors, [error.name]: error.msg });
+                setCourse({ ...course, [input.name]: e.target.value });
+              }}
+              error={errors[input.name]}
+            />
+          ))}
+          {dropdowns.map((drop, i) => (
+            <Dropdown
+              key={`dropdown-${i}`}
+              selected={course[drop.name]}
+              setSelected={(state) => {
+                setErrors({ ...errors, [drop.name]: "" });
+                setCourse({ ...course, [drop.name]: state.name });
+              }}
+              options={drop.options}
+              error={errors[drop.name]}
+            />
+          ))}
+          <details>
+            <summary>Pick subjects...</summary>
+            {/* <SearchInput placeholder={"Search..."} /> */}
+            <div className="option-test">
+              <SelectionTable
+                selection={course.subjects}
+                setSelection={(select) =>
+                  setCourse({ ...course, subjects: select })
+                }
+                data={subjects}
+                headers={["Name", "Type", "Hours"]}
+              />
+            </div>
+          </details>
+          <Button text="Add course" />
+        </form>
       </Modal>
     </section>
   );
 };
-
-{
-  /* <details>
-      <summary>Pick subjects...</summary>
-      <SearchInput placeholder={"Search..."} />
-      <div className="option-test">
-        <SelectionTable data={subjects} headers={["Name", "Type", "Hours"]} />
-      </div>
-  </details> */
-}
 
 export default Courses;

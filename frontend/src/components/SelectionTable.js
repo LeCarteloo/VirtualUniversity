@@ -2,10 +2,9 @@ import { useState } from "react";
 import "../styles/table.scss";
 import Pagination from "./Pagination";
 import Loading from "./Loading";
+// import Checkbox from "./inputs/Checkbox";
 
-const SelectionTable = ({ data, headers }) => {
-  const [selection, setSelection] = useState([]);
-
+const SelectionTable = ({ selection, setSelection, data, headers }) => {
   // States for pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(3);
@@ -14,26 +13,30 @@ const SelectionTable = ({ data, headers }) => {
   const indexOfFirst = indexOfLast - rowsPerPage;
   const current = data && data.slice(indexOfFirst, indexOfLast);
 
-  const onSelect = (id) => {
-    if (!selection.includes(id)) {
-      setSelection([...selection, id]);
+  const onSelect = (subject) => {
+    // Checking if selection is already in array
+    if (!selection.some((select) => select._id === subject._id)) {
+      setSelection([...selection, subject]);
       return;
     }
 
+    // Removing if selection is already in array
     setSelection(
       selection.filter((select) => {
-        return select !== id;
+        return select._id !== subject._id;
       })
     );
   };
 
+  // Selecting all records in table
   const selectAll = (e) => {
+    // If checkbox is
     if (!e.target.checked) {
       setSelection([]);
       return;
     }
 
-    setSelection(data.map((subject) => subject._id));
+    setSelection(data.map((subject) => subject));
   };
 
   const paginate = (number) => {
@@ -55,13 +58,15 @@ const SelectionTable = ({ data, headers }) => {
                 ))}
               </tr>
               {current.map((subject) => {
-                const isIncluded = selection.includes(subject._id);
+                const isIncluded = selection.some(
+                  (select) => select._id === subject._id
+                );
                 return (
                   <tr
                     key={subject._id}
                     className={isIncluded ? "selected" : ""}
                     name={subject.name}
-                    onClick={() => onSelect(subject._id)}
+                    onClick={() => onSelect(subject)}
                   >
                     <td>
                       <input type={"checkbox"} checked={isIncluded} readOnly />

@@ -11,12 +11,9 @@ const Pagination = ({
   setCurrent,
 }) => {
   const [disabled, setDisabled] = useState(["left"]);
-
   const numberOfPages = Math.ceil(total / perPage);
 
   const onPagination = (nextPage) => {
-    console.log(nextPage, numberOfPages);
-
     if (nextPage > 0 && nextPage <= numberOfPages) {
       paginate(nextPage);
     }
@@ -32,8 +29,8 @@ const Pagination = ({
     setDisabled([]);
   };
 
-  /* Watching the number of pages and disabling buttons if
-  1 page show all the results */
+  /* Watching the number of pages and disabling 
+  buttons if 1 page show all the results */
   useEffect(() => {
     if (numberOfPages === 1) {
       setDisabled(["left", "right"]);
@@ -61,6 +58,7 @@ const Pagination = ({
         } of ${total}`}
       </span>
       <button
+        type="button"
         className="pagination-btn"
         onClick={() => onPagination(current - 1)}
         disabled={disabled.includes("left")}
@@ -68,6 +66,7 @@ const Pagination = ({
         <FontAwesomeIcon icon={faAngleLeft} size="xl" />
       </button>
       <button
+        type="button"
         className="pagination-btn"
         onClick={() => onPagination(current + 1)}
         disabled={disabled.includes("right")}
