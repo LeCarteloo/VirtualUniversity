@@ -15,7 +15,8 @@ const initialUser = {
   surname: "",
   email: "",
   password: "",
-  album: "",
+  placeOfBirth: "",
+  idDoc: "",
   role: "",
   course: "",
 };
@@ -60,16 +61,19 @@ const Users = () => {
   const inputs = [
     {
       label: "Name",
+      name: "name",
       regex: /^[a-zA-Z]+$/,
       error: "Name should contain only letters",
     },
     {
       label: "Surname",
+      name: "surname",
       regex: /^[a-zA-Z]+$/,
       error: "Surname should contain only letters",
     },
     {
       label: "Email",
+      name: "email",
       type: "email",
       autoComplete: "new-password",
       regex:
@@ -78,6 +82,7 @@ const Users = () => {
     },
     {
       label: "Password",
+      name: "password",
       type: "password",
       autoComplete: "new-password",
       regex:
@@ -85,26 +90,17 @@ const Users = () => {
       error:
         "Password should be 8-20 characters and include at least 1 letter, 1 number and 1 special character",
     },
-  ];
-
-  const editInputs = [
     {
-      label: "Name",
-      regex: /^[a-zA-Z]+$/,
-      error: "Name should contain only letters",
+      label: "Place of birth",
+      name: "placeOfBirth",
+      regex: /^[a-zA-z\s]+$/,
+      error: "Place of birth should contain only letters",
     },
     {
-      label: "Surname",
-      regex: /^[a-zA-Z]+$/,
-      error: "Surname should contain only letters",
-    },
-    {
-      label: "Email",
-      type: "email",
-      autoComplete: "new-password",
-      regex:
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      error: "Email should be a valid email adress",
+      label: "ID number",
+      name: "idDoc",
+      regex: /^[a-zA-Z]{3}[0-9]{6}$/,
+      error: "ID number should be valid number (e.g. ABC123456)",
     },
   ];
 
@@ -114,16 +110,22 @@ const Users = () => {
     { _id: "3", name: "Admin" },
   ];
 
-  const submitAddForm = async (e) => {
-    e.preventDefault();
-
+  const validateOnSubmit = () => {
     let validateErrors = {};
 
     // Validating all inputs and dropdowns
     inputs.forEach((input) => {
-      const name = input.label.toLowerCase();
-      const error = validate(name, user[name], input.regex, input.error);
-      validateErrors[error.name] = error.msg;
+      const error = validate(
+        input.label,
+        input.name,
+        user[input.name],
+        input.regex,
+        input.error
+      );
+
+      if (error.msg !== "") {
+        validateErrors[error.name] = error.msg;
+      }
     });
 
     if (user.role === "") {
@@ -134,13 +136,21 @@ const Users = () => {
       validateErrors["course"] = "Please choose one of the courses";
     }
 
-    setErrors({ ...errors, ...validateErrors });
+    /* If there is at least one error, update 
+    errors state and prevent submitting */
+    if (Object.keys(validateErrors).length !== 0) {
+      setErrors({ ...errors, ...validateErrors });
+      return false;
+    }
 
-    // Check if there is any error
-    for (const error of Object.values(validateErrors)) {
-      if (error !== "") {
-        return;
-      }
+    return true;
+  };
+
+  const onAddUser = async (e) => {
+    e.preventDefault();
+
+    if (!validateOnSubmit()) {
+      return;
     }
 
     try {
@@ -148,30 +158,29 @@ const Users = () => {
         "users/register",
         JSON.stringify({ ...user, course: user.course._id })
       );
+      console.log(response.data);
       setUsers([...users, response.data]);
       setUser({ ...initialUser });
+      setModal();
       successToast("Successfully added user");
     } catch (error) {
       errorToast(error?.response?.data?.message);
     }
   };
 
-  const submitEditForm = async (e) => {
+  const onEditUser = async (e) => {
     e.preventDefault();
+
+    if (!validateOnSubmit()) {
+      return;
+    }
   };
 
-  const editUserModal = (id) => {
-    const foundUser = users.find((obj) => obj._id === id);
-    // console.log(foundUser);
-    setUser({ ...user, ...foundUser });
-    setEditModal(!editModal);
-  };
-
-  const removeUser = async (id) => {
+  const onRemoveUser = async (id) => {
     try {
       const response = await axiosPrivate.delete(`/users/${id.toString()}`);
-      successToast("Successfully removed user");
       setUsers(users.filter((user) => user._id !== response.data._id));
+      successToast("Successfully removed user");
     } catch (error) {
       errorToast(error?.response?.data?.message);
     }
@@ -186,43 +195,27 @@ const Users = () => {
         title={"Users"}
         data={users}
         headers={headers}
-        onAdd={() => setAddModal(true)}
-        onEdit={editUserModal}
-        onRemove={removeUser}
+        onAdd={() => setModal("add")}
+        onEdit={(id) => {
+          setModal("edit");
+          setUser(users.find((obj) => obj._id === id));
+        }}
+        onRemove={onRemoveUser}
       />
       {/* Add user modal */}
       <Modal
         title={"Add user"}
-        show={addModal}
+        show={modal === "add"}
         onClose={() => {
-          setAddModal(!addModal);
+          setModal();
           setUser({ ...initialUser });
           setErrors({ ...initialUser });
         }}
       >
-        <form onSubmit={submitAddForm}>
-          {inputs.map((input, i) => (
-            <Input
-              key={`users-input-${i}`}
-              {...input}
-              name={input.label.toLowerCase()}
-              value={user[input.label.toLowerCase()]}
-              onChange={(e) => {
-                const error = validate(
-                  e.target.name,
-                  e.target.value,
-                  input.regex,
-                  input.error
-                );
-                setErrors({ ...errors, [error.name]: error.msg });
-                setUser({ ...user, [e.target.name]: e.target.value });
-              }}
-              error={errors[input.label.toLowerCase()]}
-            />
-          ))}
+        <form onSubmit={onAddUser}>
           <Dropdown
-            state={user.role}
-            setState={(role) => {
+            selected={user.role}
+            setSelected={(role) => {
               setErrors({ ...errors, role: "" });
               setUser({ ...user, role: role.name });
             }}
@@ -231,8 +224,8 @@ const Users = () => {
           />
           {user.role === "Student" && (
             <Dropdown
-              state={user.course.name}
-              setState={(course) => {
+              selected={user.course.name}
+              setSelected={(course) => {
                 setErrors({ ...errors, course: "" });
                 setUser({ ...user, course: course });
               }}
@@ -240,29 +233,15 @@ const Users = () => {
               error={errors.course}
             />
           )}
-          <Button text="Add user"></Button>
-        </form>
-      </Modal>
-      {/* Edit user modal */}
-      <Modal
-        title={"Edit user"}
-        show={editModal}
-        onClose={() => {
-          setEditModal(!editModal);
-          setUser({ ...initialUser });
-          setErrors({ ...initialUser });
-        }}
-      >
-        <form onSubmit={submitEditForm}>
-          {editInputs.map((input, i) => (
+          {inputs.map((input, i) => (
             <Input
               key={`users-input-${i}`}
               {...input}
-              name={input.label.toLowerCase()}
-              value={user[input.label.toLowerCase()]}
+              value={user[input.name]}
               onChange={(e) => {
                 const error = validate(
-                  e.target.name,
+                  input.label,
+                  input.name,
                   e.target.value,
                   input.regex,
                   input.error
@@ -270,7 +249,41 @@ const Users = () => {
                 setErrors({ ...errors, [error.name]: error.msg });
                 setUser({ ...user, [e.target.name]: e.target.value });
               }}
-              error={errors[input.label.toLowerCase()]}
+              error={errors[input.name]}
+            />
+          ))}
+
+          <Button text="Add user"></Button>
+        </form>
+      </Modal>
+      {/* Edit user modal */}
+      <Modal
+        title={"Edit user"}
+        show={modal === "edit"}
+        onClose={() => {
+          setModal();
+          setUser({ ...initialUser });
+          setErrors({ ...initialUser });
+        }}
+      >
+        <form onSubmit={onEditUser}>
+          {inputs.map((input, i) => (
+            <Input
+              key={`users-input-${i}`}
+              {...input}
+              value={user[input.name]}
+              onChange={(e) => {
+                const error = validate(
+                  input.label,
+                  input.name,
+                  e.target.value,
+                  input.regex,
+                  input.error
+                );
+                setErrors({ ...errors, [error.name]: error.msg });
+                setUser({ ...user, [e.target.name]: e.target.value });
+              }}
+              error={errors[input.name]}
             />
           ))}
           <Button text="Edit user"></Button>

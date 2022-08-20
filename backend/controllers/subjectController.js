@@ -10,7 +10,7 @@ const getAllSubjects = asyncHandler(async (req, res) => {
   const subjects = await Subject.aggregate([
     {
       $lookup: {
-        from: "`user`s",
+        from: "users",
         localField: "lecturer",
         foreignField: "_id",
         as: "ref",

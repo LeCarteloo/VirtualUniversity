@@ -7,6 +7,8 @@ import "../styles/buttons.scss";
 const Dropdown = ({ selected, setSelected, options, error, placeholder }) => {
   const [isOpen, setIsOpen] = useState(false);
 
+  // console.log(selected);
+
   return (
     <div className="dropdown">
       <button

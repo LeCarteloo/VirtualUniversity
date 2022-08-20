@@ -118,6 +118,7 @@ const Student = () => {
     // Validating all inputs and dropdowns
     inputs.forEach((input) => {
       const error = validate(
+        input.label,
         input.name,
         contact[input.name],
         input.regex,
@@ -168,11 +169,10 @@ const Student = () => {
             <Input
               key={`contact-input-${i}`}
               {...input}
-              label={input.label}
-              name={input.name}
               value={contact[input.name]}
               onChange={(e) => {
                 const error = validate(
+                  input.label,
                   input.name,
                   e.target.value,
                   input.regex,

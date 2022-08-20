@@ -16,14 +16,12 @@ const registerUser = asyncHandler(async (req, res) => {
     email,
     password,
     telephone,
-    role,
     idDoc,
     placeOfBirth,
     course,
   } = req.body;
-  // let { role } = req.body;
-  // role = role.toLowerCase();
 
+  let role = req.body?.role.toLowerCase();
   // Checking if all fields are provided
   if (
     !name ||
@@ -52,7 +50,7 @@ const registerUser = asyncHandler(async (req, res) => {
   if (role === "student") {
     if (!course) {
       res.status(400);
-      throw new Error("Please add all fields");
+      throw new Error("Please add course");
     }
 
     // Check if course exists
@@ -340,6 +338,8 @@ const getUsers = asyncHandler(async (req, res) => {
         name: 1,
         surname: 1,
         email: 1,
+        placeOfBirth: 1,
+        idDoc: 1,
         role: 1,
         album: 1,
         courses: {
@@ -359,6 +359,8 @@ const getUsers = asyncHandler(async (req, res) => {
         name: { $first: "$name" },
         surname: { $first: "$surname" },
         email: { $first: "$email" },
+        idDoc: { $first: "$idDoc" },
+        placeOfBirth: { $first: "$placeOfBirth" },
         role: { $first: "$role" },
         album: { $first: "$album" },
         courses: { $push: "$courses" },

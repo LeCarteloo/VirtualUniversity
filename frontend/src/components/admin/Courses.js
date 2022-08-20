@@ -117,6 +117,7 @@ const Courses = () => {
     // Validating all inputs and dropdowns
     inputs.forEach((input) => {
       const error = validate(
+        input.label,
         input.name,
         course[input.name],
         input.regex,
@@ -134,7 +135,7 @@ const Courses = () => {
       }
     });
 
-    /* If there is at least one error update 
+    /* If there is at least one error, update 
     errors state and prevent submitting */
     if (Object.keys(validateErrors).length !== 0) {
       setErrors({ ...errors, ...validateErrors });
@@ -197,7 +198,7 @@ const Courses = () => {
   const onRemoveCourse = async (id) => {
     try {
       const response = await axiosPrivate.delete(`/courses/${id}`);
-      setCourses(courses.filter((course) => course._id !== id));
+      setCourses(courses.filter((course) => course._id !== response.data._id));
       successToast("Successfully removed course");
     } catch (error) {
       errorToast(error?.response?.data?.message);
@@ -215,7 +216,7 @@ const Courses = () => {
           setModal("edit");
           setCourse(courses.find((course) => course._id === id));
         }}
-        onRemove={(id) => onRemoveCourse(id)}
+        onRemove={onRemoveCourse}
       />
       {/* Add modal */}
       <Modal
@@ -235,6 +236,7 @@ const Courses = () => {
               value={course[input.name]}
               onChange={(e) => {
                 const error = validate(
+                  input.label,
                   input.name,
                   e.target.value,
                   input.regex,
@@ -294,6 +296,7 @@ const Courses = () => {
               value={course[input.name]}
               onChange={(e) => {
                 const error = validate(
+                  input.label,
                   input.name,
                   e.target.value,
                   input.regex,

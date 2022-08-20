@@ -30,6 +30,29 @@ const Subjects = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  useEffect(() => {
+    const getSubjects = async () => {
+      try {
+        const response = await axiosPrivate.get("/subjects");
+        setSubjects(response.data);
+      } catch (error) {
+        console.error(error);
+        navigate("/", { state: { from: location }, replace: true });
+      }
+    };
+    const getLecturers = async () => {
+      try {
+        const response = await axiosPrivate.get("/users/role/lecturer");
+        setLecturers(response.data);
+      } catch (error) {
+        console.error(error);
+        navigate("/", { state: { from: location }, replace: true });
+      }
+    };
+    getSubjects();
+    getLecturers();
+  }, []);
+
   const headers = ["Name", "Type", "Credit", "ECTS"];
 
   const creditOptions = [
@@ -48,22 +71,27 @@ const Subjects = () => {
   const inputs = [
     {
       label: "Name",
+      name: "name",
       regex: /^[a-zA-Z\s]+$/,
       error: "Name should contain only letters",
     },
     {
       label: "Hours",
+      name: "hours",
       regex: /^[0-9]+$/,
       error: "Hours should be numeric",
       type: "number",
     },
     {
       label: "ECTS",
-      regex: /^[0-9]+$/,
+      name: "ects",
+      regex: /^[0-9]{1,2}$/,
       error: "ECTS should be numeric",
       type: "number",
     },
   ];
+
+  console.log(subjects);
 
   // Adding event on subbmiting form inside modal
   const onAddSubject = async (e) => {
@@ -73,8 +101,13 @@ const Subjects = () => {
 
     // Validating all inputs and dropdowns
     inputs.forEach((input) => {
-      const name = input.label.toLowerCase();
-      const error = validate(name, subject[name], input.regex, input.error);
+      const error = validate(
+        input.label,
+        input.name,
+        subject[input.name],
+        input.regex,
+        input.error
+      );
       validateErrors[error.name] = error.msg;
     });
 
@@ -99,6 +132,8 @@ const Subjects = () => {
       }
     }
 
+    console.log(subject);
+
     try {
       setAddModal(false);
       const response = await axiosPrivate.post(
@@ -121,8 +156,13 @@ const Subjects = () => {
 
     // Validating all inputs and dropdowns
     inputs.forEach((input) => {
-      const name = input.label.toLowerCase();
-      const error = validate(name, subject[name], input.regex, input.error);
+      const error = validate(
+        input.label,
+        input.name,
+        subject[input.name],
+        input.regex,
+        input.error
+      );
       validateErrors[error.name] = error.msg;
     });
 
@@ -182,29 +222,6 @@ const Subjects = () => {
     setEditModal(!editModal);
   };
 
-  useEffect(() => {
-    const getSubjects = async () => {
-      try {
-        const response = await axiosPrivate.get("/subjects");
-        setSubjects(response.data);
-      } catch (error) {
-        console.error(error);
-        navigate("/", { state: { from: location }, replace: true });
-      }
-    };
-    const getLecturers = async () => {
-      try {
-        const response = await axiosPrivate.get("/users/role/lecturer");
-        setLecturers(response.data);
-      } catch (error) {
-        console.error(error);
-        navigate("/", { state: { from: location }, replace: true });
-      }
-    };
-    getSubjects();
-    getLecturers();
-  }, []);
-
   return (
     <section
       className="users-section"
@@ -229,25 +246,6 @@ const Subjects = () => {
         }}
       >
         <form onSubmit={onAddSubject}>
-          {inputs.map((input, i) => (
-            <Input
-              key={`subjects-input-${i}`}
-              {...input}
-              name={input.label.toLowerCase()}
-              value={subject[input.label.toLowerCase()]}
-              onChange={(e) => {
-                const error = validate(
-                  e.target.name,
-                  e.target.value,
-                  input.regex,
-                  input.error
-                );
-                setErrors({ ...errors, [error.name]: error.msg });
-                setSubject({ ...subject, [e.target.name]: e.target.value });
-              }}
-              error={errors[input.label.toLowerCase()]}
-            />
-          ))}
           <Dropdown
             selected={subject.type}
             setSelected={(type) => {
@@ -283,6 +281,25 @@ const Subjects = () => {
             options={creditOptions}
             error={errors.credit}
           />
+          {inputs.map((input, i) => (
+            <Input
+              key={`subjects-input-${i}`}
+              {...input}
+              value={subject[input.name]}
+              onChange={(e) => {
+                const error = validate(
+                  input.label,
+                  input.name,
+                  e.target.value,
+                  input.regex,
+                  input.error
+                );
+                setErrors({ ...errors, [error.name]: error.msg });
+                setSubject({ ...subject, [input.name]: e.target.value });
+              }}
+              error={errors[input.name]}
+            />
+          ))}
           <Button text={"Add subject"} />
         </form>
       </Modal>
@@ -297,25 +314,6 @@ const Subjects = () => {
         }}
       >
         <form onSubmit={onEditSubject}>
-          {inputs.map((input, i) => (
-            <Input
-              key={`subjects-input-${i}`}
-              {...input}
-              name={input.label.toLowerCase()}
-              value={subject[input.label.toLowerCase()]}
-              onChange={(e) => {
-                const error = validate(
-                  e.target.name,
-                  e.target.value,
-                  input.regex,
-                  input.error
-                );
-                setErrors({ ...errors, [error.name]: error.msg });
-                setSubject({ ...subject, [e.target.name]: e.target.value });
-              }}
-              error={errors[input.label.toLowerCase()]}
-            />
-          ))}
           <Dropdown
             selected={subject.type}
             setSelected={(type) => {
@@ -326,16 +324,20 @@ const Subjects = () => {
             error={errors.type}
           />
           <Dropdown
-            selected={
-              subject.lecturer.name
-                ? subject.lecturer.name
-                : subject.lecturerName
-            }
+            selected={`${subject.lecturer.name} ${subject.lecturer.surname}`}
             setSelected={(lecturer) => {
               setErrors({ ...errors, lecturer: "" });
               setSubject({ ...subject, lecturer });
             }}
-            options={lecturers}
+            options={
+              lecturers &&
+              lecturers.map((lecturer) => {
+                return {
+                  _id: lecturer._id,
+                  name: `${lecturer.name}  ${lecturer.surname}`,
+                };
+              })
+            }
             error={errors.lecturer}
           />
           <Dropdown
@@ -347,6 +349,25 @@ const Subjects = () => {
             options={creditOptions}
             error={errors.credit}
           />
+          {inputs.map((input, i) => (
+            <Input
+              key={`subjects-input-${i}`}
+              {...input}
+              value={subject[input.name]}
+              onChange={(e) => {
+                const error = validate(
+                  input.label,
+                  input.name,
+                  e.target.value,
+                  input.regex,
+                  input.error
+                );
+                setErrors({ ...errors, [error.name]: error.msg });
+                setSubject({ ...subject, [input.name]: e.target.value });
+              }}
+              error={errors[input.name]}
+            />
+          ))}
           <Button text={"Edit subject"} />
         </form>
       </Modal>

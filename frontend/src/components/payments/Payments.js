@@ -104,6 +104,7 @@ const Payments = () => {
     // Validating all inputs and dropdowns
     inputs.forEach((input) => {
       const error = validate(
+        input.label,
         input.name,
         bankAccount[input.name],
         input.regex,
@@ -154,6 +155,15 @@ const Payments = () => {
         footer={"*Bank account will be checked in two working days"}
       >
         <form onSubmit={onAddAccount}>
+          <Dropdown
+            selected={bankAccount.currency.name}
+            setSelected={(currency) => {
+              setErrors({ ...errors, currency: "" });
+              setBankAccount({ ...bankAccount, currency: currency });
+            }}
+            options={currency}
+            error={errors.currency}
+          />
           {inputs.map((input, i) => (
             <Input
               key={`accounts-input-${i}`}
@@ -163,6 +173,7 @@ const Payments = () => {
               error={errors[input.name]}
               onChange={(e) => {
                 const error = validate(
+                  input.label,
                   input.name,
                   e.target.value,
                   input.regex,
@@ -179,15 +190,6 @@ const Payments = () => {
               }}
             />
           ))}
-          <Dropdown
-            state={bankAccount.currency.name}
-            setState={(currency) => {
-              setErrors({ ...errors, currency: "" });
-              setBankAccount({ ...bankAccount, currency: currency });
-            }}
-            options={currency}
-            error={errors.currency}
-          />
           <Button text={"Add bank"} />
         </form>
       </Modal>
