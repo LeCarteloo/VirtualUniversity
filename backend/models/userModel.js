@@ -47,6 +47,73 @@ const userSchema = mongoose.Schema(
       enum: ["student", "lecturer", "admin"],
       required: [true, "Please add role!"],
     },
+    graduation: {
+      elo: {
+        type: String,
+        required: true,
+      },
+      data: {
+        status: {
+          type: String,
+          required: true,
+        },
+        degree: {
+          type: String,
+          required: true,
+        },
+        plagiarismStatus: {
+          type: String,
+        },
+        similarity: {
+          type: String,
+        },
+      },
+      thesis: {
+        date: {
+          type: mongoose.Schema.Types.Date,
+        },
+        room: {
+          type: String,
+        },
+        number: {
+          type: Number,
+        },
+      },
+      board: {
+        supervisor: {
+          type: String,
+        },
+        reviewer: {
+          type: String,
+        },
+        secondSupervisor: {
+          type: String,
+        },
+        commiMember: {
+          type: String,
+        },
+      },
+      grade: {
+        supervisor: {
+          type: mongoose.Schema.Types.Decimal128,
+        },
+        reviewer: {
+          type: mongoose.Schema.Types.Decimal128,
+        },
+        thesis: {
+          type: mongoose.Schema.Types.Decimal128,
+        },
+        exam: {
+          type: mongoose.Schema.Types.Decimal128,
+        },
+        average: {
+          type: mongoose.Schema.Types.Decimal128,
+        },
+        final: {
+          type: mongoose.Schema.Types.Decimal128,
+        },
+      },
+    },
     courses: [
       {
         courseId: {

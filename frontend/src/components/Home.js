@@ -7,7 +7,6 @@ import Articles from "./articles/Articles";
 import Article from "./articles/Article";
 import Grades from "./Grades";
 import Payments from "./payments/Payments";
-import Calendar from "./calendar/Calendar";
 import Notifications from "./notifications/Notifications";
 import Files from "./files/Files";
 import Groups from "./groups/Groups";
@@ -83,16 +82,16 @@ const Home = () => {
       subLinks: [
         { name: t("navbar.studentdata"), path: "student", icon: faIdCard },
         { name: t("navbar.syllabus"), path: "syllabus", icon: faTimeline },
-        {
-          name: t("navbar.insurance"),
-          path: "insurance",
-          icon: faBriefcaseMedical,
-        },
-        {
-          name: t("navbar.choices"),
-          path: "choices",
-          icon: faListCheck,
-        },
+        // {
+        //   name: t("navbar.insurance"),
+        //   path: "insurance",
+        //   icon: faBriefcaseMedical,
+        // },
+        // {
+        //   name: t("navbar.choices"),
+        //   path: "choices",
+        //   icon: faListCheck,
+        // },
         {
           name: t("navbar.graduationwork"),
           path: "graduation_work",
@@ -105,21 +104,21 @@ const Home = () => {
       icon: faMoneyCheckDollar,
       path: "payments",
     },
-    {
-      name: t("navbar.shareddrive"),
-      icon: faFolder,
-      path: "drive",
-    },
+    // {
+    //   name: t("navbar.shareddrive"),
+    //   icon: faFolder,
+    //   path: "drive",
+    // },
     {
       name: t("navbar.files"),
       icon: faFileArrowDown,
       path: "files",
     },
-    {
-      name: t("navbar.groups"),
-      icon: faLayerGroup,
-      path: "groups",
-    },
+    // {
+    //   name: t("navbar.groups"),
+    //   icon: faLayerGroup,
+    //   path: "groups",
+    // },
   ];
 
   return (
@@ -140,7 +139,6 @@ const Home = () => {
           <Route path="payments" exact element={<Payments />} />
           <Route path="calendar" exact element={<StudentCalendar />} />
           <Route path="files" exact element={<Files />} />
-          <Route path="groups" exact element={<Groups />} />
         </Routes>
       </section>
     </section>

@@ -671,6 +671,26 @@ const generateToken = (id, role, secret, life) => {
   return jwt.sign({ id, role }, secret, { expiresIn: life });
 };
 
+// @desc Add graduation
+// @route Put /api/users/graduation/:id
+// @access Private
+const addGraduation = asyncHandler(async (req, res) => {
+  const userExist = await User.findById(req.params.id);
+
+  if (!userExist) {
+    res.status(400);
+    throw new Error("User doesn't exist!");
+  }
+
+  const graduation = await User.findOneAndUpdate(
+    { _id: req.params.id },
+    req.body,
+    { new: true }
+  );
+
+  res.status(200).json(graduation);
+});
+
 export {
   registerUser,
   loginUser,
@@ -679,6 +699,7 @@ export {
   updateContact,
   deleteUser,
   refreshToken,
+  addGraduation,
   getUsers,
   searchUser,
   getUsersByRole,
