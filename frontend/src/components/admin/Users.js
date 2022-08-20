@@ -23,14 +23,37 @@ const initialUser = {
 const Users = () => {
   const [users, setUsers] = useState();
   const [courses, setCourses] = useState();
-  const [addModal, setAddModal] = useState(false);
-  const [editModal, setEditModal] = useState(false);
+  const [modal, setModal] = useState();
   const [user, setUser] = useState({ ...initialUser });
   const [errors, setErrors] = useState({ ...initialUser });
 
   const axiosPrivate = useAxiosPrivate();
   const navigate = useNavigate();
   const location = useLocation();
+
+  useEffect(() => {
+    const getUsers = async () => {
+      try {
+        const response = await axiosPrivate.get("/users");
+        setUsers(response.data);
+      } catch (error) {
+        errorToast(error?.response?.data?.message);
+        navigate("/", { state: { from: location }, replace: true });
+      }
+    };
+
+    const getCourses = async () => {
+      try {
+        const response = await axiosPrivate.get("/courses");
+        setCourses(response.data);
+      } catch (error) {
+        errorToast(error?.response?.data?.message);
+        navigate("/", { state: { from: location }, replace: true });
+      }
+    };
+    getUsers();
+    getCourses();
+  }, []);
 
   const headers = ["Name", "Surname", "Email", "Album"];
 
@@ -90,30 +113,6 @@ const Users = () => {
     { _id: "2", name: "Lecturer" },
     { _id: "3", name: "Admin" },
   ];
-
-  useEffect(() => {
-    const getUsers = async () => {
-      try {
-        const response = await axiosPrivate.get("/users");
-        setUsers(response.data);
-      } catch (error) {
-        errorToast(error?.response?.data?.message);
-        navigate("/", { state: { from: location }, replace: true });
-      }
-    };
-
-    const getCourses = async () => {
-      try {
-        const response = await axiosPrivate.get("/courses");
-        setCourses(response.data);
-      } catch (error) {
-        errorToast(error?.response?.data?.message);
-        navigate("/", { state: { from: location }, replace: true });
-      }
-    };
-    getUsers();
-    getCourses();
-  }, []);
 
   const submitAddForm = async (e) => {
     e.preventDefault();

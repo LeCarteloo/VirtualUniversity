@@ -318,13 +318,14 @@ const getUsers = asyncHandler(async (req, res) => {
   //   throw new Error("Not authorized");
   // }
 
-  const users = await User.find({ courses: [] }).select(
-    "-password -__v -refreshToken"
-  );
-
   // Get all users
-  const aggregate = await User.aggregate([
-    { $unwind: "$courses" },
+  const users = await User.aggregate([
+    {
+      $unwind: {
+        path: "$courses",
+        preserveNullAndEmptyArrays: true,
+      },
+    },
     {
       $lookup: {
         from: "courses",
@@ -346,7 +347,7 @@ const getUsers = asyncHandler(async (req, res) => {
           name: { $first: "$courRef.name" },
           year: { $first: "$courRef.year" },
           semester: { $first: "$courRef.semester" },
-          status: "$courses.status",
+          status: 1,
         },
         accounts: 1,
         payments: 1,
@@ -369,7 +370,7 @@ const getUsers = asyncHandler(async (req, res) => {
 
   // const combine = [...users, ...aggregate];
 
-  res.status(200).json(aggregate);
+  res.status(200).json(users);
 });
 
 // @desc Search for user by name or surname

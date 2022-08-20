@@ -156,49 +156,12 @@ button {
   }
 }
 
-.action-btn {
-  .action-tooltip {
-    position: absolute;
-    z-index: 1;
-    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.511);
-    background-color: global.$secondary;
-    border: 1px solid global.$primary;
+.btn-action {
+  padding: 0.4em;
+  &:hover,
+  &:focus-within {
     border-radius: 5px;
-    // right: 6.15em;
-    transition: 0.2s;
-    display: none;
-
-    &::before {
-      content: "";
-      position: absolute;
-      top: -20px;
-      right: 3%;
-      margin-left: -10px;
-      border-width: 10px;
-      border-style: solid;
-      border-color: transparent transparent global.$primary transparent;
-      pointer-events: none;
-    }
-
-    .action-row {
-      min-width: 140px;
-      margin: 0.3em;
-      padding: 0.7em;
-      font-size: 0.9em;
-      color: global.$gray;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      &:hover {
-        background-color: global.$bg;
-        color: global.$font;
-      }
-    }
-  }
-  &:hover {
-    .action-tooltip {
-      display: block;
-    }
+    background-color: global.$primary;
   }
 }
 

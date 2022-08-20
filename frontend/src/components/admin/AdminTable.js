@@ -14,6 +14,8 @@ import Loading from "../Loading";
 import Modal from "../Modal";
 import Input from "../Input";
 import Pagination from "../Pagination";
+import ActionButton from "../buttons/ActionButton";
+import NoData from "../tables/NoData";
 
 const AdminTable = ({ title, data, headers, onAdd, onEdit, onRemove }) => {
   // States for pagination
@@ -185,32 +187,11 @@ const AdminTable = ({ title, data, headers, onAdd, onEdit, onRemove }) => {
                       <td key={`cell-${j}`}>{item[header.toLowerCase()]}</td>
                     ))}
                     <td>
-                      <div className="action-btn">
-                        <FontAwesomeIcon icon={faEllipsis} size="xl" />
-                        <div className="action-tooltip">
-                          <button
-                            className="action-row"
-                            onClick={() => onSee(item._id)}
-                          >
-                            <span>See more</span>
-                            <FontAwesomeIcon icon={faEye} size="lg" />
-                          </button>
-                          <button
-                            className="action-row"
-                            onClick={() => onEdit(item._id)}
-                          >
-                            <span>Edit row</span>
-                            <FontAwesomeIcon icon={faGear} size="lg" />
-                          </button>
-                          <button
-                            className="action-row"
-                            onClick={() => onRemove(item._id)}
-                          >
-                            <span>Remove row</span>
-                            <FontAwesomeIcon icon={faTrash} size="lg" />
-                          </button>
-                        </div>
-                      </div>
+                      <ActionButton
+                        onSee={() => onSee(item._id)}
+                        onEdit={() => onEdit(item._id)}
+                        onRemove={() => onRemove(item._id)}
+                      />
                     </td>
                   </tr>
                 ))}
@@ -226,23 +207,7 @@ const AdminTable = ({ title, data, headers, onAdd, onEdit, onRemove }) => {
               setRows={setRowsPerPage}
             />
           )}
-          {!items ? (
-            <Loading />
-          ) : (
-            items.length === 0 && (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  opacity: "0.6",
-                }}
-              >
-                <img src={Empty} width={"100px"} height={"100px"} />
-                <p style={{ margin: "0.5em 0 0.5em 0" }}>No data to display</p>
-              </div>
-            )
-          )}
+          {!items ? <Loading /> : items.length === 0 && <NoData />}
         </div>
       </div>
       {modal.show && displaySeeModal(modal.data)}
