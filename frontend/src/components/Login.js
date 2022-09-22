@@ -70,7 +70,7 @@ const Login = () => {
       <img src={BgAuth} alt="Background blob" className="auth-blob login" />
       <div className="auth-container">
         <div className="auth-inputs">
-          <h2>Remind password</h2>
+          <h2>Sign in </h2>
           <form className="auth-form" onSubmit={onSubmit}>
             <Input
               label="Login"
@@ -92,14 +92,6 @@ const Login = () => {
               value={password}
             />
             <Button text="Login in" />
-            {/* Admin shorcut for development */}
-            <Link to="/admin/test">
-              <Button text="Admin shortcut" />
-            </Link>
-            {/* User shorcut for development */}
-            <Link to="/home/articles">
-              <Button text="User shortcut" />
-            </Link>
           </form>
         </div>
         <div className="auth-remind">

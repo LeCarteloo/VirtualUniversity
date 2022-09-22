@@ -48,70 +48,56 @@ const userSchema = mongoose.Schema(
       required: [true, "Please add role!"],
     },
     graduation: {
-      elo: {
+      status: {
         type: String,
-        required: true,
       },
-      data: {
-        status: {
-          type: String,
-          required: true,
-        },
-        degree: {
-          type: String,
-          required: true,
-        },
-        plagiarismStatus: {
-          type: String,
-        },
-        similarity: {
-          type: String,
-        },
+      degree: {
+        type: String,
+      },
+      plagiarismStatus: {
+        type: String,
+      },
+      similarity: {
+        type: String,
+      },
+      date: {
+        type: mongoose.Schema.Types.Date,
+      },
+      room: {
+        type: String,
+      },
+      number: {
+        type: Number,
+      },
+      supervisor: {
+        type: String,
+      },
+      reviewer: {
+        type: String,
+      },
+      secondSupervisor: {
+        type: String,
+      },
+      commiMember: {
+        type: String,
+      },
+      supervisor: {
+        type: mongoose.Schema.Types.Decimal128,
+      },
+      reviewer: {
+        type: mongoose.Schema.Types.Decimal128,
       },
       thesis: {
-        date: {
-          type: mongoose.Schema.Types.Date,
-        },
-        room: {
-          type: String,
-        },
-        number: {
-          type: Number,
-        },
+        type: mongoose.Schema.Types.Decimal128,
       },
-      board: {
-        supervisor: {
-          type: String,
-        },
-        reviewer: {
-          type: String,
-        },
-        secondSupervisor: {
-          type: String,
-        },
-        commiMember: {
-          type: String,
-        },
+      exam: {
+        type: mongoose.Schema.Types.Decimal128,
       },
-      grade: {
-        supervisor: {
-          type: mongoose.Schema.Types.Decimal128,
-        },
-        reviewer: {
-          type: mongoose.Schema.Types.Decimal128,
-        },
-        thesis: {
-          type: mongoose.Schema.Types.Decimal128,
-        },
-        exam: {
-          type: mongoose.Schema.Types.Decimal128,
-        },
-        average: {
-          type: mongoose.Schema.Types.Decimal128,
-        },
-        final: {
-          type: mongoose.Schema.Types.Decimal128,
-        },
+      average: {
+        type: mongoose.Schema.Types.Decimal128,
+      },
+      final: {
+        type: mongoose.Schema.Types.Decimal128,
       },
     },
     courses: [

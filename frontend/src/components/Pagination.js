@@ -40,7 +40,7 @@ const Pagination = ({
   return (
     <nav className="pagination-nav">
       <select
-        defaultValue={3}
+        defaultValue={10}
         onChange={(e) => {
           setDisabled("left");
           setCurrent(1);
