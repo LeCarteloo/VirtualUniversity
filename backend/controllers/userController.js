@@ -347,6 +347,7 @@ const getUsers = asyncHandler(async (req, res) => {
           name: { $first: "$courRef.name" },
           year: { $first: "$courRef.year" },
           semester: { $first: "$courRef.semester" },
+          subjects: 1,
           status: 1,
         },
         accounts: 1,

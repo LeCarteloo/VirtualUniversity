@@ -25,4 +25,5 @@ yarn-error.log*
 
 # Just for now
 usePostApi.js
+useAsync.js
 CourseModal.js
