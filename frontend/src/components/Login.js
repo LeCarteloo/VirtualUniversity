@@ -47,13 +47,17 @@ const Login = () => {
       );
 
       const { role, token } = response.data;
-      const from =
-        location.state?.from?.pathname || role === "admin"
-          ? "/admin/users"
-          : "/student/articles";
+      let to = "";
+      if (role === "admin") {
+        to = "/admin/users";
+      } else if (role === "lecturer") {
+        to = "/lecturer";
+      } else if (role === "student") {
+        to = "/student/articles";
+      }
 
       setAuth({ role, token });
-      navigate(from, { replace: true });
+      navigate(to, { replace: true });
     } catch (error) {
       if (!error?.response) {
         errorToast("No server response");
@@ -92,6 +96,28 @@ const Login = () => {
               value={password}
             />
             <Button text="Login in" />
+            {/* //TODO: Remove on production */}
+            <Button
+              text={"Admin"}
+              onClick={() => {
+                setLogin("admin@admin.com");
+                setPassword("admin");
+              }}
+            />
+            <Button
+              text={"Lecturer"}
+              onClick={() => {
+                setLogin("lecturer@lecturer.com");
+                setPassword("lecturer");
+              }}
+            />
+            <Button
+              text={"Student"}
+              onClick={() => {
+                setLogin("student@student.com");
+                setPassword("student");
+              }}
+            />
           </form>
         </div>
         <div className="auth-remind">

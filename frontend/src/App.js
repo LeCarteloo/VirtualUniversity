@@ -7,9 +7,10 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import { Suspense } from "react";
 import { ToastContainer } from "react-toastify";
+import useAuth from "hooks/useAuth";
 
 // Importing Components
-import Login from "./components/Login";
+import Login from "components/Login";
 import Remind from "./components/Remind";
 import Home from "./components/Home";
 import Admin from "./components/admin/Admin";
@@ -17,6 +18,7 @@ import RequireAuth from "./context/RequireAuth";
 import Unauthorized from "./components/Unauthorized";
 import Session from "./components/Session";
 import NotFound from "./components/NotFound";
+import LecturerHome from "./pages/lecturer/LecturerHome";
 
 // Languages
 import en_US from "./languages/en/app.json";
@@ -37,6 +39,8 @@ function App() {
   const lang = localStorage.getItem("language");
   i18n.changeLanguage(lang);
 
+  const { auth } = useAuth();
+
   return (
     <Suspense fallback="Loading...">
       <div className="container">
@@ -51,6 +55,9 @@ function App() {
             </Route>
             <Route element={<RequireAuth allowedRole={"admin"} />}>
               <Route path="admin/*" exact element={<Admin />} />
+            </Route>
+            <Route element={<RequireAuth allowedRole={"lecturer"} />}>
+              <Route path="/lecturer" exact element={<LecturerHome />} />
             </Route>
           </Route>
           <Route path="/unauthorized" element={<Unauthorized />} />
