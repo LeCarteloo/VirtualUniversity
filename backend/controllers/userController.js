@@ -635,21 +635,53 @@ const getMyGrades = asyncHandler(async (req, res) => {
 });
 
 // @desc Add grade to subject by userId
-// @route PUT /api/users/grades/:userId
+// @route PUT /api/users/grades/:userId/:courseId:/:subjectId
 // @access Private
-// const addGrade = asyncHandler(async (req, res) => {
-//   const user = await User.findById(req.params.userId);
+const addGrades = asyncHandler(async (req, res) => {
+  const { userId, courseId, subjectId } = req.params;
+  const { firstTerm, secondTerm, conditional, promotion, committe } = req.body;
+  const user = await User.findById(userId);
 
-//   if (!user) {
-//     res.status(400);
-//     throw new Error("User doesn't exist!");
-//   }
+  console.log(req.body);
 
-//   const updatedUser = await User.findOneAndUpdate({
-//     _id: user._id,
+  if (!user) {
+    res.status(400);
+    throw new Error("User doesn't exist!");
+  }
 
-//   })
-// });
+  const updatedUser = await User.findOneAndUpdate(
+    {
+      _id: user._id,
+    },
+    {
+      $set: {
+        "courses.$[courses].subjects.$[subjects].firstTerm": firstTerm,
+        "courses.$[courses].subjects.$[subjects].secondTerm": secondTerm,
+        "courses.$[courses].subjects.$[subjects].conditional": conditional,
+        "courses.$[courses].subjects.$[subjects].promotion": promotion,
+        "courses.$[courses].subjects.$[subjects].committe": committe,
+      },
+    },
+    {
+      multi: false,
+      upsert: false,
+      arrayFilters: [
+        {
+          "courses.courseId": {
+            $eq: courseId,
+          },
+        },
+        {
+          "subjects.subjectId": {
+            $eq: subjectId,
+          },
+        },
+      ],
+    }
+  );
+
+  res.status(200).json(updatedUser);
+});
 
 // @desc Get average user grades
 // @route GET /api/users/grades/:userId
@@ -710,5 +742,6 @@ export {
   getMyData,
   getMyCourse,
   getMyGrades,
+  addGrades,
   getAverageGrade,
 };

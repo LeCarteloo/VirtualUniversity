@@ -18,6 +18,7 @@ import {
   updateUser,
   updateContact,
   addGraduation,
+  addGrades,
 } from "../controllers/userController.js";
 import { protectUser } from "../middleware/authMiddleware.js";
 
@@ -46,6 +47,7 @@ userRouter.get("/course/me", protectUser, getMyCourse);
 
 userRouter.get("/role/:role", protectUser, getUsersByRole);
 userRouter.get("/grades/:userId", protectUser, getAverageGrade);
+userRouter.post("/grades/:userId&:courseId&:subjectId", protectUser, addGrades);
 userRouter.get("/charges/:courseId", protectUser, getCharges);
 userRouter.put("/charges/:userId", protectUser, updateCharge);
 
