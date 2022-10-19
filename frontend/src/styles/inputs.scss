@@ -271,3 +271,40 @@ select {
     }
   }
 }
+
+.grade-input {
+  border-bottom: 1px solid transparent;
+  transition: border 0.2s ease-in-out;
+  form {
+    display: flex;
+    align-items: center;
+  }
+  input {
+    background-color: transparent;
+    border: none;
+    width: 100%;
+    padding: 0.1em;
+    color: global.$font;
+    font-size: 1rem;
+    text-align: center;
+    outline: none;
+  }
+  .grade-button {
+    transition: opacity 0.2s ease-in-out;
+    opacity: 0;
+    font-size: 1rem;
+    &.changed {
+      color: global.$primary;
+      opacity: 1;
+    }
+  }
+
+  &:hover,
+  &:focus-within {
+    border-bottom: 1px solid global.$font;
+
+    .grade-button {
+      opacity: 1;
+    }
+  }
+}

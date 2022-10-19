@@ -640,9 +640,8 @@ const getMyGrades = asyncHandler(async (req, res) => {
 const addGrades = asyncHandler(async (req, res) => {
   const { userId, courseId, subjectId } = req.params;
   const { firstTerm, secondTerm, conditional, promotion, committe } = req.body;
-  const user = await User.findById(userId);
 
-  console.log(req.body);
+  const user = await User.findById(userId);
 
   if (!user) {
     res.status(400);

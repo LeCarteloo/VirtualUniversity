@@ -1,9 +1,10 @@
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { errorToast } from "utility/toast";
 import { faPlaneLock } from "@fortawesome/free-solid-svg-icons";
-import NavBar from "../components/nav/NavBar";
-import StudentTable from "../components/tables/StudentTable";
-import useAxiosPrivate from "../hooks/useAxiosPrivate";
-import { useState } from "react";
-import { useEffect } from "react";
+import useAxiosPrivate from "hooks/useAxiosPrivate";
+import NavBar from "components/nav/NavBar";
+import StudentTable from "components/tables/StudentTable";
 
 const LecturerHome = () => {
   const [students, setStudents] = useState();
