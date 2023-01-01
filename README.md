@@ -13,7 +13,7 @@
     <br />
     <a href="#">Live Project</a>
     ·
-    <a href="#">Page about project</a>
+    <a href="https://filippapiernik.pl/projects/VirtualUniversity">Page about project</a>
   </p>
 </div>
 
@@ -37,7 +37,6 @@
     <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -52,8 +51,6 @@ In progress...
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 ### Built With
-
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 
 - [React.js](https://reactjs.org/)
 - [SCSS](https://sass-lang.com/)
@@ -148,16 +145,6 @@ Project Link: [future-website](#)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-<!-- ACKNOWLEDGMENTS -->
-
-## Acknowledgments
-
-Helpful resources that helped in building this app.
-
-- [Font Awesome](https://fontawesome.com)
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
 <!-- MARKDOWN LINKS & IMAGES -->
 
-[app-screenshot]: https://i.imgur.com/NT0FPkW.png
+[app-screenshot]: https://i.imgur.com/MC8wIon.png
