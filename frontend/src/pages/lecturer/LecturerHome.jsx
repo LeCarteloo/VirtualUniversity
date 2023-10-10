@@ -1,52 +1,52 @@
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { errorToast } from "utility/toast";
-import { faPlaneLock } from "@fortawesome/free-solid-svg-icons";
-import useAxiosPrivate from "hooks/useAxiosPrivate";
-import NavBar from "components/nav/NavBar";
-import StudentTable from "components/tables/StudentTable";
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { errorToast } from '../../utility/toast';
+import { faPlaneLock } from '@fortawesome/free-solid-svg-icons';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import NavBar from '../../components/nav/NavBar';
+import StudentTable from '../../components/tables/StudentTable';
 
 const LecturerHome = () => {
-  const [students, setStudents] = useState();
-  const location = useLocation();
-  const navigate = useNavigate();
-  const axiosPrivate = useAxiosPrivate();
+	const [students, setStudents] = useState();
+	const location = useLocation();
+	const navigate = useNavigate();
+	const axiosPrivate = useAxiosPrivate();
 
-  // Navbar navigation items
-  const navItems = [
-    {
-      name: "test",
-      icon: faPlaneLock,
-      path: "test",
-    },
-  ];
+	// Navbar navigation items
+	const navItems = [
+		{
+			name: 'test',
+			icon: faPlaneLock,
+			path: 'test',
+		},
+	];
 
-  useEffect(() => {
-    const getStudents = async () => {
-      try {
-        const response = await axiosPrivate.get("/users");
-        setStudents(response.data);
-      } catch (err) {
-        errorToast(err?.response?.data?.message);
-        navigate("/", { state: { from: location }, replace: true });
-      }
-    };
+	useEffect(() => {
+		const getStudents = async () => {
+			try {
+				const response = await axiosPrivate.get('/users');
+				setStudents(response.data);
+			} catch (err) {
+				errorToast(err?.response?.data?.message);
+				navigate('/', { state: { from: location }, replace: true });
+			}
+		};
 
-    getStudents();
-  }, []);
+		getStudents();
+	}, []);
 
-  return (
-    <section className="home-section">
-      <NavBar navItems={navItems} />
-      <section className="content-section">
-        <StudentTable
-          students={students}
-          subjectId={"631ca15f876ca2d75293c62c"}
-          courseId={"62ebdbe09addf7645adfbca0"}
-        />
-      </section>
-    </section>
-  );
+	return (
+		<section className="home-section">
+			<NavBar navItems={navItems} />
+			<section className="content-section">
+				<StudentTable
+					students={students}
+					subjectId={'631ca15f876ca2d75293c62c'}
+					courseId={'62ebdbe09addf7645adfbca0'}
+				/>
+			</section>
+		</section>
+	);
 };
 
 export default LecturerHome;
